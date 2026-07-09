@@ -345,11 +345,25 @@ function jawad_dev_gravity_shortcode_id( string $shortcode ): int {
 	return 0;
 }
 
+function jawad_dev_gravity_ajax_shortcode( string $shortcode ): string {
+	$shortcode = trim( $shortcode );
+	if ( '' === $shortcode ) {
+		return '';
+	}
+
+	if ( preg_match( '/\bajax=/i', $shortcode ) ) {
+		return preg_replace( '/\bajax=(["\']?)(?:true|false|0|1)\1/i', 'ajax="true"', $shortcode );
+	}
+
+	return preg_replace( '/\]\s*$/', ' ajax="true"]', $shortcode );
+}
+
 function jawad_dev_render_gravity_form_shortcode( string $shortcode, array $gravity_params ): string {
 	if ( ! shortcode_exists( 'gravityform' ) ) {
 		return '<div class="jd-form-alert">' . esc_html__( 'Gravity Forms is selected, but the Gravity Forms plugin is not active or is not loaded.', 'jawad-dev' ) . '</div>';
 	}
 
+	$shortcode = jawad_dev_gravity_ajax_shortcode( $shortcode );
 	$form_id = jawad_dev_gravity_shortcode_id( $shortcode );
 	if ( class_exists( 'GFAPI' ) ) {
 		$form = GFAPI::get_form( $form_id );

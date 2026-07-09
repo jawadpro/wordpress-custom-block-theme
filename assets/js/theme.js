@@ -31,6 +31,7 @@
 		const next = qs( '.jd-form__next', modal );
 		const back = qs( '.jd-form__back', modal );
 		const trace = qs( '.jd-form__trace', modal );
+		const gravityWrap = qs( '.jd-gravity-form', modal );
 		let gravitySynced = false;
 
 		function open( trigger ) {
@@ -125,6 +126,14 @@
 			setGravityValue( gravitySelectors( 'timeline' ), state.timeline );
 		}
 
+		function markGravitySuccess() {
+			modal.classList.add( 'jd-modal--submitted' );
+			progress.style.width = '100%';
+			trace.textContent = '> request_sent_successfully';
+			back.hidden = true;
+			next.hidden = true;
+		}
+
 		qsa( '.jd-open-form' ).forEach( function ( trigger ) {
 			trigger.addEventListener( 'click', function ( ev ) {
 				ev.preventDefault();
@@ -168,6 +177,20 @@
 		qsa( '.jd-form__step:not(.jd-form__step--gravity) input, .jd-form__step:not(.jd-form__step--gravity) textarea', form ).forEach( function ( field ) {
 			field.addEventListener( 'input', render );
 		} );
+
+		if ( window.jQuery ) {
+			window.jQuery( document ).on( 'gform_confirmation_loaded', function () {
+				if ( ! modal.hidden ) markGravitySuccess();
+			} );
+		}
+
+		if ( gravityWrap && 'MutationObserver' in window ) {
+			new MutationObserver( function () {
+				if ( qs( '.gform_confirmation_message', gravityWrap ) ) {
+					markGravitySuccess();
+				}
+			} ).observe( gravityWrap, { childList: true, subtree: true } );
+		}
 	}
 
 	function setupMobileMenu() {
