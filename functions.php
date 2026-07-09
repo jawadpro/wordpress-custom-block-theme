@@ -1,0 +1,208 @@
+<?php
+/**
+ * Jawad Dev theme bootstrap.
+ *
+ * @package JawadDev
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+define( 'JAWAD_DEV_VERSION', '1.0.0' );
+define( 'JAWAD_DEV_DIR', get_template_directory() );
+define( 'JAWAD_DEV_URI', get_template_directory_uri() );
+
+require_once JAWAD_DEV_DIR . '/inc/render.php';
+
+add_action( 'after_setup_theme', 'jawad_dev_setup' );
+function jawad_dev_setup(): void {
+	add_theme_support( 'wp-block-styles' );
+	add_theme_support( 'editor-styles' );
+	add_editor_style( array( 'assets/css/theme.css', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap' ) );
+}
+
+add_action( 'wp_enqueue_scripts', 'jawad_dev_enqueue_assets' );
+function jawad_dev_enqueue_assets(): void {
+	wp_enqueue_style( 'jawad-dev-fonts', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap', array(), null );
+	wp_enqueue_style( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/css/theme.css', array( 'jawad-dev-fonts' ), JAWAD_DEV_VERSION );
+	wp_enqueue_script( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/js/theme.js', array(), JAWAD_DEV_VERSION, true );
+	wp_localize_script(
+		'jawad-dev-theme',
+		'JawadDevForm',
+		array(
+			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'nonce'   => wp_create_nonce( 'jawad_dev_project_request' ),
+		)
+	);
+}
+
+add_action( 'init', 'jawad_dev_register_project_content' );
+function jawad_dev_register_project_content(): void {
+	register_post_type(
+		'project',
+		array(
+			'labels'       => array(
+				'name'          => __( 'Projects', 'jawad-dev' ),
+				'singular_name' => __( 'Project', 'jawad-dev' ),
+				'add_new_item'  => __( 'Add New Project', 'jawad-dev' ),
+				'edit_item'     => __( 'Edit Project', 'jawad-dev' ),
+			),
+			'public'       => true,
+			'show_in_rest' => true,
+			'menu_icon'    => 'dashicons-portfolio',
+			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields', 'revisions' ),
+			'has_archive'  => true,
+			'rewrite'      => array( 'slug' => 'projects' ),
+		)
+	);
+
+	foreach ( array( 'project_type' => __( 'Project Types', 'jawad-dev' ), 'project_technology' => __( 'Technologies', 'jawad-dev' ) ) as $taxonomy => $label ) {
+		register_taxonomy(
+			$taxonomy,
+			'project',
+			array(
+				'label'        => $label,
+				'public'       => true,
+				'show_in_rest' => true,
+				'hierarchical' => 'project_type' === $taxonomy,
+				'rewrite'      => array( 'slug' => str_replace( '_', '-', $taxonomy ) ),
+			)
+		);
+	}
+
+	$meta = array(
+		'project_link'        => 'uri',
+		'project_client'      => 'text',
+		'project_year'        => 'text',
+		'project_result'      => 'text',
+		'project_accent'      => 'text',
+		'project_button_text' => 'text',
+	);
+
+	foreach ( $meta as $key => $format ) {
+		register_post_meta(
+			'project',
+			$key,
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'uri' === $format ? 'esc_url_raw' : 'sanitize_text_field',
+				'auth_callback'     => static function (): bool {
+					return current_user_can( 'edit_posts' );
+				},
+			)
+		);
+	}
+}
+
+add_action( 'add_meta_boxes_project', 'jawad_dev_add_project_meta_box' );
+function jawad_dev_add_project_meta_box(): void {
+	add_meta_box( 'jawad-dev-project-details', __( 'Project Details', 'jawad-dev' ), 'jawad_dev_render_project_meta_box', 'project', 'normal', 'high' );
+}
+
+function jawad_dev_render_project_meta_box( WP_Post $post ): void {
+	wp_nonce_field( 'jawad_dev_save_project_meta', 'jawad_dev_project_nonce' );
+	$fields = array(
+		'project_link'        => __( 'Live Project Link', 'jawad-dev' ),
+		'project_client'      => __( 'Client / Industry', 'jawad-dev' ),
+		'project_year'        => __( 'Year', 'jawad-dev' ),
+		'project_result'      => __( 'Result / Outcome', 'jawad-dev' ),
+		'project_accent'      => __( 'Accent color hex', 'jawad-dev' ),
+		'project_button_text' => __( 'Button text', 'jawad-dev' ),
+	);
+	echo '<div class="jawad-dev-meta-grid">';
+	foreach ( $fields as $key => $label ) {
+		$value = get_post_meta( $post->ID, $key, true );
+		printf(
+			'<p><label for="%1$s"><strong>%2$s</strong></label><input id="%1$s" name="%1$s" type="text" value="%3$s" class="widefat"></p>',
+			esc_attr( $key ),
+			esc_html( $label ),
+			esc_attr( $value )
+		);
+	}
+	echo '<p>' . esc_html__( 'Use the featured image for the project screenshot. Use Project Types and Technologies for the tags shown on the card.', 'jawad-dev' ) . '</p></div>';
+}
+
+add_action( 'save_post_project', 'jawad_dev_save_project_meta' );
+function jawad_dev_save_project_meta( int $post_id ): void {
+	if ( ! isset( $_POST['jawad_dev_project_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['jawad_dev_project_nonce'] ) ), 'jawad_dev_save_project_meta' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+	foreach ( array( 'project_link', 'project_client', 'project_year', 'project_result', 'project_accent', 'project_button_text' ) as $key ) {
+		$value = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
+		update_post_meta( $post_id, $key, 'project_link' === $key ? esc_url_raw( $value ) : $value );
+	}
+}
+
+add_action( 'init', 'jawad_dev_register_blocks' );
+function jawad_dev_register_blocks(): void {
+	wp_register_script(
+		'jawad-dev-blocks-editor',
+		JAWAD_DEV_URI . '/assets/js/editor.js',
+		array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'wp-i18n' ),
+		JAWAD_DEV_VERSION,
+		true
+	);
+
+	foreach ( jawad_dev_block_sections() as $slug => $section ) {
+		register_block_type(
+			JAWAD_DEV_DIR . '/blocks/' . $slug,
+			array(
+				'render_callback' => static function ( array $attributes, string $content, WP_Block $block ) use ( $slug ): string {
+					return jawad_dev_render_section( $slug, $attributes, $content, $block );
+				},
+			)
+		);
+	}
+}
+
+add_action( 'wp_ajax_jawad_dev_project_request', 'jawad_dev_handle_project_request' );
+add_action( 'wp_ajax_nopriv_jawad_dev_project_request', 'jawad_dev_handle_project_request' );
+function jawad_dev_handle_project_request(): void {
+	check_ajax_referer( 'jawad_dev_project_request', 'nonce' );
+
+	$ip       = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
+	$limited  = 'jawad_dev_form_' . md5( $ip );
+	$honeypot = isset( $_POST['company_url'] ) ? trim( sanitize_text_field( wp_unslash( $_POST['company_url'] ) ) ) : '';
+
+	if ( $honeypot ) {
+		wp_send_json_success( array( 'message' => __( 'Thanks, your request was received.', 'jawad-dev' ) ) );
+	}
+	if ( get_transient( $limited ) ) {
+		wp_send_json_error( array( 'message' => __( 'Please wait a few minutes before sending another request.', 'jawad-dev' ) ), 429 );
+	}
+
+	$name     = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
+	$email    = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	$message  = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
+	$website  = isset( $_POST['website'] ) ? esc_url_raw( wp_unslash( $_POST['website'] ) ) : '';
+	$service  = isset( $_POST['service'] ) ? sanitize_text_field( wp_unslash( $_POST['service'] ) ) : '';
+	$budget   = isset( $_POST['budget'] ) ? sanitize_text_field( wp_unslash( $_POST['budget'] ) ) : '';
+	$timeline = isset( $_POST['timeline'] ) ? sanitize_text_field( wp_unslash( $_POST['timeline'] ) ) : '';
+
+	if ( ! $name || ! is_email( $email ) || ! $message ) {
+		wp_send_json_error( array( 'message' => __( 'Please add your name, a valid email, and project details.', 'jawad-dev' ) ), 400 );
+	}
+
+	set_transient( $limited, 1, 10 * MINUTE_IN_SECONDS );
+
+	$to      = apply_filters( 'jawad_dev_project_request_to', get_option( 'admin_email' ) );
+	$subject = sprintf( 'New project request from %s', $name );
+	$body    = "Name: {$name}\nEmail: {$email}\nWebsite: {$website}\nService: {$service}\nBudget: {$budget}\nTimeline: {$timeline}\n\nProject Details:\n{$message}";
+	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+
+	$sent = wp_mail( $to, $subject, $body, $headers );
+	if ( ! $sent ) {
+		wp_send_json_error( array( 'message' => __( 'The request could not be sent. Please email me directly.', 'jawad-dev' ) ), 500 );
+	}
+
+	wp_send_json_success( array( 'message' => __( 'Thanks, your request was sent.', 'jawad-dev' ) ) );
+}

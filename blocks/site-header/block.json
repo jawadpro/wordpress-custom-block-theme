@@ -1,0 +1,64 @@
+{
+  "apiVersion": 3,
+  "category": "theme",
+  "icon": "screenoptions",
+  "editorScript": "jawad-dev-blocks-editor",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "buttonUrl": {
+      "type": "string"
+    },
+    "secondaryText": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string",
+      "default": "jawad.dev"
+    },
+    "ctaText": {
+      "type": "string",
+      "default": "Hire Me"
+    },
+    "postsToShow": {
+      "type": "number"
+    },
+    "showBadge": {
+      "type": "boolean"
+    },
+    "imageId": {
+      "type": "number"
+    },
+    "imageUrl": {
+      "type": "string"
+    }
+  },
+  "name": "jawad-dev/site-header",
+  "title": "JD Site Header",
+  "description": "Editable Site Header section for the Jawad Dev theme.",
+  "textdomain": "jawad-dev"
+}

@@ -1,0 +1,65 @@
+{
+  "apiVersion": 3,
+  "category": "theme",
+  "icon": "screenoptions",
+  "editorScript": "jawad-dev-blocks-editor",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "// SERVICES"
+    },
+    "title": {
+      "type": "string",
+      "default": "WordPress Services I Offer"
+    },
+    "description": {
+      "type": "string",
+      "default": "From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites."
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "buttonUrl": {
+      "type": "string"
+    },
+    "secondaryText": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "postsToShow": {
+      "type": "number"
+    },
+    "showBadge": {
+      "type": "boolean"
+    },
+    "imageId": {
+      "type": "number"
+    },
+    "imageUrl": {
+      "type": "string"
+    }
+  },
+  "name": "jawad-dev/services",
+  "title": "JD Services",
+  "description": "Editable Services section for the Jawad Dev theme.",
+  "textdomain": "jawad-dev"
+}

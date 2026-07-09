@@ -1,0 +1,22 @@
+<?php
+/**
+ * Title: Jawad Dev Home
+ * Slug: jawad-dev/home
+ * Categories: featured
+ * Block Types: core/post-content
+ */
+?>
+<!-- wp:jawad-dev/site-header {"align":"full"} /-->
+<!-- wp:jawad-dev/hero {"align":"full"} /-->
+<!-- wp:jawad-dev/services {"align":"full"} /-->
+<!-- wp:jawad-dev/why {"align":"full"} /-->
+<!-- wp:jawad-dev/solutions {"align":"full"} /-->
+<!-- wp:jawad-dev/process {"align":"full"} /-->
+<!-- wp:jawad-dev/packages {"align":"full"} /-->
+<!-- wp:jawad-dev/projects {"align":"full"} /-->
+<!-- wp:jawad-dev/stack {"align":"full"} /-->
+<!-- wp:jawad-dev/testimonials {"align":"full"} /-->
+<!-- wp:jawad-dev/faq {"align":"full"} /-->
+<!-- wp:jawad-dev/cta {"align":"full"} /-->
+<!-- wp:jawad-dev/site-footer {"align":"full"} /-->
+<!-- wp:jawad-dev/contact-modal {"align":"full"} /-->

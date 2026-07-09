@@ -1,0 +1,70 @@
+{
+  "apiVersion": 3,
+  "category": "theme",
+  "icon": "screenoptions",
+  "editorScript": "jawad-dev-blocks-editor",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "TOP RATED WORDPRESS DEVELOPER"
+    },
+    "title": {
+      "type": "string",
+      "default": "WordPress Developer for Fast, Modern & SEO-Friendly Websites"
+    },
+    "description": {
+      "type": "string",
+      "default": "I\u2019m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, and landing pages that turn visitors into clients."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Hire WordPress Developer"
+    },
+    "buttonUrl": {
+      "type": "string"
+    },
+    "secondaryText": {
+      "type": "string",
+      "default": "View My Work"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "postsToShow": {
+      "type": "number"
+    },
+    "showBadge": {
+      "type": "boolean",
+      "default": true
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "name": "jawad-dev/hero",
+  "title": "JD Hero",
+  "description": "Editable Hero section for the Jawad Dev theme.",
+  "textdomain": "jawad-dev"
+}

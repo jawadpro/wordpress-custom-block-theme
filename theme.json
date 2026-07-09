@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1400px"
+    },
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        { "slug": "base", "color": "#05070d", "name": "Base" },
+        { "slug": "surface", "color": "#0f172a", "name": "Surface" },
+        { "slug": "text", "color": "#cbd5e1", "name": "Text" },
+        { "slug": "heading", "color": "#f8fafc", "name": "Heading" },
+        { "slug": "cyan", "color": "#22d3ee", "name": "Cyan" },
+        { "slug": "blue", "color": "#2563eb", "name": "Blue" },
+        { "slug": "violet", "color": "#8b5cf6", "name": "Violet" },
+        { "slug": "green", "color": "#34d399", "name": "Green" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        { "fontFamily": "'Manrope', sans-serif", "slug": "manrope", "name": "Manrope" },
+        { "fontFamily": "'Space Grotesk', sans-serif", "slug": "space-grotesk", "name": "Space Grotesk" },
+        { "fontFamily": "'JetBrains Mono', monospace", "slug": "jetbrains-mono", "name": "JetBrains Mono" }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#05070d",
+      "text": "#cbd5e1"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--manrope)"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "#7dd3fc"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    { "name": "header", "title": "Header", "area": "header" },
+    { "name": "footer", "title": "Footer", "area": "footer" }
+  ],
+  "customTemplates": [
+    { "name": "blank", "title": "Blank" }
+  ]
+}

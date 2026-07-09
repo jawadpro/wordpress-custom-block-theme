@@ -1,0 +1,362 @@
+<?php
+/**
+ * Block render helpers.
+ *
+ * @package JawadDev
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+function jawad_dev_block_sections(): array {
+	return array(
+		'site-header'   => array( 'title' => 'JD Site Header' ),
+		'hero'          => array( 'title' => 'JD Hero' ),
+		'services'      => array( 'title' => 'JD Services' ),
+		'why'           => array( 'title' => 'JD Why Hire Me' ),
+		'solutions'     => array( 'title' => 'JD Solutions' ),
+		'process'       => array( 'title' => 'JD Process' ),
+		'packages'      => array( 'title' => 'JD Packages' ),
+		'projects'      => array( 'title' => 'JD Projects' ),
+		'stack'         => array( 'title' => 'JD Tech Stack' ),
+		'testimonials'  => array( 'title' => 'JD Testimonials' ),
+		'faq'           => array( 'title' => 'JD FAQ' ),
+		'cta'           => array( 'title' => 'JD Final CTA' ),
+		'site-footer'   => array( 'title' => 'JD Site Footer' ),
+		'contact-modal' => array( 'title' => 'JD Contact Modal' ),
+	);
+}
+
+function jawad_dev_default_attrs( string $slug ): array {
+	$defaults = array(
+		'eyebrow'     => '',
+		'title'       => '',
+		'description' => '',
+		'buttonText'  => '',
+		'buttonUrl'   => '#contact',
+		'enabled'     => true,
+	);
+
+	$by_slug = array(
+		'site-header'   => array( 'brand' => 'jawad.dev', 'ctaText' => 'Hire Me' ),
+		'hero'          => array(
+			'eyebrow'      => 'TOP RATED WORDPRESS DEVELOPER',
+			'title'        => 'WordPress Developer for Fast, Modern & SEO-Friendly Websites',
+			'description'  => 'I’m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, and landing pages that turn visitors into clients.',
+			'buttonText'   => 'Hire WordPress Developer',
+			'secondaryText'=> 'View My Work',
+			'imageId'      => 0,
+			'imageUrl'     => '',
+			'showBadge'    => true,
+		),
+		'services'      => array( 'eyebrow' => '// SERVICES', 'title' => 'WordPress Services I Offer', 'description' => 'From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites.' ),
+		'why'           => array( 'eyebrow' => '// WHY HIRE ME', 'title' => 'Why Businesses Hire Me as Their WordPress Developer' ),
+		'solutions'     => array( 'eyebrow' => '// SOLUTIONS', 'title' => 'Built for Real Business Needs' ),
+		'process'       => array( 'eyebrow' => '// PROCESS', 'title' => 'My Website Development Process' ),
+		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages' ),
+		'projects'      => array( 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
+		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With' ),
+		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'What Clients Say' ),
+		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions' ),
+		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'secondaryText' => 'Discuss Your Project' ),
+		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
+		'contact-modal' => array( 'recipient' => get_option( 'admin_email' ) ),
+	);
+
+	return array_merge( $defaults, $by_slug[ $slug ] ?? array() );
+}
+
+function jawad_dev_attrs( string $slug, array $attrs ): array {
+	return array_merge( jawad_dev_default_attrs( $slug ), $attrs );
+}
+
+function jawad_dev_render_section( string $slug, array $attributes = array(), string $content = '', ?WP_Block $block = null ): string {
+	$a = jawad_dev_attrs( $slug, $attributes );
+	if ( empty( $a['enabled'] ) ) {
+		return '';
+	}
+	$fn = 'jawad_dev_render_' . str_replace( '-', '_', $slug );
+	if ( function_exists( $fn ) ) {
+		return $fn( $a );
+	}
+	return '';
+}
+
+function jawad_dev_icon_defs(): string {
+	return '<svg width="0" height="0" class="jd-icon-defs" aria-hidden="true"><defs><linearGradient id="icoA" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#60a5fa"></stop><stop offset="1" stop-color="#22d3ee"></stop></linearGradient><linearGradient id="icoB" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#818cf8"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs></svg>';
+}
+
+function jawad_dev_svg( string $name ): string {
+	$icons = array(
+		'menu'       => '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"></path></svg>',
+		'arrow'      => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'arrow-sm'   => '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'check'      => '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="#22d3ee" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'done'       => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="#34d399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'wordpress'  => '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="url(#icoA)" stroke-width="1.6"></circle><path d="M4.5 9h4.2l2.1 6.5L13 9h3.6l2 6.5" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'elementor'  => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" stroke="url(#icoB)" stroke-width="1.6"></rect><path d="M8.5 8.5v7M12 8.5h3.5M12 12h3.5M12 15.5h3.5" stroke="url(#icoB)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'woo'        => '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16l-1.5 9.5a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7L4 7Z" stroke="#34d399" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 10.5c.4 1.6 1.5 2.6 3 2.6s2.6-1 3-2.6" stroke="#34d399" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'service-1'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="url(#icoA)" stroke-width="1.6"></rect><path d="M3 8.5h18M6 12.5h5M6 15.5h8" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'service-2'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2" stroke="url(#icoB)" stroke-width="1.6"></rect><rect x="13" y="3" width="8" height="8" rx="2" stroke="url(#icoB)" stroke-width="1.6"></rect><rect x="3" y="13" width="8" height="8" rx="2" stroke="url(#icoB)" stroke-width="1.6"></rect><rect x="13" y="13" width="8" height="8" rx="2" stroke="url(#icoB)" stroke-width="1.6"></rect></svg>',
+		'service-3'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16l-1.5 9.5a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7L4 7Z" stroke="url(#icoA)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M8.5 7V6a3.5 3.5 0 0 1 7 0v1M9 11c.4 1.6 1.5 2.6 3 2.6s2.6-1 3-2.6" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'service-4'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><ellipse cx="12" cy="13" rx="5" ry="6" stroke="url(#icoA)" stroke-width="1.6"></ellipse><path d="M12 10v4M9 4l1.8 2.2M15 4l-1.8 2.2M4 10h3M4 16h3.5M20 10h-3M20 16h-3.5" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'service-5'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20a8 8 0 1 1 8-8" stroke="url(#icoB)" stroke-width="1.6" stroke-linecap="round"></path><path d="M12 12l4.5-4.5" stroke="url(#icoB)" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="12" r="1.6" fill="url(#icoB)"></circle></svg>',
+		'service-6'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="7" height="14" rx="2" stroke="url(#icoA)" stroke-width="1.6"></rect><rect x="14" y="5" width="7" height="14" rx="2" stroke="url(#icoA)" stroke-width="1.6"></rect><path d="M10.5 12h3m-1.2-1.5 1.5 1.5-1.5 1.5" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'service-7'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="url(#icoA)" stroke-width="1.6"></rect><path d="M3 8h18" stroke="url(#icoA)" stroke-width="1.6"></path><rect x="6" y="11" width="7" height="3" rx="1" fill="url(#icoA)" opacity="0.7"></rect><path d="M6 17h9" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'service-8'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.4-7 10-4-1.6-7-5.5-7-10V6l7-3Z" stroke="url(#icoB)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M9 12l2 2 4-4.5" stroke="url(#icoB)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'service-9'  => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5M13.2 5l-2.4 14" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+		'service-10' => '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="2.5" stroke="url(#icoA)" stroke-width="1.6"></circle><circle cx="18" cy="6" r="2.5" stroke="url(#icoA)" stroke-width="1.6"></circle><circle cx="12" cy="18" r="2.5" stroke="url(#icoA)" stroke-width="1.6"></circle><path d="M7.8 7.8 10.5 16M16.2 7.8 13.5 16M8.5 6h7" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'solution-1' => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2" stroke="url(#icoA)" stroke-width="1.6"></rect><path d="M8 20.5h8M12 17v3.5M6.5 8.5h5M6.5 11.5h8" stroke="url(#icoA)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'solution-2' => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 3 5 13.5h5L9.5 21 18 10.5h-5L13 3Z" stroke="url(#icoA)" stroke-width="1.6" stroke-linejoin="round"></path></svg>',
+		'solution-3' => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16l-1.5 9.5a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7L4 7Z" stroke="url(#icoB)" stroke-width="1.6" stroke-linejoin="round"></path><path d="M8.5 7V6a3.5 3.5 0 0 1 7 0v1" stroke="url(#icoB)" stroke-width="1.6" stroke-linecap="round"></path></svg>',
+		'solution-4' => '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 6.5a4.5 4.5 0 0 0-6 6L4 17v3h3l4.5-4.5a4.5 4.5 0 0 0 6-6L14 13l-3-3 3.5-3.5Z" stroke="url(#icoA)" stroke-width="1.6" stroke-linejoin="round"></path></svg>',
+		'star'       => '<svg width="15" height="15" viewBox="0 0 24 24" fill="#fbbf24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.7 5.8 21.2l1.4-7L2 9.4l7-.8L12 2Z"></path></svg>',
+	);
+	return $icons[ $name ] ?? '';
+}
+
+function jawad_dev_render_site_header( array $a ): string {
+	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Contact' => '#contact' );
+	ob_start();
+	echo jawad_dev_icon_defs();
+	?>
+	<div class="jd-grid-bg"></div><div class="jd-cursor-glow" aria-hidden="true"></div>
+	<nav class="jd-nav" aria-label="<?php esc_attr_e( 'Main navigation', 'jawad-dev' ); ?>">
+		<div class="jd-container jd-nav__inner">
+			<a class="jd-brand" href="#top"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo wp_kses_post( str_replace( '.dev', '<span>.dev</span>', esc_html( $a['brand'] ) ) ); ?></span></a>
+			<div class="jd-nav__links">
+				<?php foreach ( $links as $label => $url ) : ?>
+					<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+				<?php endforeach; ?>
+			</div>
+			<a class="jd-btn jd-btn--small jd-open-form jd-hire-anim" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
+			<button type="button" class="jd-menu-toggle" aria-label="<?php esc_attr_e( 'Toggle menu', 'jawad-dev' ); ?>" aria-expanded="false"><?php echo jawad_dev_svg( 'menu' ); ?></button>
+		</div>
+		<div class="jd-mobile-menu">
+			<?php foreach ( $links as $label => $url ) : ?>
+				<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+			<?php endforeach; ?>
+			<a class="jd-hire-anim jd-open-form" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
+		</div>
+	</nav>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_hero( array $a ): string {
+	$stats = array( array( '10+', 'Years Experience' ), array( '500+', 'Projects Completed' ), array( '420+', 'Happy Clients' ), array( '2K+', 'Positive Reviews' ) );
+	$image = $a['imageUrl'] ? $a['imageUrl'] : '';
+	if ( ! $image && ! empty( $a['imageId'] ) ) {
+		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
+	}
+	ob_start();
+	?>
+	<header id="top" class="jd-hero jd-section">
+		<div class="jd-orb jd-orb--hero-a"></div><div class="jd-orb jd-orb--hero-b"></div>
+		<div class="jd-container jd-hero__grid">
+			<div class="jd-hero__copy">
+				<?php if ( ! empty( $a['showBadge'] ) ) : ?><div class="jd-pill"><span></span><?php echo esc_html( $a['eyebrow'] ); ?></div><?php endif; ?>
+				<h1><?php echo wp_kses_post( preg_replace( '/(Fast, Modern &amp; SEO-Friendly|Fast, Modern & SEO-Friendly)/', '<span>$1</span>', esc_html( $a['title'] ) ) ); ?></h1>
+				<p><?php echo esc_html( $a['description'] ); ?></p>
+				<div class="jd-actions"><a class="jd-btn jd-open-form" href="#contact"><?php echo esc_html( $a['buttonText'] ); ?> <?php echo jawad_dev_svg( 'arrow' ); ?></a><a class="jd-btn jd-btn--ghost" href="#work"><?php echo esc_html( $a['secondaryText'] ); ?></a></div>
+				<div class="jd-stats"><?php foreach ( $stats as $stat ) : ?><div><strong><?php echo esc_html( $stat[0] ); ?></strong><span><?php echo esc_html( $stat[1] ); ?></span></div><?php endforeach; ?></div>
+			</div>
+			<div class="jd-hero-visual">
+				<div class="jd-portrait"><?php if ( $image ) : ?><img src="<?php echo esc_url( $image ); ?>" alt="<?php esc_attr_e( 'Portrait of Jawad Ilyas', 'jawad-dev' ); ?>"><?php else : ?><div class="jd-portrait__placeholder">JI</div><?php endif; ?></div>
+				<div class="jd-float-card jd-code-card"><div class="jd-window-dots"><span></span><span></span><span></span><em>functions.php</em></div><code><b>add_action</b>('wp_head',<br><i>'optimize_site'</i>);<br><small>// speed + SEO ready</small></code></div>
+				<div class="jd-float-card jd-speed-card"><div class="jd-score"><span>98</span></div><div><strong>PageSpeed</strong><span>Core Web Vitals ✓</span></div></div>
+				<div class="jd-badge-stack"><span><?php echo jawad_dev_svg( 'wordpress' ); ?>WordPress</span><span><?php echo jawad_dev_svg( 'elementor' ); ?>Elementor</span><span><?php echo jawad_dev_svg( 'woo' ); ?>WooCommerce</span></div>
+			</div>
+		</div>
+	</header>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_section_heading( array $a, string $id ): string {
+	return '<div class="jd-heading"><div class="jd-eyebrow">' . esc_html( $a['eyebrow'] ) . '</div><h2 id="' . esc_attr( $id ) . '">' . esc_html( $a['title'] ) . '</h2>' . ( $a['description'] ? '<p>' . esc_html( $a['description'] ) . '</p>' : '' ) . '</div>';
+}
+
+function jawad_dev_cards_services(): array {
+	return array(
+		array( 'Custom WordPress Website Design', 'Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.', 'wp_custom_build()', 'service-1' ),
+		array( 'Elementor & Elementor Pro Development', 'Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.', 'elementor.pro', 'service-2' ),
+		array( 'WooCommerce Store Development', 'Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.', 'woocommerce_store()', 'service-3' ),
+		array( 'WordPress Bug Fixing', 'Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.', 'debug_wp_issue()', 'service-4' ),
+		array( 'WordPress Speed Optimization', 'Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.', 'optimize_assets()', 'service-5' ),
+		array( 'Figma to WordPress', 'Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.', 'figma_to_wp()', 'service-6' ),
+		array( 'Landing Page Design', 'Focused pages for services, products, ads, and lead generation with clear CTAs.', 'landing_page()', 'service-7' ),
+		array( 'Maintenance & Security', 'Updates, backups, malware cleanup, monitoring, and dependable ongoing care.', 'site_care()', 'service-8' ),
+		array( 'ACF, CPT & Custom Theme Development', 'Custom post types, flexible fields, and lightweight custom themes built with clean PHP.', 'register_post_type()', 'service-9' ),
+		array( 'API Integration & Automation', 'CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.', 'POST /api/v1/connect', 'service-10' ),
+	);
+}
+
+function jawad_dev_render_services( array $a ): string {
+	return jawad_dev_render_card_grid( 'services', 'services-h', $a, jawad_dev_cards_services(), 'jd-card--service' );
+}
+
+function jawad_dev_render_solutions( array $a ): string {
+	$cards = array(
+		array( 'Business Websites', 'Professional websites for companies, consultants, and service providers.', '', 'solution-1' ),
+		array( 'Landing Pages', 'High-converting pages for coaches, SaaS, campaigns, and lead generation.', '', 'solution-2' ),
+		array( 'WooCommerce Stores', 'Clean product pages, checkout setup, payment settings, and store optimization.', '', 'solution-3' ),
+		array( 'Website Fixes & Optimization', 'For slow, broken, outdated, or poorly designed WordPress websites.', '', 'solution-4' ),
+	);
+	return jawad_dev_render_card_grid( 'solutions', 'solutions-h', $a, $cards, 'jd-card--solution' );
+}
+
+function jawad_dev_render_card_grid( string $section, string $heading_id, array $a, array $cards, string $class ): string {
+	ob_start();
+	?>
+	<section id="<?php echo esc_attr( $section ); ?>" class="jd-section">
+		<div class="jd-container">
+			<?php echo jawad_dev_section_heading( $a, $heading_id ); ?>
+			<div class="jd-card-grid" data-reveal-group>
+				<?php foreach ( $cards as $card ) : ?>
+					<article class="jd-card <?php echo esc_attr( $class ); ?>">
+						<div class="jd-card__icon"><?php echo jawad_dev_svg( $card[3] ?? '' ); ?></div>
+						<h3><?php echo esc_html( $card[0] ); ?></h3>
+						<p><?php echo esc_html( $card[1] ); ?></p>
+						<?php if ( ! empty( $card[2] ) ) : ?><code><?php echo esc_html( $card[2] ); ?></code><?php endif; ?>
+					</article>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_why( array $a ): string {
+	$items = array( 'Clean, modern, and responsive website design', 'Strong WordPress, Elementor, WooCommerce, PHP, JavaScript, and custom development experience', 'SEO-friendly page structure and fast-loading websites', 'Clear communication and reliable delivery', 'Ability to fix complex WordPress issues, not just basic design edits', 'Experience with business websites, eCommerce stores, landing pages, agencies, and service-based websites' );
+	ob_start();
+	?>
+	<section id="why" class="jd-section jd-why">
+		<div class="jd-orb jd-orb--left"></div>
+		<div class="jd-container jd-split">
+			<div data-reveal><?php echo jawad_dev_section_heading( $a, 'why-h' ); ?><ul class="jd-check-list"><?php foreach ( $items as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item ); ?></li><?php endforeach; ?></ul></div>
+			<div class="jd-health-panel" data-reveal><div class="jd-window-dots"><span></span><span></span><span></span><em>site-health — jawadjd.dev</em></div><?php foreach ( array( 'performance' => 98, 'seo_structure' => 100, 'mobile_responsive' => 100 ) as $label => $score ) : ?><div class="jd-meter"><span><?php echo esc_html( $label ); ?></span><b><?php echo esc_html( $score ); ?>/100</b><i style="width:<?php echo esc_attr( $score ); ?>%"></i></div><?php endforeach; ?><code>✓ plugin conflicts — resolved<br>✓ core web vitals — passing<br>✓ checkout flow — tested<br>➜ deploy --production</code></div>
+		</div>
+	</section>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_process( array $a ): string {
+	$steps = array( array( '01', 'Discovery & Strategy', 'I understand your business, goals, audience, and website requirements.' ), array( '02', 'Design Direction', 'I plan the page structure, user flow, sections, and conversion-focused layout.' ), array( '03', 'WordPress Development', 'I build a responsive, SEO-friendly, and easy-to-manage WordPress website.' ), array( '04', 'Testing & Optimization', 'I check mobile layout, speed, forms, browser compatibility, and SEO basics.' ) );
+	ob_start();
+	?>
+	<section id="process" class="jd-section jd-process"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'process-h' ); ?><div class="jd-timeline" data-reveal-group><?php foreach ( $steps as $step ) : ?><article><span><?php echo esc_html( $step[0] ); ?></span><div><h3><?php echo esc_html( $step[1] ); ?></h3><p><?php echo esc_html( $step[2] ); ?></p></div></article><?php endforeach; ?></div></div></section>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_packages( array $a ): string {
+	$packages = array(
+		array( 'Landing Page', '$500 – $1,500', 'One focused conversion page', array( 'Custom layout', 'Responsive design', 'Contact form/CTA setup', 'Basic SEO setup' ), 'Build My Landing Page', 'landing' ),
+		array( 'Business Website', '$1,500 – $3,500', 'Complete website for service businesses', array( 'Homepage + inner pages', 'Elementor or block editor setup', 'Contact forms', 'Speed and SEO basics', 'Launch support' ), 'Start My Website', 'site' ),
+		array( 'WooCommerce Store', '$3,500 – $6,000', 'Store setup and conversion cleanup', array( 'Product and checkout setup', 'Payment/shipping configuration', 'Mobile store layout', 'Basic performance optimization' ), 'Build My Store', 'store' ),
+	);
+	ob_start();
+	?>
+	<section id="packages" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'packages-h' ); ?><div class="jd-package-grid" data-reveal-group><?php foreach ( $packages as $i => $p ) : ?><article class="jd-package <?php echo 1 === $i ? 'is-featured' : ''; ?>"><h3><?php echo esc_html( $p[0] ); ?></h3><strong><?php echo esc_html( $p[1] ); ?></strong><p><?php echo esc_html( $p[2] ); ?></p><ul><?php foreach ( $p[3] as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item ); ?></li><?php endforeach; ?></ul><a class="jd-btn <?php echo 1 === $i ? '' : 'jd-btn--ghost'; ?> jd-open-form" data-service="<?php echo esc_attr( $p[5] ); ?>" data-budget="<?php echo esc_attr( $p[1] ); ?>" href="#contact"><?php echo esc_html( $p[4] ); ?></a></article><?php endforeach; ?></div></div></section>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_projects( array $a ): string {
+	$q = new WP_Query( array( 'post_type' => 'project', 'posts_per_page' => max( 1, (int) $a['postsToShow'] ), 'post_status' => 'publish', 'no_found_rows' => true ) );
+	ob_start();
+	?>
+	<section id="work" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'work-h' ); ?><div class="jd-project-grid" data-reveal-group>
+	<?php
+	if ( $q->have_posts() ) :
+		while ( $q->have_posts() ) :
+			$q->the_post();
+			$link   = get_post_meta( get_the_ID(), 'project_link', true ) ?: get_permalink();
+			$result = get_post_meta( get_the_ID(), 'project_result', true );
+			$accent = get_post_meta( get_the_ID(), 'project_accent', true ) ?: '#22d3ee';
+			$tags   = get_the_terms( get_the_ID(), 'project_technology' );
+			?>
+			<article class="jd-project" style="--jd-accent:<?php echo esc_attr( $accent ); ?>">
+				<a class="jd-project__media" href="<?php echo esc_url( $link ); ?>"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } else { echo '<span>Project Screenshot</span>'; } ?></a>
+				<div><h3><?php the_title(); ?></h3><p><?php echo esc_html( get_the_excerpt() ); ?></p><?php if ( $result ) : ?><strong><?php echo esc_html( $result ); ?></strong><?php endif; ?><div class="jd-tags"><?php if ( $tags && ! is_wp_error( $tags ) ) { foreach ( array_slice( $tags, 0, 3 ) as $tag ) { echo '<span>' . esc_html( $tag->name ) . '</span>'; } } ?></div><a href="<?php echo esc_url( $link ); ?>"><?php echo esc_html( get_post_meta( get_the_ID(), 'project_button_text', true ) ?: 'View Project' ); ?> <?php echo jawad_dev_svg( 'arrow-sm' ); ?></a></div>
+			</article>
+			<?php
+		endwhile;
+		wp_reset_postdata();
+	else :
+		foreach ( array( 'Business Website Redesign', 'WooCommerce Catalog Build', 'Landing Page System', 'Store Speed Optimization' ) as $title ) :
+			?>
+			<article class="jd-project"><div class="jd-project__media"><span>Project Screenshot</span></div><div><h3><?php echo esc_html( $title ); ?></h3><p><?php esc_html_e( 'Add Projects in WordPress admin to replace this sample card with live project data.', 'jawad-dev' ); ?></p><div class="jd-tags"><span>WordPress</span><span>Performance</span></div><a href="#work">View Project <?php echo jawad_dev_svg( 'arrow-sm' ); ?></a></div></article>
+			<?php
+		endforeach;
+	endif;
+	?>
+	</div></div></section>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_stack( array $a ): string {
+	$items = array( 'WordPress', 'Elementor', 'WooCommerce', 'PHP', 'JavaScript', 'ACF', 'CPT', 'REST APIs', 'Speed Optimization', 'SEO Basics', 'Figma', 'Git' );
+	ob_start();
+	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div data-reveal-group><?php foreach ( $items as $item ) : ?><span><?php echo esc_html( $item ); ?></span><?php endforeach; ?></div></div></section><?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_testimonials( array $a ): string {
+	$items = array( array( 'Jawad delivered a fast, clean WordPress site and explained everything clearly.', 'Business Owner' ), array( 'Our WooCommerce checkout is smoother and the site feels much faster.', 'Store Founder' ), array( 'Reliable, technical, and easy to work with from design to launch.', 'Agency Partner' ) );
+	ob_start();
+	?><section id="testimonials" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'testimonials-h' ); ?><div class="jd-card-grid jd-card-grid--three" data-reveal-group><?php foreach ( $items as $item ) : ?><blockquote class="jd-testimonial"><div class="jd-stars"><?php echo str_repeat( jawad_dev_svg( 'star' ), 5 ); ?></div><p>“<?php echo esc_html( $item[0] ); ?>”</p><cite><?php echo esc_html( $item[1] ); ?></cite></blockquote><?php endforeach; ?></div></div></section><?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_faq( array $a ): string {
+	$items = array(
+		array( 'Do you build complete WordPress websites?', 'Yes, I build complete WordPress websites for businesses, agencies, coaches, eCommerce stores, and service providers. I can design, develop, optimize, and launch the full website.' ),
+		array( 'Can you fix WordPress issues or bugs?', 'Yes, I can fix WordPress bugs, layout issues, Elementor problems, WooCommerce errors, plugin conflicts, responsive issues, and speed problems.' ),
+		array( 'Do you work with Elementor?', 'Yes, I work with Elementor and Elementor Pro to build custom, responsive, and easy-to-manage WordPress websites and landing pages.' ),
+		array( 'Can you improve my WordPress website speed?', 'Yes, I can optimize WordPress speed by checking images, plugins, cache settings, theme performance, scripts, and Core Web Vitals basics.' ),
+		array( 'Do you build WooCommerce stores?', 'Yes, I can set up and customize WooCommerce stores, product pages, cart, checkout, payment settings, and store layouts.' ),
+		array( 'Can you convert Figma designs to WordPress?', 'Yes, I can convert Figma designs into responsive WordPress websites using Elementor, custom themes, or clean frontend development depending on the project.' ),
+	);
+	ob_start();
+	?><section id="faq" class="jd-section"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'faq-h' ); ?><div class="jd-faq" data-reveal-group><?php foreach ( $items as $item ) : ?><details><summary><h3><?php echo esc_html( $item[0] ); ?></h3><span class="faq-x">+</span></summary><p><?php echo esc_html( $item[1] ); ?></p></details><?php endforeach; ?></div></div></section><?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_cta( array $a ): string {
+	ob_start();
+	?><section id="contact" class="jd-section jd-cta"><div class="jd-container"><div class="jd-cta__box" data-reveal><h2><?php echo esc_html( $a['title'] ); ?></h2><p><?php echo esc_html( $a['description'] ); ?></p><div class="jd-actions"><a class="jd-btn jd-open-form jd-hire-anim-lg" href="#contact"><?php echo esc_html( $a['buttonText'] ); ?></a><a class="jd-btn jd-btn--ghost jd-open-form" href="#contact"><?php echo esc_html( $a['secondaryText'] ); ?></a></div></div></div></section><?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_site_footer( array $a ): string {
+	ob_start();
+	?><footer class="jd-footer"><div class="jd-container"><div class="jd-footer__top"><div><div class="jd-brand"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo esc_html( $a['brand'] ); ?></span></div><p><?php echo esc_html( $a['description'] ); ?></p></div><nav><strong>PAGES</strong><a href="#services">Services</a><a href="#work">Work</a><a href="#packages">Packages</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav><strong>FIND ME ON</strong><a href="#contact">LinkedIn</a><a href="#contact">GitHub</a></nav></div><div class="jd-footer__bottom"><span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> Jawad Ilyas · jawadjd.dev — All rights reserved.</span><code>built_with: WordPress · care · clean_code</code></div></div></footer><?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_contact_modal( array $a ): string {
+	ob_start();
+	?>
+	<div class="jd-modal" hidden>
+		<div class="jd-modal__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Start a project request', 'jawad-dev' ); ?>">
+			<div class="jd-window-dots"><span></span><span></span><span></span><em>~/new-project-request</em><button type="button" class="jd-modal__close" aria-label="<?php esc_attr_e( 'Close form', 'jawad-dev' ); ?>">×</button></div>
+			<div class="jd-progress"><span></span></div>
+			<form class="jd-form">
+				<input type="text" name="company_url" tabindex="-1" autocomplete="off" class="jd-hp" aria-hidden="true">
+				<div class="jd-form__step" data-step="1"><div class="jd-eyebrow">&gt; step_1: project_type</div><h3>What do you need built?</h3><p>Pick the closest match. You can explain the details later.</p><div class="jd-choice-grid"><?php foreach ( array( 'site' => 'Full Website', 'landing' => 'Landing Page', 'store' => 'WooCommerce Store', 'fix' => 'Fix & Optimize', 'other' => 'Something Else' ) as $key => $label ) : ?><button type="button" data-name="service" data-value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?><span><?php echo esc_html( $key ); ?></span></button><?php endforeach; ?></div></div>
+				<div class="jd-form__step" data-step="2" hidden><div class="jd-eyebrow">&gt; step_2: scope</div><h3>Budget & timeline</h3><p>A rough range is fine.</p><label>budget_range *</label><div class="jd-chip-row"><?php foreach ( array( '$500 – $1,500', '$1,500 – $3,500', '$3,500 – $6,000', '$6,000+' ) as $value ) : ?><button type="button" data-name="budget" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div><label>timeline *</label><div class="jd-chip-row"><?php foreach ( array( 'ASAP', '1–2 weeks', 'This month', 'Flexible' ) as $value ) : ?><button type="button" data-name="timeline" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div></div>
+				<div class="jd-form__step" data-step="3" hidden><div class="jd-eyebrow">&gt; step_3: contact</div><h3>Where should I reply?</h3><p>I usually respond within 24 hours.</p><div class="jd-field-grid"><label>your_name *<input type="text" name="name" required placeholder="Jane Smith"></label><label>email *<input type="email" name="email" required placeholder="jane@company.com"></label></div><label>current_website <small>(optional)</small><input type="url" name="website" placeholder="https://"></label><label>project_details *<textarea name="message" rows="4" required placeholder="Tell me about your business and what the website needs to do..."></textarea></label></div>
+				<div class="jd-form__done" hidden><div class="jd-done-mark"><?php echo jawad_dev_svg( 'done' ); ?></div><h3>Request received!</h3><p>Thanks. I’ll review your project details and get back to you within 24 hours.</p></div>
+				<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>
+			</form>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}
