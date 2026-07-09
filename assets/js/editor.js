@@ -10,6 +10,7 @@
 	const TextareaControl = components.TextareaControl;
 	const ToggleControl = components.ToggleControl;
 	const RangeControl = components.RangeControl;
+	const SelectControl = components.SelectControl;
 	const Button = components.Button;
 	const ServerSideRender = serverSideRender;
 
@@ -93,6 +94,11 @@
 		'site-footer': [
 			[ 'brand', __( 'Brand', 'jawad-dev' ) ],
 			[ 'description', __( 'Description', 'jawad-dev' ), 'textarea' ]
+		],
+		'contact-modal': [
+			[ 'modalTitle', __( 'Modal title', 'jawad-dev' ) ],
+			[ 'modalSubtitle', __( 'Modal subtitle', 'jawad-dev' ), 'textarea' ],
+			[ 'gravityEyebrow', __( 'Modal eyebrow', 'jawad-dev' ) ]
 		]
 	};
 
@@ -376,6 +382,29 @@
 						max: 12,
 						value: attrs.postsToShow || 4,
 						onChange: set( 'postsToShow' )
+					} ) );
+				}
+
+				if ( slug === 'contact-modal' ) {
+					sectionControls.push( el( SelectControl, {
+						key: 'formProvider',
+						label: __( 'Form provider', 'jawad-dev' ),
+						value: attrs.formProvider || 'builtin',
+						options: [
+							{ label: __( 'Built-in AJAX form', 'jawad-dev' ), value: 'builtin' },
+							{ label: __( 'Gravity Forms', 'jawad-dev' ), value: 'gravity' }
+						],
+						onChange: set( 'formProvider' )
+					} ) );
+					sectionControls.push( el( TextControl, {
+						key: 'gravityFormId',
+						label: __( 'Gravity Form ID', 'jawad-dev' ),
+						type: 'number',
+						min: 1,
+						value: attrs.gravityFormId || '',
+						onChange: function ( value ) {
+							props.setAttributes( { gravityFormId: parseInt( value, 10 ) || 0 } );
+						}
 					} ) );
 				}
 

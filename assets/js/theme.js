@@ -38,7 +38,9 @@
 			state.budget = trigger && trigger.dataset.budget ? trigger.dataset.budget : state.budget;
 			modal.hidden = false;
 			document.documentElement.style.overflow = 'hidden';
-			render();
+			if ( form ) {
+				render();
+			}
 		}
 
 		function close() {
@@ -114,6 +116,18 @@
 			} );
 		} );
 
+		qs( '.jd-modal__close', modal ).addEventListener( 'click', close );
+		modal.addEventListener( 'click', function ( ev ) {
+			if ( ev.target === modal ) close();
+		} );
+		document.addEventListener( 'keydown', function ( ev ) {
+			if ( ev.key === 'Escape' && ! modal.hidden ) close();
+		} );
+
+		if ( ! form || ! next || ! back || ! progress || ! trace ) {
+			return;
+		}
+
 		qsa( '[data-name]', form ).forEach( function ( button ) {
 			button.addEventListener( 'click', function () {
 				state[ button.dataset.name ] = button.dataset.value;
@@ -139,14 +153,6 @@
 
 		qsa( 'input, textarea', form ).forEach( function ( field ) {
 			field.addEventListener( 'input', render );
-		} );
-
-		qs( '.jd-modal__close', modal ).addEventListener( 'click', close );
-		modal.addEventListener( 'click', function ( ev ) {
-			if ( ev.target === modal ) close();
-		} );
-		document.addEventListener( 'keydown', function ( ev ) {
-			if ( ev.key === 'Escape' && ! modal.hidden ) close();
 		} );
 	}
 

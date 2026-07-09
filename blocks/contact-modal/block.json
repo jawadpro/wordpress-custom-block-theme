@@ -21,6 +21,26 @@
     "recipient": {
       "type": "string",
       "default": ""
+    },
+    "formProvider": {
+      "type": "string",
+      "default": "builtin"
+    },
+    "gravityFormId": {
+      "type": "number",
+      "default": 0
+    },
+    "modalTitle": {
+      "type": "string",
+      "default": "Start a project request"
+    },
+    "modalSubtitle": {
+      "type": "string",
+      "default": "Tell me what you need and I’ll reply with next steps."
+    },
+    "gravityEyebrow": {
+      "type": "string",
+      "default": "> project_request"
     }
   },
   "name": "jawad-dev/contact-modal",
