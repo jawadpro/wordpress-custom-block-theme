@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.0.2' );
+define( 'JAWAD_DEV_VERSION', '1.0.3' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -17,9 +17,49 @@ require_once JAWAD_DEV_DIR . '/inc/render.php';
 
 add_action( 'after_setup_theme', 'jawad_dev_setup' );
 function jawad_dev_setup(): void {
+	add_theme_support( 'title-tag' );
+	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'editor-styles' );
+	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 	add_editor_style( array( 'assets/css/theme.css', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap' ) );
+}
+
+add_action( 'wp_head', 'jawad_dev_output_seo_fallbacks', 4 );
+function jawad_dev_output_seo_fallbacks(): void {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$description = 'Hire Jawad Ilyas, a WordPress developer for fast, SEO-friendly websites, WooCommerce stores, Elementor builds, speed optimization, and AI workflow automation.';
+	if ( ! jawad_dev_has_seo_plugin() ) {
+		echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+	}
+
+	$schema = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'ProfessionalService',
+		'name'        => 'Jawad Ilyas - WordPress Developer',
+		'url'         => home_url( '/' ),
+		'description' => $description,
+		'image'       => get_site_icon_url() ?: '',
+		'areaServed'  => 'Worldwide',
+		'serviceType' => array(
+			'WordPress Website Development',
+			'Elementor Development',
+			'WooCommerce Development',
+			'WordPress Speed Optimization',
+			'AI Workflow Automation',
+		),
+	);
+	echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $schema ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+
+function jawad_dev_has_seo_plugin(): bool {
+	return defined( 'WPSEO_VERSION' )
+		|| defined( 'RANK_MATH_VERSION' )
+		|| defined( 'AIOSEO_VERSION' )
+		|| defined( 'SEOPRESS_VERSION' );
 }
 
 add_action( 'wp_enqueue_scripts', 'jawad_dev_enqueue_assets' );

@@ -92,6 +92,12 @@
           "text": "CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.",
           "code": "POST /api/v1/connect",
           "icon": "service-10"
+        },
+        {
+          "title": "AI Workflow Automation",
+          "text": "AI chatbots, lead qualification, content workflows, CRM handoffs, and smart automations connected to your WordPress website.",
+          "code": "ai_automation()",
+          "icon": "service-11"
         }
       ]
     }

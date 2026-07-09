@@ -52,6 +52,10 @@
         {
           "question": "Can you convert Figma designs to WordPress?",
           "answer": "Yes, I can convert Figma designs into responsive WordPress websites using Elementor, custom themes, or clean frontend development depending on the project."
+        },
+        {
+          "question": "Can you add AI automation to my WordPress website?",
+          "answer": "Yes, I can add AI chatbots, lead qualification, smart contact forms, content workflows, CRM handoffs, webhook automations, and other AI-assisted systems that connect cleanly with your WordPress website."
         }
       ]
     }

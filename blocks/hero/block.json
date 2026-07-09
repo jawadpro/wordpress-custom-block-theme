@@ -28,7 +28,7 @@
     },
     "description": {
       "type": "string",
-      "default": "I’m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, and landing pages that turn visitors into clients."
+      "default": "I’m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, landing pages, and AI workflow automation that turns visitors into clients."
     },
     "buttonText": {
       "type": "string",

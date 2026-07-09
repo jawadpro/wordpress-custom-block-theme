@@ -95,6 +95,21 @@
           "colorEnd": "#818cf8"
         },
         {
+          "text": "OpenAI API",
+          "colorStart": "#22d3ee",
+          "colorEnd": "#a78bfa"
+        },
+        {
+          "text": "Zapier / Make",
+          "colorStart": "#fb923c",
+          "colorEnd": "#fbbf24"
+        },
+        {
+          "text": "n8n",
+          "colorStart": "#f472b6",
+          "colorEnd": "#a78bfa"
+        },
+        {
           "text": "Framer",
           "colorStart": "#22d3ee",
           "colorEnd": "#60a5fa"
