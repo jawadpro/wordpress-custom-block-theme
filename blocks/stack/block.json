@@ -30,40 +30,72 @@
       "type": "array",
       "default": [
         {
-          "text": "WordPress"
+          "text": "WordPress",
+          "color": "#38bdf8"
         },
         {
-          "text": "Elementor"
+          "text": "Elementor",
+          "color": "#a78bfa"
         },
         {
-          "text": "WooCommerce"
+          "text": "WooCommerce",
+          "color": "#2dd4bf"
         },
         {
-          "text": "PHP"
+          "text": "PHP",
+          "color": "#7aa2ff"
         },
         {
-          "text": "JavaScript"
+          "text": "JavaScript",
+          "color": "#fbbf24"
         },
         {
-          "text": "ACF"
+          "text": "jQuery",
+          "color": "#38bdf8"
         },
         {
-          "text": "CPT"
+          "text": "HTML5",
+          "color": "#fb8b5b"
         },
         {
-          "text": "REST APIs"
+          "text": "CSS3",
+          "color": "#60a5fa"
         },
         {
-          "text": "Speed Optimization"
+          "text": "Tailwind CSS",
+          "color": "#22d3ee"
         },
         {
-          "text": "SEO Basics"
+          "text": "ACF",
+          "color": "#34d399"
         },
         {
-          "text": "Figma"
+          "text": "CPT UI",
+          "color": "#7aa2ff"
         },
         {
-          "text": "Git"
+          "text": "WP Rocket",
+          "color": "#fbbf24"
+        },
+        {
+          "text": "Rank Math",
+          "color": "#a78bfa"
+        },
+        {
+          "text": "Framer",
+          "color": "#38bdf8"
+        },
+        {
+          "text": "Shopify",
+          "color": "#72e06a"
+        },
+        {
+          "text": "Webflow",
+          "color": "#60a5fa"
+        },
+        {
+          "text": "Next.js",
+          "color": "#cbd5e1"
         }
       ]
     }

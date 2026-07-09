@@ -166,8 +166,11 @@
 			key: 'items',
 			title: __( 'Stack Items', 'jawad-dev' ),
 			addLabel: __( 'Add tool', 'jawad-dev' ),
-			empty: { text: 'New Tool' },
-			fields: [ [ 'text', __( 'Tool name', 'jawad-dev' ) ] ]
+			empty: { text: 'New Tool', color: '#38bdf8' },
+			fields: [
+				[ 'text', __( 'Tool name', 'jawad-dev' ) ],
+				[ 'color', __( 'Dot color', 'jawad-dev' ) ]
+			]
 		},
 		testimonials: {
 			key: 'items',

@@ -254,9 +254,24 @@ function jawad_dev_package_items(): array {
 }
 
 function jawad_dev_stack_items(): array {
-	return array_map(
-		static fn( string $text ): array => array( 'text' => $text ),
-		array( 'WordPress', 'Elementor', 'WooCommerce', 'PHP', 'JavaScript', 'ACF', 'CPT', 'REST APIs', 'Speed Optimization', 'SEO Basics', 'Figma', 'Git' )
+	return array(
+		array( 'text' => 'WordPress', 'color' => '#38bdf8' ),
+		array( 'text' => 'Elementor', 'color' => '#a78bfa' ),
+		array( 'text' => 'WooCommerce', 'color' => '#2dd4bf' ),
+		array( 'text' => 'PHP', 'color' => '#7aa2ff' ),
+		array( 'text' => 'JavaScript', 'color' => '#fbbf24' ),
+		array( 'text' => 'jQuery', 'color' => '#38bdf8' ),
+		array( 'text' => 'HTML5', 'color' => '#fb8b5b' ),
+		array( 'text' => 'CSS3', 'color' => '#60a5fa' ),
+		array( 'text' => 'Tailwind CSS', 'color' => '#22d3ee' ),
+		array( 'text' => 'ACF', 'color' => '#34d399' ),
+		array( 'text' => 'CPT UI', 'color' => '#7aa2ff' ),
+		array( 'text' => 'WP Rocket', 'color' => '#fbbf24' ),
+		array( 'text' => 'Rank Math', 'color' => '#a78bfa' ),
+		array( 'text' => 'Framer', 'color' => '#38bdf8' ),
+		array( 'text' => 'Shopify', 'color' => '#72e06a' ),
+		array( 'text' => 'Webflow', 'color' => '#60a5fa' ),
+		array( 'text' => 'Next.js', 'color' => '#cbd5e1' ),
 	);
 }
 
@@ -385,7 +400,7 @@ function jawad_dev_render_projects( array $a ): string {
 function jawad_dev_render_stack( array $a ): string {
 	$items = jawad_dev_attr_items( $a, jawad_dev_stack_items() );
 	ob_start();
-	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div data-reveal-group><?php foreach ( $items as $item ) : ?><span><?php echo esc_html( $item['text'] ?? $item ); ?></span><?php endforeach; ?></div></div></section><?php
+	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div class="jd-stack__items" data-reveal-group><?php foreach ( $items as $item ) : ?><?php $label = $item['text'] ?? $item; $color = sanitize_hex_color( $item['color'] ?? '' ) ?: '#38bdf8'; ?><span style="--jd-stack-dot: <?php echo esc_attr( $color ); ?>"><i></i><?php echo esc_html( $label ); ?></span><?php endforeach; ?></div></div></section><?php
 	return ob_get_clean();
 }
 
