@@ -208,6 +208,30 @@
 		} );
 	}
 
+	function repeaterTitle( item, index, config ) {
+		const fallback = config.title + ' #' + ( index + 1 );
+		return ( item && ( item.title || item.question || item.author || item.text || item.label || item.value ) ) || fallback;
+	}
+
+	function repeaterMeta( item ) {
+		if ( ! item ) {
+			return '';
+		}
+		if ( item.price ) {
+			return item.price;
+		}
+		if ( item.meta ) {
+			return item.meta;
+		}
+		if ( item.code ) {
+			return item.code;
+		}
+		if ( item.service ) {
+			return item.service;
+		}
+		return '';
+	}
+
 	function repeaterControls( attrs, setAttributes, config ) {
 		const items = Array.isArray( attrs[ config.key ] ) ? attrs[ config.key ] : [];
 		const updateItem = function ( index, field, value ) {
@@ -230,7 +254,7 @@
 			setAttributes( { [ config.key ]: next } );
 		};
 
-		return el( PanelBody, { title: config.title, initialOpen: false },
+		return el( PanelBody, { title: config.title + ' (' + items.length + ')', initialOpen: false },
 			items.map( function ( item, index ) {
 				const itemFields = config.fields.map( function ( field ) {
 					const type = field[ 2 ];
@@ -265,18 +289,29 @@
 						}
 					} );
 				} );
+				const meta = repeaterMeta( item );
 
-				return el( 'div', { key: index, className: 'jd-editor-repeater-item' },
-					el( 'strong', {}, config.title + ' #' + ( index + 1 ) ),
-					itemFields,
-					el( 'div', { className: 'jd-editor-repeater-actions' },
-						el( Button, { variant: 'secondary', onClick: function () { moveItem( index, -1 ); }, disabled: index === 0 }, __( 'Up', 'jawad-dev' ) ),
-						el( Button, { variant: 'secondary', onClick: function () { moveItem( index, 1 ); }, disabled: index === items.length - 1 }, __( 'Down', 'jawad-dev' ) ),
-						el( Button, { variant: 'link', isDestructive: true, onClick: function () { removeItem( index ); } }, __( 'Remove', 'jawad-dev' ) )
+				return el( 'details', { key: index, className: 'jd-editor-repeater-item', defaultOpen: index === items.length - 1 },
+					el( 'summary', { className: 'jd-editor-repeater-summary' },
+						el( 'span', { className: 'jd-editor-repeater-index' }, String( index + 1 ).padStart( 2, '0' ) ),
+						el( 'span', { className: 'jd-editor-repeater-heading' },
+							el( 'strong', {}, repeaterTitle( item, index, config ) ),
+							meta ? el( 'small', {}, meta ) : null
+						),
+						el( 'span', { className: 'jd-editor-repeater-chevron', 'aria-hidden': true }, '⌄' )
+					),
+					el( 'div', { className: 'jd-editor-repeater-body' },
+						itemFields,
+						el( 'div', { className: 'jd-editor-repeater-actions' },
+							el( Button, { variant: 'secondary', size: 'small', onClick: function () { moveItem( index, -1 ); }, disabled: index === 0 }, __( 'Up', 'jawad-dev' ) ),
+							el( Button, { variant: 'secondary', size: 'small', onClick: function () { moveItem( index, 1 ); }, disabled: index === items.length - 1 }, __( 'Down', 'jawad-dev' ) ),
+							el( Button, { variant: 'tertiary', size: 'small', isDestructive: true, onClick: function () { removeItem( index ); } }, __( 'Remove', 'jawad-dev' ) )
+						)
 					)
 				);
 			} ),
 			el( Button, {
+				className: 'jd-editor-repeater-add',
 				variant: 'primary',
 				onClick: function () {
 					setAttributes( { [ config.key ]: items.concat( [ Object.assign( {}, config.empty ) ] ) } );
