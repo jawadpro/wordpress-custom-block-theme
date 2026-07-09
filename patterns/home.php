@@ -13,7 +13,6 @@
 <!-- wp:jawad-dev/solutions {"align":"full"} /-->
 <!-- wp:jawad-dev/process {"align":"full"} /-->
 <!-- wp:jawad-dev/packages {"align":"full"} /-->
-<!-- wp:jawad-dev/projects {"align":"full"} /-->
 <!-- wp:jawad-dev/stack {"align":"full"} /-->
 <!-- wp:jawad-dev/testimonials {"align":"full"} /-->
 <!-- wp:jawad-dev/faq {"align":"full"} /-->

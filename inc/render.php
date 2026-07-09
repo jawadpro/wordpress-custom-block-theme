@@ -62,7 +62,7 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'solutions'     => array( 'eyebrow' => '// SOLUTIONS', 'title' => 'Built for Real Business Needs', 'items' => jawad_dev_solution_items() ),
 		'process'       => array( 'eyebrow' => '// PROCESS', 'title' => 'My Website Development Process', 'items' => jawad_dev_process_items() ),
 		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages', 'items' => jawad_dev_package_items() ),
-		'projects'      => array( 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
+		'projects'      => array( 'enabled' => false, 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
 		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With', 'items' => jawad_dev_stack_items() ),
 		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'Trusted by Clients Worldwide', 'items' => jawad_dev_testimonial_items() ),
 		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions', 'items' => jawad_dev_faq_items() ),
@@ -453,6 +453,10 @@ function jawad_dev_render_packages( array $a ): string {
 }
 
 function jawad_dev_render_projects( array $a ): string {
+	if ( empty( $a['enabled'] ) ) {
+		return '';
+	}
+
 	$q = new WP_Query( array( 'post_type' => 'project', 'posts_per_page' => max( 1, (int) $a['postsToShow'] ), 'post_status' => 'publish', 'no_found_rows' => true ) );
 	ob_start();
 	?>
