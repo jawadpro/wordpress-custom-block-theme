@@ -4,6 +4,7 @@
 	const InspectorControls = blockEditor.InspectorControls;
 	const MediaUpload = blockEditor.MediaUpload;
 	const MediaUploadCheck = blockEditor.MediaUploadCheck;
+	const useBlockProps = blockEditor.useBlockProps;
 	const PanelBody = components.PanelBody;
 	const TextControl = components.TextControl;
 	const TextareaControl = components.TextareaControl;
@@ -325,6 +326,7 @@
 		blocks.registerBlockType( name, {
 			edit: function ( props ) {
 				const attrs = props.attributes;
+				const blockProps = useBlockProps( { className: 'jawad-dev-editor-preview' } );
 				const set = function ( key ) {
 					return function ( value ) {
 						const next = {};
@@ -376,7 +378,7 @@
 					} ) );
 				}
 
-				return el( 'div', { className: 'jawad-dev-editor-preview' },
+				return el( 'div', blockProps,
 					el( InspectorControls, {},
 						el( PanelBody, { title: __( 'Section Settings', 'jawad-dev' ), initialOpen: true }, sectionControls ),
 						repeaterConfigs[ slug ] ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ slug ] ) : null

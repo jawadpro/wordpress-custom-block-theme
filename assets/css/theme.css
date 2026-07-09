@@ -207,21 +207,6 @@ a:hover { color: #bae6fd; }
 .jd-orb--hero-a { top: -220px; left: 50%; transform: translateX(-50%); width: 900px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.28), transparent); }
 .jd-orb--hero-b { top: 10%; right: -180px; width: 560px; height: 560px; background: radial-gradient(closest-side, rgba(139,92,246,.16), transparent); }
 .jd-orb--left { top: 20%; left: -200px; width: 520px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.14), transparent); }
-.jd-editor-repeater-item { margin: 0 0 10px; border: 1px solid #dcdcde; border-radius: 8px; background: #fff; overflow: hidden; }
-.jd-editor-repeater-summary { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 9px 12px; cursor: pointer; list-style: none; user-select: none; }
-.jd-editor-repeater-summary::-webkit-details-marker { display: none; }
-.jd-editor-repeater-item[open] .jd-editor-repeater-summary { border-bottom: 1px solid #e0e0e0; background: #f6f7f7; }
-.jd-editor-repeater-index { flex: 0 0 30px; height: 26px; display: grid; place-items: center; border-radius: 999px; background: #eef2ff; color: #3b4cca; font-size: 11px; font-weight: 700; line-height: 1; }
-.jd-editor-repeater-heading { flex: 1; min-width: 0; display: grid; gap: 2px; }
-.jd-editor-repeater-heading strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #1e1e1e; font-size: 13px; line-height: 1.25; }
-.jd-editor-repeater-heading small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #757575; font-size: 11px; line-height: 1.25; }
-.jd-editor-repeater-chevron { color: #757575; font-size: 18px; line-height: 1; transition: transform .15s ease; }
-.jd-editor-repeater-item[open] .jd-editor-repeater-chevron { transform: rotate(180deg); }
-.jd-editor-repeater-body { padding: 12px; }
-.jd-editor-repeater-body .components-base-control { margin-bottom: 12px; }
-.jd-editor-repeater-actions { display: flex; align-items: center; gap: 6px; padding-top: 4px; }
-.jd-editor-repeater-actions .components-button:last-child { margin-left: auto; }
-.jd-editor-repeater-add { width: 100%; justify-content: center; margin-top: 4px; }
 @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes floatY2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); } 50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }
