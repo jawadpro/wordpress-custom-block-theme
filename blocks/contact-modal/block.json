@@ -20,7 +20,11 @@
     },
     "gravityFormId": {
       "type": "number",
-      "default": 0
+      "default": 1
+    },
+    "gravityFormShortcode": {
+      "type": "string",
+      "default": "[gravityform id=\"1\" title=\"false\"]"
     },
     "modalTitle": {
       "type": "string",

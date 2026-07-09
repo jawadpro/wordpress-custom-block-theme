@@ -99,6 +99,7 @@
 			[ 'modalTitle', __( 'Modal title', 'jawad-dev' ) ],
 			[ 'modalSubtitle', __( 'Modal subtitle', 'jawad-dev' ), 'textarea' ],
 			[ 'gravityEyebrow', __( 'Modal eyebrow', 'jawad-dev' ) ],
+			[ 'gravityFormShortcode', __( 'Gravity shortcode', 'jawad-dev' ) ],
 			[ 'gravityServiceParam', __( 'GF service parameter', 'jawad-dev' ) ],
 			[ 'gravityBudgetParam', __( 'GF budget parameter', 'jawad-dev' ) ],
 			[ 'gravityTimelineParam', __( 'GF timeline parameter', 'jawad-dev' ) ]
@@ -392,11 +393,12 @@
 					sectionControls.push( el( TextControl, {
 						key: 'gravityFormId',
 						label: __( 'Gravity Form ID', 'jawad-dev' ),
-						type: 'number',
-						min: 1,
 						value: attrs.gravityFormId || '',
 						onChange: function ( value ) {
-							props.setAttributes( { gravityFormId: parseInt( value, 10 ) || 0 } );
+							const match = String( value ).match( /id=(["']?)(\d+)\1/i );
+							props.setAttributes( {
+								gravityFormId: match ? parseInt( match[ 2 ], 10 ) : parseInt( value, 10 ) || 0
+							} );
 						}
 					} ) );
 				}
