@@ -166,10 +166,11 @@
 			key: 'items',
 			title: __( 'Stack Items', 'jawad-dev' ),
 			addLabel: __( 'Add tool', 'jawad-dev' ),
-			empty: { text: 'New Tool', color: '#38bdf8' },
+			empty: { text: 'New Tool', colorStart: '#60a5fa', colorEnd: '#22d3ee' },
 			fields: [
 				[ 'text', __( 'Tool name', 'jawad-dev' ) ],
-				[ 'color', __( 'Dot color', 'jawad-dev' ) ]
+				[ 'colorStart', __( 'Dot gradient start', 'jawad-dev' ) ],
+				[ 'colorEnd', __( 'Dot gradient end', 'jawad-dev' ) ]
 			]
 		},
 		testimonials: {
@@ -179,7 +180,10 @@
 			empty: { quote: 'Client feedback goes here.', author: 'Client Name' },
 			fields: [
 				[ 'quote', __( 'Quote', 'jawad-dev' ), 'textarea' ],
-				[ 'author', __( 'Author', 'jawad-dev' ) ]
+				[ 'author', __( 'Author', 'jawad-dev' ) ],
+				[ 'meta', __( 'Company / project', 'jawad-dev' ) ],
+				[ 'initials', __( 'Avatar initials', 'jawad-dev' ) ],
+				[ 'color', __( 'Avatar color', 'jawad-dev' ) ]
 			]
 		},
 		faq: {

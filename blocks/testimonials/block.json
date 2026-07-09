@@ -24,22 +24,31 @@
     },
     "title": {
       "type": "string",
-      "default": "What Clients Say"
+      "default": "Trusted by Clients Worldwide"
     },
     "items": {
       "type": "array",
       "default": [
         {
-          "quote": "Jawad delivered a fast, clean WordPress site and explained everything clearly.",
-          "author": "Business Owner"
+          "quote": "Jawad rebuilt our law firm’s WordPress website with Elementor and it was the best decision we made. The site is fast, professional, easy to update — and our Google rankings improved within weeks of launch.",
+          "author": "Sarah Mitchell",
+          "meta": "MSED Law · Business Website",
+          "initials": "SM",
+          "color": "#60a5fa"
         },
         {
-          "quote": "Our WooCommerce checkout is smoother and the site feels much faster.",
-          "author": "Store Founder"
+          "quote": "Our WooCommerce store was slow and checkout kept breaking. Jawad fixed every bug, brought load time from 6 seconds to under 2, and cleaned up the whole checkout flow. Sales improved almost immediately.",
+          "author": "David Kramer",
+          "meta": "Western Office Equipment · WooCommerce Store",
+          "initials": "DK",
+          "color": "#a78bfa"
         },
         {
-          "quote": "Reliable, technical, and easy to work with from design to launch.",
-          "author": "Agency Partner"
+          "quote": "He converted my Figma design into a pixel-perfect WordPress landing page in under a week — mobile responsive, SEO-friendly, and it converts far better than the old page. Clear communication the whole way.",
+          "author": "Amina Yusuf",
+          "meta": "Growth Coach · Landing Page",
+          "initials": "AY",
+          "color": "#34d399"
         }
       ]
     }

@@ -31,71 +31,88 @@
       "default": [
         {
           "text": "WordPress",
-          "color": "#38bdf8"
+          "colorStart": "#60a5fa",
+          "colorEnd": "#22d3ee"
         },
         {
           "text": "Elementor",
-          "color": "#a78bfa"
+          "colorStart": "#818cf8",
+          "colorEnd": "#c084fc"
         },
         {
           "text": "WooCommerce",
-          "color": "#2dd4bf"
+          "colorStart": "#34d399",
+          "colorEnd": "#22d3ee"
         },
         {
           "text": "PHP",
-          "color": "#7aa2ff"
+          "colorStart": "#60a5fa",
+          "colorEnd": "#818cf8"
         },
         {
           "text": "JavaScript",
-          "color": "#fbbf24"
+          "colorStart": "#fbbf24",
+          "colorEnd": "#f59e0b"
         },
         {
           "text": "jQuery",
-          "color": "#38bdf8"
+          "colorStart": "#60a5fa",
+          "colorEnd": "#22d3ee"
         },
         {
           "text": "HTML5",
-          "color": "#fb8b5b"
+          "colorStart": "#fb923c",
+          "colorEnd": "#f87171"
         },
         {
           "text": "CSS3",
-          "color": "#60a5fa"
+          "colorStart": "#38bdf8",
+          "colorEnd": "#60a5fa"
         },
         {
           "text": "Tailwind CSS",
-          "color": "#22d3ee"
+          "colorStart": "#22d3ee",
+          "colorEnd": "#06b6d4"
         },
         {
           "text": "ACF",
-          "color": "#34d399"
+          "colorStart": "#34d399",
+          "colorEnd": "#10b981"
         },
         {
           "text": "CPT UI",
-          "color": "#7aa2ff"
+          "colorStart": "#60a5fa",
+          "colorEnd": "#818cf8"
         },
         {
           "text": "WP Rocket",
-          "color": "#fbbf24"
+          "colorStart": "#fbbf24",
+          "colorEnd": "#f59e0b"
         },
         {
           "text": "Rank Math",
-          "color": "#a78bfa"
+          "colorStart": "#c084fc",
+          "colorEnd": "#818cf8"
         },
         {
           "text": "Framer",
-          "color": "#38bdf8"
+          "colorStart": "#22d3ee",
+          "colorEnd": "#60a5fa"
         },
         {
           "text": "Shopify",
-          "color": "#72e06a"
+          "colorStart": "#34d399",
+          "colorEnd": "#a3e635"
         },
         {
           "text": "Webflow",
-          "color": "#60a5fa"
+          "colorStart": "#3b82f6",
+          "colorEnd": "#60a5fa"
         },
         {
           "text": "Next.js",
-          "color": "#cbd5e1"
+          "colorStart": "#e2e8f0",
+          "colorEnd": "#94a3b8"
         }
       ]
     }

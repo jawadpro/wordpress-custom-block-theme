@@ -64,7 +64,7 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages', 'items' => jawad_dev_package_items() ),
 		'projects'      => array( 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
 		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With', 'items' => jawad_dev_stack_items() ),
-		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'What Clients Say', 'items' => jawad_dev_testimonial_items() ),
+		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'Trusted by Clients Worldwide', 'items' => jawad_dev_testimonial_items() ),
 		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions', 'items' => jawad_dev_faq_items() ),
 		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'buttonUrl' => '#contact', 'secondaryText' => 'Discuss Your Project', 'secondaryUrl' => '#contact' ),
 		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
@@ -255,31 +255,31 @@ function jawad_dev_package_items(): array {
 
 function jawad_dev_stack_items(): array {
 	return array(
-		array( 'text' => 'WordPress', 'color' => '#38bdf8' ),
-		array( 'text' => 'Elementor', 'color' => '#a78bfa' ),
-		array( 'text' => 'WooCommerce', 'color' => '#2dd4bf' ),
-		array( 'text' => 'PHP', 'color' => '#7aa2ff' ),
-		array( 'text' => 'JavaScript', 'color' => '#fbbf24' ),
-		array( 'text' => 'jQuery', 'color' => '#38bdf8' ),
-		array( 'text' => 'HTML5', 'color' => '#fb8b5b' ),
-		array( 'text' => 'CSS3', 'color' => '#60a5fa' ),
-		array( 'text' => 'Tailwind CSS', 'color' => '#22d3ee' ),
-		array( 'text' => 'ACF', 'color' => '#34d399' ),
-		array( 'text' => 'CPT UI', 'color' => '#7aa2ff' ),
-		array( 'text' => 'WP Rocket', 'color' => '#fbbf24' ),
-		array( 'text' => 'Rank Math', 'color' => '#a78bfa' ),
-		array( 'text' => 'Framer', 'color' => '#38bdf8' ),
-		array( 'text' => 'Shopify', 'color' => '#72e06a' ),
-		array( 'text' => 'Webflow', 'color' => '#60a5fa' ),
-		array( 'text' => 'Next.js', 'color' => '#cbd5e1' ),
+		array( 'text' => 'WordPress', 'colorStart' => '#60a5fa', 'colorEnd' => '#22d3ee' ),
+		array( 'text' => 'Elementor', 'colorStart' => '#818cf8', 'colorEnd' => '#c084fc' ),
+		array( 'text' => 'WooCommerce', 'colorStart' => '#34d399', 'colorEnd' => '#22d3ee' ),
+		array( 'text' => 'PHP', 'colorStart' => '#60a5fa', 'colorEnd' => '#818cf8' ),
+		array( 'text' => 'JavaScript', 'colorStart' => '#fbbf24', 'colorEnd' => '#f59e0b' ),
+		array( 'text' => 'jQuery', 'colorStart' => '#60a5fa', 'colorEnd' => '#22d3ee' ),
+		array( 'text' => 'HTML5', 'colorStart' => '#fb923c', 'colorEnd' => '#f87171' ),
+		array( 'text' => 'CSS3', 'colorStart' => '#38bdf8', 'colorEnd' => '#60a5fa' ),
+		array( 'text' => 'Tailwind CSS', 'colorStart' => '#22d3ee', 'colorEnd' => '#06b6d4' ),
+		array( 'text' => 'ACF', 'colorStart' => '#34d399', 'colorEnd' => '#10b981' ),
+		array( 'text' => 'CPT UI', 'colorStart' => '#60a5fa', 'colorEnd' => '#818cf8' ),
+		array( 'text' => 'WP Rocket', 'colorStart' => '#fbbf24', 'colorEnd' => '#f59e0b' ),
+		array( 'text' => 'Rank Math', 'colorStart' => '#c084fc', 'colorEnd' => '#818cf8' ),
+		array( 'text' => 'Framer', 'colorStart' => '#22d3ee', 'colorEnd' => '#60a5fa' ),
+		array( 'text' => 'Shopify', 'colorStart' => '#34d399', 'colorEnd' => '#a3e635' ),
+		array( 'text' => 'Webflow', 'colorStart' => '#3b82f6', 'colorEnd' => '#60a5fa' ),
+		array( 'text' => 'Next.js', 'colorStart' => '#e2e8f0', 'colorEnd' => '#94a3b8' ),
 	);
 }
 
 function jawad_dev_testimonial_items(): array {
 	return array(
-		array( 'quote' => 'Jawad delivered a fast, clean WordPress site and explained everything clearly.', 'author' => 'Business Owner' ),
-		array( 'quote' => 'Our WooCommerce checkout is smoother and the site feels much faster.', 'author' => 'Store Founder' ),
-		array( 'quote' => 'Reliable, technical, and easy to work with from design to launch.', 'author' => 'Agency Partner' ),
+		array( 'quote' => 'Jawad rebuilt our law firm’s WordPress website with Elementor and it was the best decision we made. The site is fast, professional, easy to update — and our Google rankings improved within weeks of launch.', 'author' => 'Sarah Mitchell', 'meta' => 'MSED Law · Business Website', 'initials' => 'SM', 'color' => '#60a5fa' ),
+		array( 'quote' => 'Our WooCommerce store was slow and checkout kept breaking. Jawad fixed every bug, brought load time from 6 seconds to under 2, and cleaned up the whole checkout flow. Sales improved almost immediately.', 'author' => 'David Kramer', 'meta' => 'Western Office Equipment · WooCommerce Store', 'initials' => 'DK', 'color' => '#a78bfa' ),
+		array( 'quote' => 'He converted my Figma design into a pixel-perfect WordPress landing page in under a week — mobile responsive, SEO-friendly, and it converts far better than the old page. Clear communication the whole way.', 'author' => 'Amina Yusuf', 'meta' => 'Growth Coach · Landing Page', 'initials' => 'AY', 'color' => '#34d399' ),
 	);
 }
 
@@ -400,14 +400,45 @@ function jawad_dev_render_projects( array $a ): string {
 function jawad_dev_render_stack( array $a ): string {
 	$items = jawad_dev_attr_items( $a, jawad_dev_stack_items() );
 	ob_start();
-	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div class="jd-stack__items" data-reveal-group><?php foreach ( $items as $item ) : ?><?php $label = $item['text'] ?? $item; $color = sanitize_hex_color( $item['color'] ?? '' ) ?: '#38bdf8'; ?><span style="--jd-stack-dot: <?php echo esc_attr( $color ); ?>"><i></i><?php echo esc_html( $label ); ?></span><?php endforeach; ?></div></div></section><?php
+	?><section id="stack" class="jd-section jd-stack" aria-labelledby="stack-h"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div class="jd-stack__items" data-reveal-group><?php foreach ( $items as $item ) : ?><?php $label = $item['text'] ?? $item; $start = sanitize_hex_color( $item['colorStart'] ?? ( $item['color'] ?? '' ) ) ?: '#60a5fa'; $end = sanitize_hex_color( $item['colorEnd'] ?? ( $item['color'] ?? '' ) ) ?: '#22d3ee'; ?><span style="--jd-stack-a: <?php echo esc_attr( $start ); ?>; --jd-stack-b: <?php echo esc_attr( $end ); ?>"><i></i><?php echo esc_html( $label ); ?></span><?php endforeach; ?></div></div></section><?php
 	return ob_get_clean();
 }
 
 function jawad_dev_render_testimonials( array $a ): string {
 	$items = jawad_dev_attr_items( $a, jawad_dev_testimonial_items() );
 	ob_start();
-	?><section id="testimonials" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'testimonials-h' ); ?><div class="jd-card-grid jd-card-grid--three" data-reveal-group><?php foreach ( $items as $item ) : ?><blockquote class="jd-testimonial"><div class="jd-stars"><?php echo str_repeat( jawad_dev_svg( 'star' ), 5 ); ?></div><p>“<?php echo esc_html( $item['quote'] ?? ( $item[0] ?? '' ) ); ?>”</p><cite><?php echo esc_html( $item['author'] ?? ( $item[1] ?? '' ) ); ?></cite></blockquote><?php endforeach; ?></div></div></section><?php
+	?>
+	<section id="testimonials" class="jd-section jd-testimonials" aria-labelledby="testimonials-h">
+		<div class="jd-testimonials__orb"></div>
+		<div class="jd-container">
+			<?php echo jawad_dev_section_heading( $a, 'testimonials-h' ); ?>
+			<div class="jd-testimonial-grid" data-reveal-group>
+				<?php foreach ( $items as $item ) : ?>
+					<?php
+					$author   = $item['author'] ?? ( $item[1] ?? '' );
+					$parts    = preg_split( '/\s+/', trim( $author ) );
+					$initials = $item['initials'] ?? implode(
+						'',
+						array_map(
+							static fn( string $part ): string => strtoupper( substr( $part, 0, 1 ) ),
+							array_slice( $parts ?: array(), 0, 2 )
+						)
+					);
+					$color = sanitize_hex_color( $item['color'] ?? '' ) ?: '#60a5fa';
+					?>
+					<figure class="jd-testimonial" style="--jd-avatar: <?php echo esc_attr( $color ); ?>">
+						<div class="jd-stars" aria-label="<?php esc_attr_e( '5 star rating', 'jawad-dev' ); ?>"><?php echo str_repeat( jawad_dev_svg( 'star' ), 5 ); ?></div>
+						<blockquote>“<?php echo esc_html( $item['quote'] ?? ( $item[0] ?? '' ) ); ?>”</blockquote>
+						<figcaption>
+							<span class="jd-avatar"><?php echo esc_html( $initials ); ?></span>
+							<span><strong><?php echo esc_html( $author ); ?></strong><?php if ( ! empty( $item['meta'] ) ) : ?><em><?php echo esc_html( $item['meta'] ); ?></em><?php endif; ?></span>
+						</figcaption>
+					</figure>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php
 	return ob_get_clean();
 }
 
