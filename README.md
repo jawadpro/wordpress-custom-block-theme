@@ -13,7 +13,7 @@ Full-site-editing WordPress block theme converted from the supplied HTML export.
 
 ## Setup
 
-1. Copy this folder to `wp-content/themes/jawad-ilyas-block-theme`.
+1. Copy this folder to `wp-content/themes/wordpress-custom-block-theme`.
 2. Activate **Jawad Ilyas Block Theme** in WordPress.
 3. Go to **Appearance > Editor** to edit sections. Each section is its own block.
 4. Add projects under **Projects**. Use the featured image for the screenshot, taxonomies for card tags, and Project Details fields for the card metadata.
