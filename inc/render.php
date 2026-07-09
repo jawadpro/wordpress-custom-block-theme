@@ -481,11 +481,18 @@ function jawad_dev_render_contact_modal( array $a ): string {
 			<div class="jd-window-dots"><span></span><span></span><span></span><em>~/new-project-request</em><button type="button" class="jd-modal__close" aria-label="<?php esc_attr_e( 'Close form', 'jawad-dev' ); ?>">×</button></div>
 			<div class="jd-progress"><span></span></div>
 			<?php if ( $use_gravity ) : ?>
-				<div class="jd-gravity-form">
-					<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
-					<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
-					<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
-					<?php echo gravity_form( $form_id, false, false, false, null, true, 0, false ); ?>
+				<div class="jd-form jd-form--gravity">
+					<div class="jd-form__step" data-step="1"><div class="jd-eyebrow">&gt; step_1: project_type</div><h3>What do you need built?</h3><p>Pick the closest match. Your answer will be attached to the final request.</p><div class="jd-choice-grid"><?php foreach ( array( 'site' => 'Full Website', 'landing' => 'Landing Page', 'store' => 'WooCommerce Store', 'fix' => 'Fix & Optimize', 'other' => 'Something Else' ) as $key => $label ) : ?><button type="button" data-name="service" data-value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?><span><?php echo esc_html( $key ); ?></span></button><?php endforeach; ?></div></div>
+					<div class="jd-form__step" data-step="2" hidden><div class="jd-eyebrow">&gt; step_2: scope</div><h3>Budget & timeline</h3><p>A rough range is fine. These values go into hidden Gravity Forms fields.</p><label>budget_range *</label><div class="jd-chip-row"><?php foreach ( array( '$500 – $1,500', '$1,500 – $3,500', '$3,500 – $6,000', '$6,000+' ) as $value ) : ?><button type="button" data-name="budget" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div><label>timeline *</label><div class="jd-chip-row"><?php foreach ( array( 'ASAP', '1–2 weeks', 'This month', 'Flexible' ) as $value ) : ?><button type="button" data-name="timeline" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div></div>
+					<div class="jd-form__step jd-form__step--gravity" data-step="3" hidden>
+						<div class="jd-gravity-form">
+							<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
+							<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
+							<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
+							<?php echo gravity_form( $form_id, false, false, false, null, true, 0, false ); ?>
+						</div>
+					</div>
+					<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>
 				</div>
 			<?php else : ?>
 			<form class="jd-form">

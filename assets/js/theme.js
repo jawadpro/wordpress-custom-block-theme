@@ -31,6 +31,7 @@
 		const next = qs( '.jd-form__next', modal );
 		const back = qs( '.jd-form__back', modal );
 		const trace = qs( '.jd-form__trace', modal );
+		const isGravity = modal.classList.contains( 'jd-modal--gravity' );
 
 		function open( trigger ) {
 			state.step = 1;
@@ -58,6 +59,7 @@
 			const valid = isValid();
 			next.disabled = ! valid;
 			next.textContent = state.step === 3 ? 'Send Request ↵' : 'Continue →';
+			next.hidden = isGravity && state.step === 3;
 			back.hidden = state.step === 1;
 			progress.style.width = ( state.step === 1 ? 33 : state.step === 2 ? 66 : 92 ) + '%';
 			const parts = [];
@@ -65,15 +67,35 @@
 			if ( state.budget ) parts.push( 'budget: ' + state.budget.replace( /\s/g, '' ) );
 			if ( state.timeline ) parts.push( 'eta: ' + state.timeline.toLowerCase() );
 			trace.textContent = '> ' + ( parts.length ? parts.join( '  ·  ' ) : 'awaiting_input...' );
+			if ( isGravity && state.step === 3 ) {
+				syncGravityFields();
+				progress.style.width = '100%';
+				trace.textContent = '> selections_added_to_gravity_fields';
+			}
 		}
 
 		function isValid() {
 			if ( state.step === 1 ) return !! state.service;
 			if ( state.step === 2 ) return !! ( state.budget && state.timeline );
+			if ( isGravity ) return true;
 			const name = qs( '[name="name"]', form ).value.trim();
 			const email = qs( '[name="email"]', form ).value.trim();
 			const message = qs( '[name="message"]', form ).value.trim();
 			return !! ( name && email.indexOf( '@' ) > 0 && message );
+		}
+
+		function setGravityValue( selectors, value ) {
+			qsa( selectors.join( ',' ), modal ).forEach( function ( field ) {
+				field.value = value;
+				field.dispatchEvent( new Event( 'input', { bubbles: true } ) );
+				field.dispatchEvent( new Event( 'change', { bubbles: true } ) );
+			} );
+		}
+
+		function syncGravityFields() {
+			setGravityValue( [ '.jd-gf-service input', '.jd-gf-service textarea', 'input.jd-gf-service', 'textarea.jd-gf-service' ], state.service );
+			setGravityValue( [ '.jd-gf-budget input', '.jd-gf-budget textarea', 'input.jd-gf-budget', 'textarea.jd-gf-budget' ], state.budget );
+			setGravityValue( [ '.jd-gf-timeline input', '.jd-gf-timeline textarea', 'input.jd-gf-timeline', 'textarea.jd-gf-timeline' ], state.timeline );
 		}
 
 		function submit() {
@@ -141,7 +163,7 @@
 					state.step += 1;
 					render();
 				}
-			} else {
+			} else if ( ! isGravity ) {
 				submit();
 			}
 		} );

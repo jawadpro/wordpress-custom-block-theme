@@ -204,8 +204,8 @@ a:hover { color: #bae6fd; }
 .jd-form__next:disabled { opacity: .4; cursor: not-allowed; box-shadow: none; }
 .jd-form__done { text-align: center; padding: 24px 0; }
 .jd-done-mark { width: 64px; height: 64px; margin: 0 auto 20px; border-radius: 50%; display: grid; place-items: center; background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.4); box-shadow: 0 0 40px -8px rgba(52,211,153,.5); }
-.jd-modal--gravity .jd-progress { display: none; }
 .jd-gravity-form { padding: 28px; border-radius: 0 0 21px 21px; background: rgba(7,11,20,.98); }
+.jd-form--gravity .jd-gravity-form { padding: 0; background: transparent; }
 .jd-gravity-form h3 { font-family: "Space Grotesk"; font-size: 23px; color: #f8fafc; margin: 0 0 8px; }
 .jd-gravity-form > p { color: #8b9cb3; margin: 0 0 22px; line-height: 1.6; }
 .jd-gravity-form .gform_wrapper.gravity-theme, .jd-gravity-form .gform_wrapper { margin: 0; }
