@@ -75,6 +75,9 @@ function jawad_dev_default_attrs( string $slug ): array {
 			'modalTitle'     => 'Start a project request',
 			'modalSubtitle'  => 'Tell me what you need and I’ll reply with next steps.',
 			'gravityEyebrow' => '> project_request',
+			'gravityServiceParam' => 'service',
+			'gravityBudgetParam'  => 'budget',
+			'gravityTimelineParam'=> 'timeline',
 		),
 	);
 
@@ -308,6 +311,34 @@ function jawad_dev_faq_items(): array {
 	);
 }
 
+add_filter( 'gform_pre_render', 'jawad_dev_gravity_dynamic_field_classes' );
+function jawad_dev_gravity_dynamic_field_classes( array $form ): array {
+	if ( empty( $GLOBALS['jawad_dev_gravity_param_map'] ) || empty( $form['fields'] ) ) {
+		return $form;
+	}
+
+	$param_map = $GLOBALS['jawad_dev_gravity_param_map'];
+	foreach ( $form['fields'] as &$field ) {
+		$input_name = isset( $field->inputName ) ? (string) $field->inputName : '';
+		if ( '' === $input_name ) {
+			continue;
+		}
+
+		foreach ( $param_map as $key => $param_name ) {
+			if ( $input_name !== $param_name ) {
+				continue;
+			}
+
+			$classes = preg_split( '/\s+/', (string) $field->cssClass, -1, PREG_SPLIT_NO_EMPTY );
+			$classes[] = 'jd-gf-' . $key;
+			$field->cssClass = implode( ' ', array_unique( $classes ) );
+		}
+	}
+	unset( $field );
+
+	return $form;
+}
+
 function jawad_dev_render_services( array $a ): string {
 	return jawad_dev_render_card_grid( 'services', 'services-h', $a, jawad_dev_attr_items( $a, jawad_dev_cards_services() ), 'jd-card--service' );
 }
@@ -478,12 +509,17 @@ function jawad_dev_render_site_footer( array $a ): string {
 function jawad_dev_render_contact_modal( array $a ): string {
 	$form_id     = isset( $a['gravityFormId'] ) ? absint( $a['gravityFormId'] ) : 0;
 	$use_gravity = 'gravity' === ( $a['formProvider'] ?? 'builtin' ) && $form_id && function_exists( 'gravity_form' );
+	$gravity_params = array(
+		'service'  => sanitize_key( $a['gravityServiceParam'] ?? 'service' ) ?: 'service',
+		'budget'   => sanitize_key( $a['gravityBudgetParam'] ?? 'budget' ) ?: 'budget',
+		'timeline' => sanitize_key( $a['gravityTimelineParam'] ?? 'timeline' ) ?: 'timeline',
+	);
 	if ( $use_gravity && function_exists( 'gravity_form_enqueue_scripts' ) ) {
 		gravity_form_enqueue_scripts( $form_id, true );
 	}
 	ob_start();
 	?>
-	<div class="jd-modal <?php echo $use_gravity ? 'jd-modal--gravity' : ''; ?>" hidden>
+	<div class="jd-modal <?php echo $use_gravity ? 'jd-modal--gravity' : ''; ?>" data-gf-service-param="<?php echo esc_attr( $gravity_params['service'] ); ?>" data-gf-budget-param="<?php echo esc_attr( $gravity_params['budget'] ); ?>" data-gf-timeline-param="<?php echo esc_attr( $gravity_params['timeline'] ); ?>" hidden>
 		<div class="jd-modal__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Start a project request', 'jawad-dev' ); ?>">
 			<div class="jd-window-dots"><span></span><span></span><span></span><em>~/new-project-request</em><button type="button" class="jd-modal__close" aria-label="<?php esc_attr_e( 'Close form', 'jawad-dev' ); ?>">×</button></div>
 			<div class="jd-progress"><span></span></div>
@@ -496,7 +532,9 @@ function jawad_dev_render_contact_modal( array $a ): string {
 							<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
 							<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
 							<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
+							<?php $GLOBALS['jawad_dev_gravity_param_map'] = $gravity_params; ?>
 							<?php echo gravity_form( $form_id, false, false, false, null, true, 0, false ); ?>
+							<?php unset( $GLOBALS['jawad_dev_gravity_param_map'] ); ?>
 						</div>
 					</div>
 					<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>

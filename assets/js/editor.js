@@ -98,7 +98,10 @@
 		'contact-modal': [
 			[ 'modalTitle', __( 'Modal title', 'jawad-dev' ) ],
 			[ 'modalSubtitle', __( 'Modal subtitle', 'jawad-dev' ), 'textarea' ],
-			[ 'gravityEyebrow', __( 'Modal eyebrow', 'jawad-dev' ) ]
+			[ 'gravityEyebrow', __( 'Modal eyebrow', 'jawad-dev' ) ],
+			[ 'gravityServiceParam', __( 'GF service parameter', 'jawad-dev' ) ],
+			[ 'gravityBudgetParam', __( 'GF budget parameter', 'jawad-dev' ) ],
+			[ 'gravityTimelineParam', __( 'GF timeline parameter', 'jawad-dev' ) ]
 		]
 	};
 

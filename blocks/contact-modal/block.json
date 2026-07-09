@@ -41,6 +41,18 @@
     "gravityEyebrow": {
       "type": "string",
       "default": "> project_request"
+    },
+    "gravityServiceParam": {
+      "type": "string",
+      "default": "service"
+    },
+    "gravityBudgetParam": {
+      "type": "string",
+      "default": "budget"
+    },
+    "gravityTimelineParam": {
+      "type": "string",
+      "default": "timeline"
     }
   },
   "name": "jawad-dev/contact-modal",

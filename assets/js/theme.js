@@ -84,6 +84,32 @@
 			return !! ( name && email.indexOf( '@' ) > 0 && message );
 		}
 
+		function escapeSelectorValue( value ) {
+			if ( window.CSS && window.CSS.escape ) {
+				return window.CSS.escape( value );
+			}
+			return value.replace( /["\\]/g, '\\$&' );
+		}
+
+		function gravitySelectors( key ) {
+			const param = modal.dataset[ 'gf' + key.charAt( 0 ).toUpperCase() + key.slice( 1 ) + 'Param' ] || key;
+			const escaped = escapeSelectorValue( param );
+			return [
+				'input[name="' + escaped + '"]',
+				'textarea[name="' + escaped + '"]',
+				'select[name="' + escaped + '"]',
+				'[data-gf-param="' + escaped + '"] input',
+				'[data-gf-param="' + escaped + '"] textarea',
+				'[data-gf-param="' + escaped + '"] select',
+				'.jd-gf-' + key + ' input',
+				'.jd-gf-' + key + ' textarea',
+				'.jd-gf-' + key + ' select',
+				'input.jd-gf-' + key,
+				'textarea.jd-gf-' + key,
+				'select.jd-gf-' + key
+			];
+		}
+
 		function setGravityValue( selectors, value ) {
 			qsa( selectors.join( ',' ), modal ).forEach( function ( field ) {
 				field.value = value;
@@ -93,9 +119,9 @@
 		}
 
 		function syncGravityFields() {
-			setGravityValue( [ '.jd-gf-service input', '.jd-gf-service textarea', 'input.jd-gf-service', 'textarea.jd-gf-service' ], state.service );
-			setGravityValue( [ '.jd-gf-budget input', '.jd-gf-budget textarea', 'input.jd-gf-budget', 'textarea.jd-gf-budget' ], state.budget );
-			setGravityValue( [ '.jd-gf-timeline input', '.jd-gf-timeline textarea', 'input.jd-gf-timeline', 'textarea.jd-gf-timeline' ], state.timeline );
+			setGravityValue( gravitySelectors( 'service' ), state.service );
+			setGravityValue( gravitySelectors( 'budget' ), state.budget );
+			setGravityValue( gravitySelectors( 'timeline' ), state.timeline );
 		}
 
 		function submit() {
