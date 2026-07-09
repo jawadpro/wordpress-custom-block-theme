@@ -18,10 +18,6 @@
       "type": "boolean",
       "default": true
     },
-    "gravityFormId": {
-      "type": "number",
-      "default": 1
-    },
     "gravityFormShortcode": {
       "type": "string",
       "default": "[gravityform id=\"1\" title=\"false\"]"

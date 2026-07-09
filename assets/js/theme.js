@@ -31,6 +31,7 @@
 		const next = qs( '.jd-form__next', modal );
 		const back = qs( '.jd-form__back', modal );
 		const trace = qs( '.jd-form__trace', modal );
+		let gravitySynced = false;
 
 		function open( trigger ) {
 			state.step = 1;
@@ -67,9 +68,14 @@
 			if ( state.timeline ) parts.push( 'eta: ' + state.timeline.toLowerCase() );
 			trace.textContent = '> ' + ( parts.length ? parts.join( '  ·  ' ) : 'awaiting_input...' );
 			if ( state.step === 3 ) {
-				syncGravityFields();
+				if ( ! gravitySynced ) {
+					syncGravityFields();
+					gravitySynced = true;
+				}
 				progress.style.width = '100%';
 				trace.textContent = '> selections_added_to_gravity_fields';
+			} else {
+				gravitySynced = false;
 			}
 		}
 
@@ -107,8 +113,8 @@
 
 		function setGravityValue( selectors, value ) {
 			qsa( selectors.join( ',' ), modal ).forEach( function ( field ) {
+				if ( field.value === value ) return;
 				field.value = value;
-				field.dispatchEvent( new Event( 'input', { bubbles: true } ) );
 				field.dispatchEvent( new Event( 'change', { bubbles: true } ) );
 			} );
 		}
@@ -159,7 +165,7 @@
 			render();
 		} );
 
-		qsa( 'input, textarea', form ).forEach( function ( field ) {
+		qsa( '.jd-form__step:not(.jd-form__step--gravity) input, .jd-form__step:not(.jd-form__step--gravity) textarea', form ).forEach( function ( field ) {
 			field.addEventListener( 'input', render );
 		} );
 	}

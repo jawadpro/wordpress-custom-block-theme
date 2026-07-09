@@ -69,7 +69,6 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'buttonUrl' => '#contact', 'secondaryText' => 'Discuss Your Project', 'secondaryUrl' => '#contact' ),
 		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
 		'contact-modal' => array(
-			'gravityFormId'  => 1,
 			'gravityFormShortcode' => '[gravityform id="1" title="false"]',
 			'modalTitle'     => 'Start a project request',
 			'modalSubtitle'  => 'Tell me what you need and I’ll reply with next steps.',
@@ -346,29 +345,25 @@ function jawad_dev_gravity_shortcode_id( string $shortcode ): int {
 	return 0;
 }
 
-function jawad_dev_render_gravity_form( int $form_id, array $gravity_params, string $shortcode = '' ): string {
-	if ( ! function_exists( 'gravity_form' ) ) {
+function jawad_dev_render_gravity_form_shortcode( string $shortcode, array $gravity_params ): string {
+	if ( ! shortcode_exists( 'gravityform' ) ) {
 		return '<div class="jd-form-alert">' . esc_html__( 'Gravity Forms is selected, but the Gravity Forms plugin is not active or is not loaded.', 'jawad-dev' ) . '</div>';
 	}
 
+	$form_id = jawad_dev_gravity_shortcode_id( $shortcode );
 	if ( class_exists( 'GFAPI' ) ) {
 		$form = GFAPI::get_form( $form_id );
 		if ( empty( $form ) ) {
-			return '<div class="jd-form-alert">' . sprintf( esc_html__( 'Gravity Form ID %d was not found. Check the form ID in the Contact Modal block settings.', 'jawad-dev' ), $form_id ) . '</div>';
+			return '<div class="jd-form-alert">' . sprintf( esc_html__( 'Gravity Form ID %d was not found. Check the shortcode in the Contact Modal block settings.', 'jawad-dev' ), $form_id ) . '</div>';
 		}
 	}
 
 	$GLOBALS['jawad_dev_gravity_param_map'] = $gravity_params;
-	$markup = gravity_form( $form_id, false, false, true, null, true, 0, false );
+	$markup = do_shortcode( $shortcode );
 	unset( $GLOBALS['jawad_dev_gravity_param_map'] );
 
-	if ( '' === trim( (string) $markup ) && shortcode_exists( 'gravityform' ) ) {
-		$embed_shortcode = $shortcode ? $shortcode : sprintf( '[gravityform id="%d" title="false" description="false" ajax="true"]', $form_id );
-		$markup = do_shortcode( $embed_shortcode );
-	}
-
 	if ( '' === trim( (string) $markup ) ) {
-		return '<div class="jd-form-alert">' . sprintf( esc_html__( 'Gravity Form ID %d did not return any markup. Make sure the form exists and is not trashed.', 'jawad-dev' ), $form_id ) . '</div>';
+		return '<div class="jd-form-alert">' . esc_html__( 'The Gravity Forms shortcode did not return any markup. Make sure the form exists and the shortcode is valid.', 'jawad-dev' ) . '</div>';
 	}
 
 	return $markup;
@@ -543,10 +538,7 @@ function jawad_dev_render_site_footer( array $a ): string {
 
 function jawad_dev_render_contact_modal( array $a ): string {
 	$form_shortcode = isset( $a['gravityFormShortcode'] ) ? trim( (string) $a['gravityFormShortcode'] ) : '';
-	$form_id        = isset( $a['gravityFormId'] ) ? absint( $a['gravityFormId'] ) : 0;
-	if ( ! $form_id && $form_shortcode ) {
-		$form_id = jawad_dev_gravity_shortcode_id( $form_shortcode );
-	}
+	$form_id        = $form_shortcode ? jawad_dev_gravity_shortcode_id( $form_shortcode ) : 0;
 	$gravity_params = array(
 		'service'  => sanitize_key( $a['gravityServiceParam'] ?? 'service' ) ?: 'service',
 		'budget'   => sanitize_key( $a['gravityBudgetParam'] ?? 'budget' ) ?: 'budget',
@@ -570,9 +562,9 @@ function jawad_dev_render_contact_modal( array $a ): string {
 						<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
 						<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
 						<?php if ( $form_id ) : ?>
-							<?php echo jawad_dev_render_gravity_form( $form_id, $gravity_params, $form_shortcode ); ?>
+							<?php echo jawad_dev_render_gravity_form_shortcode( $form_shortcode, $gravity_params ); ?>
 						<?php else : ?>
-							<div class="jd-form-alert"><?php esc_html_e( 'Add a Gravity Form ID or shortcode in the Contact Modal block settings.', 'jawad-dev' ); ?></div>
+							<div class="jd-form-alert"><?php esc_html_e( 'Add a Gravity Forms shortcode in the Contact Modal block settings.', 'jawad-dev' ); ?></div>
 						<?php endif; ?>
 					</div>
 				</div>

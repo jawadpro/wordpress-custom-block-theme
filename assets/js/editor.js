@@ -389,20 +389,6 @@
 					} ) );
 				}
 
-				if ( slug === 'contact-modal' ) {
-					sectionControls.push( el( TextControl, {
-						key: 'gravityFormId',
-						label: __( 'Gravity Form ID', 'jawad-dev' ),
-						value: attrs.gravityFormId || '',
-						onChange: function ( value ) {
-							const match = String( value ).match( /id=(["']?)(\d+)\1/i );
-							props.setAttributes( {
-								gravityFormId: match ? parseInt( match[ 2 ], 10 ) : parseInt( value, 10 ) || 0
-							} );
-						}
-					} ) );
-				}
-
 				return el( 'div', blockProps,
 					el( InspectorControls, {},
 						el( PanelBody, { title: __( 'Section Settings', 'jawad-dev' ), initialOpen: true }, sectionControls ),
