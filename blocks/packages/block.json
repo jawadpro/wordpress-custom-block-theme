@@ -41,7 +41,8 @@
           ],
           "buttonText": "Build My Landing Page",
           "service": "landing",
-          "featured": false
+          "featured": false,
+          "badgeText": ""
         },
         {
           "title": "Business Website",
@@ -56,7 +57,8 @@
           ],
           "buttonText": "Start My Website",
           "service": "site",
-          "featured": true
+          "featured": true,
+          "badgeText": "Most Popular"
         },
         {
           "title": "WooCommerce Store",
@@ -70,7 +72,8 @@
           ],
           "buttonText": "Build My Store",
           "service": "store",
-          "featured": false
+          "featured": false,
+          "badgeText": ""
         }
       ]
     }

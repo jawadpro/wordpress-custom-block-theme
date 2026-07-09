@@ -152,7 +152,7 @@
 			key: 'items',
 			title: __( 'Packages', 'jawad-dev' ),
 			addLabel: __( 'Add package', 'jawad-dev' ),
-			empty: { title: 'New Package', price: '$0', text: '', features: [], buttonText: 'Start Project', service: 'site', featured: false },
+			empty: { title: 'New Package', price: '$0', text: '', features: [], buttonText: 'Start Project', service: 'site', featured: false, badgeText: '' },
 			fields: [
 				[ 'title', __( 'Package title', 'jawad-dev' ) ],
 				[ 'price', __( 'Price range', 'jawad-dev' ) ],
@@ -160,7 +160,8 @@
 				[ 'features', __( 'Features', 'jawad-dev' ), 'lines' ],
 				[ 'buttonText', __( 'Button text', 'jawad-dev' ) ],
 				[ 'service', __( 'Form service key', 'jawad-dev' ) ],
-				[ 'featured', __( 'Featured package', 'jawad-dev' ), 'toggle' ]
+				[ 'featured', __( 'Featured package', 'jawad-dev' ), 'toggle' ],
+				[ 'badgeText', __( 'Badge text', 'jawad-dev' ) ]
 			]
 		},
 		stack: {
