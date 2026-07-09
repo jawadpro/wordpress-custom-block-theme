@@ -26,35 +26,30 @@
       "type": "string",
       "default": "My Website Development Process"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "number": "01",
+          "title": "Discovery & Strategy",
+          "text": "I understand your business, goals, audience, and website requirements."
+        },
+        {
+          "number": "02",
+          "title": "Design Direction",
+          "text": "I plan the page structure, user flow, sections, and conversion-focused layout."
+        },
+        {
+          "number": "03",
+          "title": "WordPress Development",
+          "text": "I build a responsive, SEO-friendly, and easy-to-manage WordPress website."
+        },
+        {
+          "number": "04",
+          "title": "Testing & Optimization",
+          "text": "I check mobile layout, speed, forms, browser compatibility, and SEO basics."
+        }
+      ]
     }
   },
   "name": "jawad-dev/process",

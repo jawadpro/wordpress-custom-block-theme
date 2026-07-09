@@ -26,35 +26,46 @@
       "type": "string",
       "default": "Tools & Technologies I Work With"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "text": "WordPress"
+        },
+        {
+          "text": "Elementor"
+        },
+        {
+          "text": "WooCommerce"
+        },
+        {
+          "text": "PHP"
+        },
+        {
+          "text": "JavaScript"
+        },
+        {
+          "text": "ACF"
+        },
+        {
+          "text": "CPT"
+        },
+        {
+          "text": "REST APIs"
+        },
+        {
+          "text": "Speed Optimization"
+        },
+        {
+          "text": "SEO Basics"
+        },
+        {
+          "text": "Figma"
+        },
+        {
+          "text": "Git"
+        }
+      ]
     }
   },
   "name": "jawad-dev/stack",

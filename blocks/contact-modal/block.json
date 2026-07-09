@@ -18,41 +18,9 @@
       "type": "boolean",
       "default": true
     },
-    "eyebrow": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "recipient": {
+      "type": "string",
+      "default": ""
     }
   },
   "name": "jawad-dev/contact-modal",

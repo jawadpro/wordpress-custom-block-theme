@@ -26,35 +26,28 @@
       "type": "string",
       "default": "Why Businesses Hire Me as Their WordPress Developer"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "text": "Clean, modern, and responsive website design"
+        },
+        {
+          "text": "Strong WordPress, Elementor, WooCommerce, PHP, JavaScript, and custom development experience"
+        },
+        {
+          "text": "SEO-friendly page structure and fast-loading websites"
+        },
+        {
+          "text": "Clear communication and reliable delivery"
+        },
+        {
+          "text": "Ability to fix complex WordPress issues, not just basic design edits"
+        },
+        {
+          "text": "Experience with business websites, eCommerce stores, landing pages, agencies, and service-based websites"
+        }
+      ]
     }
   },
   "name": "jawad-dev/why",

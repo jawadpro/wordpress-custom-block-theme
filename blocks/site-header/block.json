@@ -18,24 +18,6 @@
       "type": "boolean",
       "default": true
     },
-    "eyebrow": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
     "brand": {
       "type": "string",
       "default": "jawad.dev"
@@ -43,18 +25,6 @@
     "ctaText": {
       "type": "string",
       "default": "Hire Me"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
     }
   },
   "name": "jawad-dev/site-header",

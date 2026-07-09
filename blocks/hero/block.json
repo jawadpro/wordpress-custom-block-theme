@@ -28,31 +28,23 @@
     },
     "description": {
       "type": "string",
-      "default": "I\u2019m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, and landing pages that turn visitors into clients."
+      "default": "I’m Jawad Ilyas, a WordPress developer and full-stack web designer helping businesses build fast, mobile-friendly, SEO-ready, and conversion-focused websites. I specialize in Elementor, WooCommerce, custom WordPress development, website fixes, speed optimization, and landing pages that turn visitors into clients."
     },
     "buttonText": {
       "type": "string",
       "default": "Hire WordPress Developer"
     },
     "buttonUrl": {
-      "type": "string"
+      "type": "string",
+      "default": "#contact"
     },
     "secondaryText": {
       "type": "string",
       "default": "View My Work"
     },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean",
-      "default": true
+    "secondaryUrl": {
+      "type": "string",
+      "default": "#work"
     },
     "imageId": {
       "type": "number",
@@ -61,6 +53,31 @@
     "imageUrl": {
       "type": "string",
       "default": ""
+    },
+    "showBadge": {
+      "type": "boolean",
+      "default": true
+    },
+    "stats": {
+      "type": "array",
+      "default": [
+        {
+          "value": "10+",
+          "label": "Years Experience"
+        },
+        {
+          "value": "500+",
+          "label": "Projects Completed"
+        },
+        {
+          "value": "420+",
+          "label": "Happy Clients"
+        },
+        {
+          "value": "2K+",
+          "label": "Positive Reviews"
+        }
+      ]
     }
   },
   "name": "jawad-dev/hero",

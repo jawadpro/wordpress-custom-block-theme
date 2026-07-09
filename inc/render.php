@@ -49,17 +49,24 @@ function jawad_dev_default_attrs( string $slug ): array {
 			'imageId'      => 0,
 			'imageUrl'     => '',
 			'showBadge'    => true,
+			'secondaryUrl' => '#work',
+			'stats'        => array(
+				array( 'value' => '10+', 'label' => 'Years Experience' ),
+				array( 'value' => '500+', 'label' => 'Projects Completed' ),
+				array( 'value' => '420+', 'label' => 'Happy Clients' ),
+				array( 'value' => '2K+', 'label' => 'Positive Reviews' ),
+			),
 		),
-		'services'      => array( 'eyebrow' => '// SERVICES', 'title' => 'WordPress Services I Offer', 'description' => 'From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites.' ),
-		'why'           => array( 'eyebrow' => '// WHY HIRE ME', 'title' => 'Why Businesses Hire Me as Their WordPress Developer' ),
-		'solutions'     => array( 'eyebrow' => '// SOLUTIONS', 'title' => 'Built for Real Business Needs' ),
-		'process'       => array( 'eyebrow' => '// PROCESS', 'title' => 'My Website Development Process' ),
-		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages' ),
+		'services'      => array( 'eyebrow' => '// SERVICES', 'title' => 'WordPress Services I Offer', 'description' => 'From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites.', 'items' => jawad_dev_cards_services() ),
+		'why'           => array( 'eyebrow' => '// WHY HIRE ME', 'title' => 'Why Businesses Hire Me as Their WordPress Developer', 'items' => jawad_dev_why_items() ),
+		'solutions'     => array( 'eyebrow' => '// SOLUTIONS', 'title' => 'Built for Real Business Needs', 'items' => jawad_dev_solution_items() ),
+		'process'       => array( 'eyebrow' => '// PROCESS', 'title' => 'My Website Development Process', 'items' => jawad_dev_process_items() ),
+		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages', 'items' => jawad_dev_package_items() ),
 		'projects'      => array( 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
-		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With' ),
-		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'What Clients Say' ),
-		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions' ),
-		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'secondaryText' => 'Discuss Your Project' ),
+		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With', 'items' => jawad_dev_stack_items() ),
+		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'What Clients Say', 'items' => jawad_dev_testimonial_items() ),
+		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions', 'items' => jawad_dev_faq_items() ),
+		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'buttonUrl' => '#contact', 'secondaryText' => 'Discuss Your Project', 'secondaryUrl' => '#contact' ),
 		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
 		'contact-modal' => array( 'recipient' => get_option( 'admin_email' ) ),
 	);
@@ -69,6 +76,22 @@ function jawad_dev_default_attrs( string $slug ): array {
 
 function jawad_dev_attrs( string $slug, array $attrs ): array {
 	return array_merge( jawad_dev_default_attrs( $slug ), $attrs );
+}
+
+function jawad_dev_attr_items( array $a, array $fallback ): array {
+	return ! empty( $a['items'] ) && is_array( $a['items'] ) ? $a['items'] : $fallback;
+}
+
+function jawad_dev_lines( $value ): array {
+	if ( is_array( $value ) ) {
+		return array_values( array_filter( array_map( 'strval', $value ) ) );
+	}
+
+	if ( is_string( $value ) ) {
+		return array_values( array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $value ) ) ) );
+	}
+
+	return array();
 }
 
 function jawad_dev_render_section( string $slug, array $attributes = array(), string $content = '', ?WP_Block $block = null ): string {
@@ -145,7 +168,7 @@ function jawad_dev_render_site_header( array $a ): string {
 }
 
 function jawad_dev_render_hero( array $a ): string {
-	$stats = array( array( '10+', 'Years Experience' ), array( '500+', 'Projects Completed' ), array( '420+', 'Happy Clients' ), array( '2K+', 'Positive Reviews' ) );
+	$stats = ! empty( $a['stats'] ) && is_array( $a['stats'] ) ? $a['stats'] : jawad_dev_default_attrs( 'hero' )['stats'];
 	$image = $a['imageUrl'] ? $a['imageUrl'] : '';
 	if ( ! $image && ! empty( $a['imageId'] ) ) {
 		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
@@ -159,8 +182,8 @@ function jawad_dev_render_hero( array $a ): string {
 				<?php if ( ! empty( $a['showBadge'] ) ) : ?><div class="jd-pill"><span></span><?php echo esc_html( $a['eyebrow'] ); ?></div><?php endif; ?>
 				<h1><?php echo wp_kses_post( preg_replace( '/(Fast, Modern &amp; SEO-Friendly|Fast, Modern & SEO-Friendly)/', '<span>$1</span>', esc_html( $a['title'] ) ) ); ?></h1>
 				<p><?php echo esc_html( $a['description'] ); ?></p>
-				<div class="jd-actions"><a class="jd-btn jd-open-form" href="#contact"><?php echo esc_html( $a['buttonText'] ); ?> <?php echo jawad_dev_svg( 'arrow' ); ?></a><a class="jd-btn jd-btn--ghost" href="#work"><?php echo esc_html( $a['secondaryText'] ); ?></a></div>
-				<div class="jd-stats"><?php foreach ( $stats as $stat ) : ?><div><strong><?php echo esc_html( $stat[0] ); ?></strong><span><?php echo esc_html( $stat[1] ); ?></span></div><?php endforeach; ?></div>
+				<div class="jd-actions"><a class="jd-btn jd-open-form" href="<?php echo esc_url( $a['buttonUrl'] ); ?>"><?php echo esc_html( $a['buttonText'] ); ?> <?php echo jawad_dev_svg( 'arrow' ); ?></a><a class="jd-btn jd-btn--ghost" href="<?php echo esc_url( $a['secondaryUrl'] ); ?>"><?php echo esc_html( $a['secondaryText'] ); ?></a></div>
+				<div class="jd-stats"><?php foreach ( $stats as $stat ) : ?><div><strong><?php echo esc_html( $stat['value'] ?? ( $stat[0] ?? '' ) ); ?></strong><span><?php echo esc_html( $stat['label'] ?? ( $stat[1] ?? '' ) ); ?></span></div><?php endforeach; ?></div>
 			</div>
 			<div class="jd-hero-visual">
 				<div class="jd-portrait"><?php if ( $image ) : ?><img src="<?php echo esc_url( $image ); ?>" alt="<?php esc_attr_e( 'Portrait of Jawad Ilyas', 'jawad-dev' ); ?>"><?php else : ?><div class="jd-portrait__placeholder">JI</div><?php endif; ?></div>
@@ -180,31 +203,88 @@ function jawad_dev_section_heading( array $a, string $id ): string {
 
 function jawad_dev_cards_services(): array {
 	return array(
-		array( 'Custom WordPress Website Design', 'Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.', 'wp_custom_build()', 'service-1' ),
-		array( 'Elementor & Elementor Pro Development', 'Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.', 'elementor.pro', 'service-2' ),
-		array( 'WooCommerce Store Development', 'Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.', 'woocommerce_store()', 'service-3' ),
-		array( 'WordPress Bug Fixing', 'Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.', 'debug_wp_issue()', 'service-4' ),
-		array( 'WordPress Speed Optimization', 'Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.', 'optimize_assets()', 'service-5' ),
-		array( 'Figma to WordPress', 'Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.', 'figma_to_wp()', 'service-6' ),
-		array( 'Landing Page Design', 'Focused pages for services, products, ads, and lead generation with clear CTAs.', 'landing_page()', 'service-7' ),
-		array( 'Maintenance & Security', 'Updates, backups, malware cleanup, monitoring, and dependable ongoing care.', 'site_care()', 'service-8' ),
-		array( 'ACF, CPT & Custom Theme Development', 'Custom post types, flexible fields, and lightweight custom themes built with clean PHP.', 'register_post_type()', 'service-9' ),
-		array( 'API Integration & Automation', 'CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.', 'POST /api/v1/connect', 'service-10' ),
+		array( 'title' => 'Custom WordPress Website Design', 'text' => 'Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.', 'code' => 'wp_custom_build()', 'icon' => 'service-1' ),
+		array( 'title' => 'Elementor & Elementor Pro Development', 'text' => 'Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.', 'code' => 'elementor.pro', 'icon' => 'service-2' ),
+		array( 'title' => 'WooCommerce Store Development', 'text' => 'Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.', 'code' => 'woocommerce_store()', 'icon' => 'service-3' ),
+		array( 'title' => 'WordPress Bug Fixing', 'text' => 'Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.', 'code' => 'debug_wp_issue()', 'icon' => 'service-4' ),
+		array( 'title' => 'WordPress Speed Optimization', 'text' => 'Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.', 'code' => 'optimize_assets()', 'icon' => 'service-5' ),
+		array( 'title' => 'Figma to WordPress', 'text' => 'Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.', 'code' => 'figma_to_wp()', 'icon' => 'service-6' ),
+		array( 'title' => 'Landing Page Design', 'text' => 'Focused pages for services, products, ads, and lead generation with clear CTAs.', 'code' => 'landing_page()', 'icon' => 'service-7' ),
+		array( 'title' => 'Maintenance & Security', 'text' => 'Updates, backups, malware cleanup, monitoring, and dependable ongoing care.', 'code' => 'site_care()', 'icon' => 'service-8' ),
+		array( 'title' => 'ACF, CPT & Custom Theme Development', 'text' => 'Custom post types, flexible fields, and lightweight custom themes built with clean PHP.', 'code' => 'register_post_type()', 'icon' => 'service-9' ),
+		array( 'title' => 'API Integration & Automation', 'text' => 'CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.', 'code' => 'POST /api/v1/connect', 'icon' => 'service-10' ),
+	);
+}
+
+function jawad_dev_solution_items(): array {
+	return array(
+		array( 'title' => 'Business Websites', 'text' => 'Professional websites for companies, consultants, and service providers.', 'icon' => 'solution-1' ),
+		array( 'title' => 'Landing Pages', 'text' => 'High-converting pages for coaches, SaaS, campaigns, and lead generation.', 'icon' => 'solution-2' ),
+		array( 'title' => 'WooCommerce Stores', 'text' => 'Clean product pages, checkout setup, payment settings, and store optimization.', 'icon' => 'solution-3' ),
+		array( 'title' => 'Website Fixes & Optimization', 'text' => 'For slow, broken, outdated, or poorly designed WordPress websites.', 'icon' => 'solution-4' ),
+	);
+}
+
+function jawad_dev_why_items(): array {
+	return array(
+		array( 'text' => 'Clean, modern, and responsive website design' ),
+		array( 'text' => 'Strong WordPress, Elementor, WooCommerce, PHP, JavaScript, and custom development experience' ),
+		array( 'text' => 'SEO-friendly page structure and fast-loading websites' ),
+		array( 'text' => 'Clear communication and reliable delivery' ),
+		array( 'text' => 'Ability to fix complex WordPress issues, not just basic design edits' ),
+		array( 'text' => 'Experience with business websites, eCommerce stores, landing pages, agencies, and service-based websites' ),
+	);
+}
+
+function jawad_dev_process_items(): array {
+	return array(
+		array( 'number' => '01', 'title' => 'Discovery & Strategy', 'text' => 'I understand your business, goals, audience, and website requirements.' ),
+		array( 'number' => '02', 'title' => 'Design Direction', 'text' => 'I plan the page structure, user flow, sections, and conversion-focused layout.' ),
+		array( 'number' => '03', 'title' => 'WordPress Development', 'text' => 'I build a responsive, SEO-friendly, and easy-to-manage WordPress website.' ),
+		array( 'number' => '04', 'title' => 'Testing & Optimization', 'text' => 'I check mobile layout, speed, forms, browser compatibility, and SEO basics.' ),
+	);
+}
+
+function jawad_dev_package_items(): array {
+	return array(
+		array( 'title' => 'Landing Page', 'price' => '$500 – $1,500', 'text' => 'One focused conversion page', 'features' => array( 'Custom layout', 'Responsive design', 'Contact form/CTA setup', 'Basic SEO setup' ), 'buttonText' => 'Build My Landing Page', 'service' => 'landing', 'featured' => false ),
+		array( 'title' => 'Business Website', 'price' => '$1,500 – $3,500', 'text' => 'Complete website for service businesses', 'features' => array( 'Homepage + inner pages', 'Elementor or block editor setup', 'Contact forms', 'Speed and SEO basics', 'Launch support' ), 'buttonText' => 'Start My Website', 'service' => 'site', 'featured' => true ),
+		array( 'title' => 'WooCommerce Store', 'price' => '$3,500 – $6,000', 'text' => 'Store setup and conversion cleanup', 'features' => array( 'Product and checkout setup', 'Payment/shipping configuration', 'Mobile store layout', 'Basic performance optimization' ), 'buttonText' => 'Build My Store', 'service' => 'store', 'featured' => false ),
+	);
+}
+
+function jawad_dev_stack_items(): array {
+	return array_map(
+		static fn( string $text ): array => array( 'text' => $text ),
+		array( 'WordPress', 'Elementor', 'WooCommerce', 'PHP', 'JavaScript', 'ACF', 'CPT', 'REST APIs', 'Speed Optimization', 'SEO Basics', 'Figma', 'Git' )
+	);
+}
+
+function jawad_dev_testimonial_items(): array {
+	return array(
+		array( 'quote' => 'Jawad delivered a fast, clean WordPress site and explained everything clearly.', 'author' => 'Business Owner' ),
+		array( 'quote' => 'Our WooCommerce checkout is smoother and the site feels much faster.', 'author' => 'Store Founder' ),
+		array( 'quote' => 'Reliable, technical, and easy to work with from design to launch.', 'author' => 'Agency Partner' ),
+	);
+}
+
+function jawad_dev_faq_items(): array {
+	return array(
+		array( 'question' => 'Do you build complete WordPress websites?', 'answer' => 'Yes, I build complete WordPress websites for businesses, agencies, coaches, eCommerce stores, and service providers. I can design, develop, optimize, and launch the full website.' ),
+		array( 'question' => 'Can you fix WordPress issues or bugs?', 'answer' => 'Yes, I can fix WordPress bugs, layout issues, Elementor problems, WooCommerce errors, plugin conflicts, responsive issues, and speed problems.' ),
+		array( 'question' => 'Do you work with Elementor?', 'answer' => 'Yes, I work with Elementor and Elementor Pro to build custom, responsive, and easy-to-manage WordPress websites and landing pages.' ),
+		array( 'question' => 'Can you improve my WordPress website speed?', 'answer' => 'Yes, I can optimize WordPress speed by checking images, plugins, cache settings, theme performance, scripts, and Core Web Vitals basics.' ),
+		array( 'question' => 'Do you build WooCommerce stores?', 'answer' => 'Yes, I can set up and customize WooCommerce stores, product pages, cart, checkout, payment settings, and store layouts.' ),
+		array( 'question' => 'Can you convert Figma designs to WordPress?', 'answer' => 'Yes, I can convert Figma designs into responsive WordPress websites using Elementor, custom themes, or clean frontend development depending on the project.' ),
 	);
 }
 
 function jawad_dev_render_services( array $a ): string {
-	return jawad_dev_render_card_grid( 'services', 'services-h', $a, jawad_dev_cards_services(), 'jd-card--service' );
+	return jawad_dev_render_card_grid( 'services', 'services-h', $a, jawad_dev_attr_items( $a, jawad_dev_cards_services() ), 'jd-card--service' );
 }
 
 function jawad_dev_render_solutions( array $a ): string {
-	$cards = array(
-		array( 'Business Websites', 'Professional websites for companies, consultants, and service providers.', '', 'solution-1' ),
-		array( 'Landing Pages', 'High-converting pages for coaches, SaaS, campaigns, and lead generation.', '', 'solution-2' ),
-		array( 'WooCommerce Stores', 'Clean product pages, checkout setup, payment settings, and store optimization.', '', 'solution-3' ),
-		array( 'Website Fixes & Optimization', 'For slow, broken, outdated, or poorly designed WordPress websites.', '', 'solution-4' ),
-	);
-	return jawad_dev_render_card_grid( 'solutions', 'solutions-h', $a, $cards, 'jd-card--solution' );
+	return jawad_dev_render_card_grid( 'solutions', 'solutions-h', $a, jawad_dev_attr_items( $a, jawad_dev_solution_items() ), 'jd-card--solution' );
 }
 
 function jawad_dev_render_card_grid( string $section, string $heading_id, array $a, array $cards, string $class ): string {
@@ -215,11 +295,17 @@ function jawad_dev_render_card_grid( string $section, string $heading_id, array 
 			<?php echo jawad_dev_section_heading( $a, $heading_id ); ?>
 			<div class="jd-card-grid" data-reveal-group>
 				<?php foreach ( $cards as $card ) : ?>
+					<?php
+					$title = $card['title'] ?? ( $card[0] ?? '' );
+					$text  = $card['text'] ?? ( $card[1] ?? '' );
+					$code  = $card['code'] ?? ( $card[2] ?? '' );
+					$icon  = $card['icon'] ?? ( $card[3] ?? '' );
+					?>
 					<article class="jd-card <?php echo esc_attr( $class ); ?>">
-						<div class="jd-card__icon"><?php echo jawad_dev_svg( $card[3] ?? '' ); ?></div>
-						<h3><?php echo esc_html( $card[0] ); ?></h3>
-						<p><?php echo esc_html( $card[1] ); ?></p>
-						<?php if ( ! empty( $card[2] ) ) : ?><code><?php echo esc_html( $card[2] ); ?></code><?php endif; ?>
+						<div class="jd-card__icon"><?php echo jawad_dev_svg( $icon ); ?></div>
+						<h3><?php echo esc_html( $title ); ?></h3>
+						<p><?php echo esc_html( $text ); ?></p>
+						<?php if ( ! empty( $code ) ) : ?><code><?php echo esc_html( $code ); ?></code><?php endif; ?>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -230,13 +316,13 @@ function jawad_dev_render_card_grid( string $section, string $heading_id, array 
 }
 
 function jawad_dev_render_why( array $a ): string {
-	$items = array( 'Clean, modern, and responsive website design', 'Strong WordPress, Elementor, WooCommerce, PHP, JavaScript, and custom development experience', 'SEO-friendly page structure and fast-loading websites', 'Clear communication and reliable delivery', 'Ability to fix complex WordPress issues, not just basic design edits', 'Experience with business websites, eCommerce stores, landing pages, agencies, and service-based websites' );
+	$items = jawad_dev_attr_items( $a, jawad_dev_why_items() );
 	ob_start();
 	?>
 	<section id="why" class="jd-section jd-why">
 		<div class="jd-orb jd-orb--left"></div>
 		<div class="jd-container jd-split">
-			<div data-reveal><?php echo jawad_dev_section_heading( $a, 'why-h' ); ?><ul class="jd-check-list"><?php foreach ( $items as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item ); ?></li><?php endforeach; ?></ul></div>
+			<div data-reveal><?php echo jawad_dev_section_heading( $a, 'why-h' ); ?><ul class="jd-check-list"><?php foreach ( $items as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item['text'] ?? $item ); ?></li><?php endforeach; ?></ul></div>
 			<div class="jd-health-panel" data-reveal><div class="jd-window-dots"><span></span><span></span><span></span><em>site-health — jawadjd.dev</em></div><?php foreach ( array( 'performance' => 98, 'seo_structure' => 100, 'mobile_responsive' => 100 ) as $label => $score ) : ?><div class="jd-meter"><span><?php echo esc_html( $label ); ?></span><b><?php echo esc_html( $score ); ?>/100</b><i style="width:<?php echo esc_attr( $score ); ?>%"></i></div><?php endforeach; ?><code>✓ plugin conflicts — resolved<br>✓ core web vitals — passing<br>✓ checkout flow — tested<br>➜ deploy --production</code></div>
 		</div>
 	</section>
@@ -245,23 +331,19 @@ function jawad_dev_render_why( array $a ): string {
 }
 
 function jawad_dev_render_process( array $a ): string {
-	$steps = array( array( '01', 'Discovery & Strategy', 'I understand your business, goals, audience, and website requirements.' ), array( '02', 'Design Direction', 'I plan the page structure, user flow, sections, and conversion-focused layout.' ), array( '03', 'WordPress Development', 'I build a responsive, SEO-friendly, and easy-to-manage WordPress website.' ), array( '04', 'Testing & Optimization', 'I check mobile layout, speed, forms, browser compatibility, and SEO basics.' ) );
+	$steps = jawad_dev_attr_items( $a, jawad_dev_process_items() );
 	ob_start();
 	?>
-	<section id="process" class="jd-section jd-process"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'process-h' ); ?><div class="jd-timeline" data-reveal-group><?php foreach ( $steps as $step ) : ?><article><span><?php echo esc_html( $step[0] ); ?></span><div><h3><?php echo esc_html( $step[1] ); ?></h3><p><?php echo esc_html( $step[2] ); ?></p></div></article><?php endforeach; ?></div></div></section>
+	<section id="process" class="jd-section jd-process"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'process-h' ); ?><div class="jd-timeline" data-reveal-group><?php foreach ( $steps as $step ) : ?><article><span><?php echo esc_html( $step['number'] ?? ( $step[0] ?? '' ) ); ?></span><div><h3><?php echo esc_html( $step['title'] ?? ( $step[1] ?? '' ) ); ?></h3><p><?php echo esc_html( $step['text'] ?? ( $step[2] ?? '' ) ); ?></p></div></article><?php endforeach; ?></div></div></section>
 	<?php
 	return ob_get_clean();
 }
 
 function jawad_dev_render_packages( array $a ): string {
-	$packages = array(
-		array( 'Landing Page', '$500 – $1,500', 'One focused conversion page', array( 'Custom layout', 'Responsive design', 'Contact form/CTA setup', 'Basic SEO setup' ), 'Build My Landing Page', 'landing' ),
-		array( 'Business Website', '$1,500 – $3,500', 'Complete website for service businesses', array( 'Homepage + inner pages', 'Elementor or block editor setup', 'Contact forms', 'Speed and SEO basics', 'Launch support' ), 'Start My Website', 'site' ),
-		array( 'WooCommerce Store', '$3,500 – $6,000', 'Store setup and conversion cleanup', array( 'Product and checkout setup', 'Payment/shipping configuration', 'Mobile store layout', 'Basic performance optimization' ), 'Build My Store', 'store' ),
-	);
+	$packages = jawad_dev_attr_items( $a, jawad_dev_package_items() );
 	ob_start();
 	?>
-	<section id="packages" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'packages-h' ); ?><div class="jd-package-grid" data-reveal-group><?php foreach ( $packages as $i => $p ) : ?><article class="jd-package <?php echo 1 === $i ? 'is-featured' : ''; ?>"><h3><?php echo esc_html( $p[0] ); ?></h3><strong><?php echo esc_html( $p[1] ); ?></strong><p><?php echo esc_html( $p[2] ); ?></p><ul><?php foreach ( $p[3] as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item ); ?></li><?php endforeach; ?></ul><a class="jd-btn <?php echo 1 === $i ? '' : 'jd-btn--ghost'; ?> jd-open-form" data-service="<?php echo esc_attr( $p[5] ); ?>" data-budget="<?php echo esc_attr( $p[1] ); ?>" href="#contact"><?php echo esc_html( $p[4] ); ?></a></article><?php endforeach; ?></div></div></section>
+	<section id="packages" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'packages-h' ); ?><div class="jd-package-grid" data-reveal-group><?php foreach ( $packages as $i => $p ) : ?><?php $featured = isset( $p['featured'] ) ? (bool) $p['featured'] : 1 === $i; $price = $p['price'] ?? ( $p[1] ?? '' ); ?><article class="jd-package <?php echo $featured ? 'is-featured' : ''; ?>"><h3><?php echo esc_html( $p['title'] ?? ( $p[0] ?? '' ) ); ?></h3><strong><?php echo esc_html( $price ); ?></strong><p><?php echo esc_html( $p['text'] ?? ( $p[2] ?? '' ) ); ?></p><ul><?php foreach ( jawad_dev_lines( $p['features'] ?? ( $p[3] ?? array() ) ) as $item ) : ?><li><span><?php echo jawad_dev_svg( 'check' ); ?></span><?php echo esc_html( $item ); ?></li><?php endforeach; ?></ul><a class="jd-btn <?php echo $featured ? '' : 'jd-btn--ghost'; ?> jd-open-form" data-service="<?php echo esc_attr( $p['service'] ?? ( $p[5] ?? '' ) ); ?>" data-budget="<?php echo esc_attr( $price ); ?>" href="#contact"><?php echo esc_html( $p['buttonText'] ?? ( $p[4] ?? '' ) ); ?></a></article><?php endforeach; ?></div></div></section>
 	<?php
 	return ob_get_clean();
 }
@@ -301,36 +383,29 @@ function jawad_dev_render_projects( array $a ): string {
 }
 
 function jawad_dev_render_stack( array $a ): string {
-	$items = array( 'WordPress', 'Elementor', 'WooCommerce', 'PHP', 'JavaScript', 'ACF', 'CPT', 'REST APIs', 'Speed Optimization', 'SEO Basics', 'Figma', 'Git' );
+	$items = jawad_dev_attr_items( $a, jawad_dev_stack_items() );
 	ob_start();
-	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div data-reveal-group><?php foreach ( $items as $item ) : ?><span><?php echo esc_html( $item ); ?></span><?php endforeach; ?></div></div></section><?php
+	?><section id="stack" class="jd-section jd-stack"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'stack-h' ); ?><div data-reveal-group><?php foreach ( $items as $item ) : ?><span><?php echo esc_html( $item['text'] ?? $item ); ?></span><?php endforeach; ?></div></div></section><?php
 	return ob_get_clean();
 }
 
 function jawad_dev_render_testimonials( array $a ): string {
-	$items = array( array( 'Jawad delivered a fast, clean WordPress site and explained everything clearly.', 'Business Owner' ), array( 'Our WooCommerce checkout is smoother and the site feels much faster.', 'Store Founder' ), array( 'Reliable, technical, and easy to work with from design to launch.', 'Agency Partner' ) );
+	$items = jawad_dev_attr_items( $a, jawad_dev_testimonial_items() );
 	ob_start();
-	?><section id="testimonials" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'testimonials-h' ); ?><div class="jd-card-grid jd-card-grid--three" data-reveal-group><?php foreach ( $items as $item ) : ?><blockquote class="jd-testimonial"><div class="jd-stars"><?php echo str_repeat( jawad_dev_svg( 'star' ), 5 ); ?></div><p>“<?php echo esc_html( $item[0] ); ?>”</p><cite><?php echo esc_html( $item[1] ); ?></cite></blockquote><?php endforeach; ?></div></div></section><?php
+	?><section id="testimonials" class="jd-section"><div class="jd-container"><?php echo jawad_dev_section_heading( $a, 'testimonials-h' ); ?><div class="jd-card-grid jd-card-grid--three" data-reveal-group><?php foreach ( $items as $item ) : ?><blockquote class="jd-testimonial"><div class="jd-stars"><?php echo str_repeat( jawad_dev_svg( 'star' ), 5 ); ?></div><p>“<?php echo esc_html( $item['quote'] ?? ( $item[0] ?? '' ) ); ?>”</p><cite><?php echo esc_html( $item['author'] ?? ( $item[1] ?? '' ) ); ?></cite></blockquote><?php endforeach; ?></div></div></section><?php
 	return ob_get_clean();
 }
 
 function jawad_dev_render_faq( array $a ): string {
-	$items = array(
-		array( 'Do you build complete WordPress websites?', 'Yes, I build complete WordPress websites for businesses, agencies, coaches, eCommerce stores, and service providers. I can design, develop, optimize, and launch the full website.' ),
-		array( 'Can you fix WordPress issues or bugs?', 'Yes, I can fix WordPress bugs, layout issues, Elementor problems, WooCommerce errors, plugin conflicts, responsive issues, and speed problems.' ),
-		array( 'Do you work with Elementor?', 'Yes, I work with Elementor and Elementor Pro to build custom, responsive, and easy-to-manage WordPress websites and landing pages.' ),
-		array( 'Can you improve my WordPress website speed?', 'Yes, I can optimize WordPress speed by checking images, plugins, cache settings, theme performance, scripts, and Core Web Vitals basics.' ),
-		array( 'Do you build WooCommerce stores?', 'Yes, I can set up and customize WooCommerce stores, product pages, cart, checkout, payment settings, and store layouts.' ),
-		array( 'Can you convert Figma designs to WordPress?', 'Yes, I can convert Figma designs into responsive WordPress websites using Elementor, custom themes, or clean frontend development depending on the project.' ),
-	);
+	$items = jawad_dev_attr_items( $a, jawad_dev_faq_items() );
 	ob_start();
-	?><section id="faq" class="jd-section"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'faq-h' ); ?><div class="jd-faq" data-reveal-group><?php foreach ( $items as $item ) : ?><details><summary><h3><?php echo esc_html( $item[0] ); ?></h3><span class="faq-x">+</span></summary><p><?php echo esc_html( $item[1] ); ?></p></details><?php endforeach; ?></div></div></section><?php
+	?><section id="faq" class="jd-section"><div class="jd-container jd-narrow"><?php echo jawad_dev_section_heading( $a, 'faq-h' ); ?><div class="jd-faq" data-reveal-group><?php foreach ( $items as $item ) : ?><details><summary><h3><?php echo esc_html( $item['question'] ?? ( $item[0] ?? '' ) ); ?></h3><span class="faq-x">+</span></summary><p><?php echo esc_html( $item['answer'] ?? ( $item[1] ?? '' ) ); ?></p></details><?php endforeach; ?></div></div></section><?php
 	return ob_get_clean();
 }
 
 function jawad_dev_render_cta( array $a ): string {
 	ob_start();
-	?><section id="contact" class="jd-section jd-cta"><div class="jd-container"><div class="jd-cta__box" data-reveal><h2><?php echo esc_html( $a['title'] ); ?></h2><p><?php echo esc_html( $a['description'] ); ?></p><div class="jd-actions"><a class="jd-btn jd-open-form jd-hire-anim-lg" href="#contact"><?php echo esc_html( $a['buttonText'] ); ?></a><a class="jd-btn jd-btn--ghost jd-open-form" href="#contact"><?php echo esc_html( $a['secondaryText'] ); ?></a></div></div></div></section><?php
+	?><section id="contact" class="jd-section jd-cta"><div class="jd-container"><div class="jd-cta__box" data-reveal><h2><?php echo esc_html( $a['title'] ); ?></h2><p><?php echo esc_html( $a['description'] ); ?></p><div class="jd-actions"><a class="jd-btn jd-open-form jd-hire-anim-lg" href="<?php echo esc_url( $a['buttonUrl'] ); ?>"><?php echo esc_html( $a['buttonText'] ); ?></a><a class="jd-btn jd-btn--ghost jd-open-form" href="<?php echo esc_url( $a['secondaryUrl'] ); ?>"><?php echo esc_html( $a['secondaryText'] ); ?></a></div></div></div></section><?php
 	return ob_get_clean();
 }
 

@@ -26,35 +26,22 @@
       "type": "string",
       "default": "What Clients Say"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "quote": "Jawad delivered a fast, clean WordPress site and explained everything clearly.",
+          "author": "Business Owner"
+        },
+        {
+          "quote": "Our WooCommerce checkout is smoother and the site feels much faster.",
+          "author": "Store Founder"
+        },
+        {
+          "quote": "Reliable, technical, and easy to work with from design to launch.",
+          "author": "Agency Partner"
+        }
+      ]
     }
   },
   "name": "jawad-dev/testimonials",

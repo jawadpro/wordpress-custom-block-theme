@@ -26,35 +26,34 @@
       "type": "string",
       "default": "Frequently Asked Questions"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "question": "Do you build complete WordPress websites?",
+          "answer": "Yes, I build complete WordPress websites for businesses, agencies, coaches, eCommerce stores, and service providers. I can design, develop, optimize, and launch the full website."
+        },
+        {
+          "question": "Can you fix WordPress issues or bugs?",
+          "answer": "Yes, I can fix WordPress bugs, layout issues, Elementor problems, WooCommerce errors, plugin conflicts, responsive issues, and speed problems."
+        },
+        {
+          "question": "Do you work with Elementor?",
+          "answer": "Yes, I work with Elementor and Elementor Pro to build custom, responsive, and easy-to-manage WordPress websites and landing pages."
+        },
+        {
+          "question": "Can you improve my WordPress website speed?",
+          "answer": "Yes, I can optimize WordPress speed by checking images, plugins, cache settings, theme performance, scripts, and Core Web Vitals basics."
+        },
+        {
+          "question": "Do you build WooCommerce stores?",
+          "answer": "Yes, I can set up and customize WooCommerce stores, product pages, cart, checkout, payment settings, and store layouts."
+        },
+        {
+          "question": "Can you convert Figma designs to WordPress?",
+          "answer": "Yes, I can convert Figma designs into responsive WordPress websites using Elementor, custom themes, or clean frontend development depending on the project."
+        }
+      ]
     }
   },
   "name": "jawad-dev/faq",

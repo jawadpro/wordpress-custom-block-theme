@@ -26,35 +26,30 @@
       "type": "string",
       "default": "Built for Real Business Needs"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Business Websites",
+          "text": "Professional websites for companies, consultants, and service providers.",
+          "icon": "solution-1"
+        },
+        {
+          "title": "Landing Pages",
+          "text": "High-converting pages for coaches, SaaS, campaigns, and lead generation.",
+          "icon": "solution-2"
+        },
+        {
+          "title": "WooCommerce Stores",
+          "text": "Clean product pages, checkout setup, payment settings, and store optimization.",
+          "icon": "solution-3"
+        },
+        {
+          "title": "Website Fixes & Optimization",
+          "text": "For slow, broken, outdated, or poorly designed WordPress websites.",
+          "icon": "solution-4"
+        }
+      ]
     }
   },
   "name": "jawad-dev/solutions",

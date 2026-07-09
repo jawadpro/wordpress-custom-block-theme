@@ -30,33 +30,9 @@
       "type": "string",
       "default": "A few representative WordPress builds, optimization projects, and WooCommerce improvements."
     },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
     "postsToShow": {
       "type": "number",
       "default": 4
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
     }
   },
   "name": "jawad-dev/projects",

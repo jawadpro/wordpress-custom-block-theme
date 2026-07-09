@@ -187,6 +187,9 @@ a:hover { color: #bae6fd; }
 .jd-orb--hero-a { top: -220px; left: 50%; transform: translateX(-50%); width: 900px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.28), transparent); }
 .jd-orb--hero-b { top: 10%; right: -180px; width: 560px; height: 560px; background: radial-gradient(closest-side, rgba(139,92,246,.16), transparent); }
 .jd-orb--left { top: 20%; left: -200px; width: 520px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.14), transparent); }
+.jd-editor-repeater-item { margin: 0 0 16px; padding: 12px; border: 1px solid #dcdcde; border-radius: 6px; background: #fff; }
+.jd-editor-repeater-item > strong { display: block; margin-bottom: 12px; }
+.jd-editor-repeater-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
 @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes floatY2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); } 50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }

@@ -18,45 +18,29 @@
       "type": "boolean",
       "default": true
     },
-    "eyebrow": {
-      "type": "string"
-    },
     "title": {
       "type": "string",
       "default": "Have a WordPress project in mind?"
     },
     "description": {
       "type": "string",
-      "default": "Tell me what you want to build, fix, or improve. I\u2019ll help you choose the right approach and next steps."
+      "default": "Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps."
     },
     "buttonText": {
       "type": "string",
       "default": "Hire Me Now"
     },
     "buttonUrl": {
-      "type": "string"
+      "type": "string",
+      "default": "#contact"
     },
     "secondaryText": {
       "type": "string",
       "default": "Discuss Your Project"
     },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "secondaryUrl": {
+      "type": "string",
+      "default": "#contact"
     }
   },
   "name": "jawad-dev/cta",

@@ -26,35 +26,53 @@
       "type": "string",
       "default": "Website Development Packages"
     },
-    "description": {
-      "type": "string"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Landing Page",
+          "price": "$500 - $1,500",
+          "text": "One focused conversion page",
+          "features": [
+            "Custom layout",
+            "Responsive design",
+            "Contact form/CTA setup",
+            "Basic SEO setup"
+          ],
+          "buttonText": "Build My Landing Page",
+          "service": "landing",
+          "featured": false
+        },
+        {
+          "title": "Business Website",
+          "price": "$1,500 - $3,500",
+          "text": "Complete website for service businesses",
+          "features": [
+            "Homepage + inner pages",
+            "Elementor or block editor setup",
+            "Contact forms",
+            "Speed and SEO basics",
+            "Launch support"
+          ],
+          "buttonText": "Start My Website",
+          "service": "site",
+          "featured": true
+        },
+        {
+          "title": "WooCommerce Store",
+          "price": "$3,500 - $6,000",
+          "text": "Store setup and conversion cleanup",
+          "features": [
+            "Product and checkout setup",
+            "Payment/shipping configuration",
+            "Mobile store layout",
+            "Basic performance optimization"
+          ],
+          "buttonText": "Build My Store",
+          "service": "store",
+          "featured": false
+        }
+      ]
     }
   },
   "name": "jawad-dev/packages",

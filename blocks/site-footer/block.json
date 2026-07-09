@@ -18,43 +18,13 @@
       "type": "boolean",
       "default": true
     },
-    "eyebrow": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string",
-      "default": "WordPress Developer & Full-Stack Web Designer"
-    },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
     "brand": {
       "type": "string",
       "default": "Jawad Ilyas"
     },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "description": {
+      "type": "string",
+      "default": "WordPress Developer & Full-Stack Web Designer"
     }
   },
   "name": "jawad-dev/site-footer",

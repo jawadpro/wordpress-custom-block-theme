@@ -29,15 +29,254 @@
 		'contact-modal': 'JD Contact Modal'
 	};
 
-	const copyFields = [
-		[ 'brand', __( 'Brand', 'jawad-dev' ) ],
-		[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
-		[ 'title', __( 'Title', 'jawad-dev' ) ],
-		[ 'description', __( 'Description', 'jawad-dev' ), 'textarea' ],
-		[ 'buttonText', __( 'Primary Button', 'jawad-dev' ) ],
-		[ 'secondaryText', __( 'Secondary Button', 'jawad-dev' ) ],
-		[ 'ctaText', __( 'Header CTA', 'jawad-dev' ) ]
-	];
+	const sectionFields = {
+		'site-header': [
+			[ 'brand', __( 'Brand', 'jawad-dev' ) ],
+			[ 'ctaText', __( 'CTA text', 'jawad-dev' ) ]
+		],
+		hero: [
+			[ 'eyebrow', __( 'Badge text', 'jawad-dev' ) ],
+			[ 'title', __( 'Headline', 'jawad-dev' ) ],
+			[ 'description', __( 'Intro text', 'jawad-dev' ), 'textarea' ],
+			[ 'buttonText', __( 'Primary button text', 'jawad-dev' ) ],
+			[ 'buttonUrl', __( 'Primary button URL', 'jawad-dev' ) ],
+			[ 'secondaryText', __( 'Secondary button text', 'jawad-dev' ) ],
+			[ 'secondaryUrl', __( 'Secondary button URL', 'jawad-dev' ) ]
+		],
+		services: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ],
+			[ 'description', __( 'Intro text', 'jawad-dev' ), 'textarea' ]
+		],
+		why: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		solutions: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		process: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		packages: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		projects: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ],
+			[ 'description', __( 'Intro text', 'jawad-dev' ), 'textarea' ]
+		],
+		stack: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		testimonials: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		faq: [
+			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
+			[ 'title', __( 'Heading', 'jawad-dev' ) ]
+		],
+		cta: [
+			[ 'title', __( 'Heading', 'jawad-dev' ) ],
+			[ 'description', __( 'Intro text', 'jawad-dev' ), 'textarea' ],
+			[ 'buttonText', __( 'Primary button text', 'jawad-dev' ) ],
+			[ 'buttonUrl', __( 'Primary button URL', 'jawad-dev' ) ],
+			[ 'secondaryText', __( 'Secondary button text', 'jawad-dev' ) ],
+			[ 'secondaryUrl', __( 'Secondary button URL', 'jawad-dev' ) ]
+		],
+		'site-footer': [
+			[ 'brand', __( 'Brand', 'jawad-dev' ) ],
+			[ 'description', __( 'Description', 'jawad-dev' ), 'textarea' ]
+		]
+	};
+
+	const repeaterConfigs = {
+		hero: {
+			key: 'stats',
+			title: __( 'Hero Stats', 'jawad-dev' ),
+			addLabel: __( 'Add stat', 'jawad-dev' ),
+			empty: { value: '100+', label: 'Result' },
+			fields: [
+				[ 'value', __( 'Value', 'jawad-dev' ) ],
+				[ 'label', __( 'Label', 'jawad-dev' ) ]
+			]
+		},
+		services: {
+			key: 'items',
+			title: __( 'Service Cards', 'jawad-dev' ),
+			addLabel: __( 'Add service', 'jawad-dev' ),
+			empty: { title: 'New Service', text: '', code: '', icon: 'service-1' },
+			fields: [
+				[ 'title', __( 'Service title', 'jawad-dev' ) ],
+				[ 'text', __( 'Description', 'jawad-dev' ), 'textarea' ],
+				[ 'code', __( 'Code label', 'jawad-dev' ) ],
+				[ 'icon', __( 'Icon key', 'jawad-dev' ) ]
+			]
+		},
+		why: {
+			key: 'items',
+			title: __( 'Checklist Items', 'jawad-dev' ),
+			addLabel: __( 'Add item', 'jawad-dev' ),
+			empty: { text: 'New reason' },
+			fields: [ [ 'text', __( 'Reason', 'jawad-dev' ), 'textarea' ] ]
+		},
+		solutions: {
+			key: 'items',
+			title: __( 'Solution Cards', 'jawad-dev' ),
+			addLabel: __( 'Add solution', 'jawad-dev' ),
+			empty: { title: 'New Solution', text: '', icon: 'solution-1' },
+			fields: [
+				[ 'title', __( 'Solution title', 'jawad-dev' ) ],
+				[ 'text', __( 'Description', 'jawad-dev' ), 'textarea' ],
+				[ 'icon', __( 'Icon key', 'jawad-dev' ) ]
+			]
+		},
+		process: {
+			key: 'items',
+			title: __( 'Process Steps', 'jawad-dev' ),
+			addLabel: __( 'Add step', 'jawad-dev' ),
+			empty: { number: '05', title: 'New Step', text: '' },
+			fields: [
+				[ 'number', __( 'Step number', 'jawad-dev' ) ],
+				[ 'title', __( 'Step title', 'jawad-dev' ) ],
+				[ 'text', __( 'Description', 'jawad-dev' ), 'textarea' ]
+			]
+		},
+		packages: {
+			key: 'items',
+			title: __( 'Packages', 'jawad-dev' ),
+			addLabel: __( 'Add package', 'jawad-dev' ),
+			empty: { title: 'New Package', price: '$0', text: '', features: [], buttonText: 'Start Project', service: 'site', featured: false },
+			fields: [
+				[ 'title', __( 'Package title', 'jawad-dev' ) ],
+				[ 'price', __( 'Price range', 'jawad-dev' ) ],
+				[ 'text', __( 'Short description', 'jawad-dev' ), 'textarea' ],
+				[ 'features', __( 'Features', 'jawad-dev' ), 'lines' ],
+				[ 'buttonText', __( 'Button text', 'jawad-dev' ) ],
+				[ 'service', __( 'Form service key', 'jawad-dev' ) ],
+				[ 'featured', __( 'Featured package', 'jawad-dev' ), 'toggle' ]
+			]
+		},
+		stack: {
+			key: 'items',
+			title: __( 'Stack Items', 'jawad-dev' ),
+			addLabel: __( 'Add tool', 'jawad-dev' ),
+			empty: { text: 'New Tool' },
+			fields: [ [ 'text', __( 'Tool name', 'jawad-dev' ) ] ]
+		},
+		testimonials: {
+			key: 'items',
+			title: __( 'Testimonials', 'jawad-dev' ),
+			addLabel: __( 'Add testimonial', 'jawad-dev' ),
+			empty: { quote: 'Client feedback goes here.', author: 'Client Name' },
+			fields: [
+				[ 'quote', __( 'Quote', 'jawad-dev' ), 'textarea' ],
+				[ 'author', __( 'Author', 'jawad-dev' ) ]
+			]
+		},
+		faq: {
+			key: 'items',
+			title: __( 'FAQ Items', 'jawad-dev' ),
+			addLabel: __( 'Add FAQ', 'jawad-dev' ),
+			empty: { question: 'New question?', answer: 'Answer text.' },
+			fields: [
+				[ 'question', __( 'Question', 'jawad-dev' ) ],
+				[ 'answer', __( 'Answer', 'jawad-dev' ), 'textarea' ]
+			]
+		}
+	};
+
+	function fieldControl( attrs, set, field ) {
+		const Control = field[ 2 ] === 'textarea' ? TextareaControl : TextControl;
+		return el( Control, {
+			key: field[ 0 ],
+			label: field[ 1 ],
+			value: attrs[ field[ 0 ] ] || '',
+			onChange: set( field[ 0 ] )
+		} );
+	}
+
+	function repeaterControls( attrs, setAttributes, config ) {
+		const items = Array.isArray( attrs[ config.key ] ) ? attrs[ config.key ] : [];
+		const updateItem = function ( index, field, value ) {
+			const next = items.slice();
+			next[ index ] = Object.assign( {}, next[ index ], { [ field ]: value } );
+			setAttributes( { [ config.key ]: next } );
+		};
+		const removeItem = function ( index ) {
+			setAttributes( { [ config.key ]: items.filter( function ( item, i ) { return i !== index; } ) } );
+		};
+		const moveItem = function ( index, direction ) {
+			const target = index + direction;
+			if ( target < 0 || target >= items.length ) {
+				return;
+			}
+			const next = items.slice();
+			const current = next[ index ];
+			next[ index ] = next[ target ];
+			next[ target ] = current;
+			setAttributes( { [ config.key ]: next } );
+		};
+
+		return el( PanelBody, { title: config.title, initialOpen: false },
+			items.map( function ( item, index ) {
+				const itemFields = config.fields.map( function ( field ) {
+					const type = field[ 2 ];
+					const value = item && item[ field[ 0 ] ] !== undefined ? item[ field[ 0 ] ] : '';
+					if ( type === 'toggle' ) {
+						return el( ToggleControl, {
+							key: field[ 0 ],
+							label: field[ 1 ],
+							checked: !! value,
+							onChange: function ( next ) {
+								updateItem( index, field[ 0 ], next );
+							}
+						} );
+					}
+					if ( type === 'lines' ) {
+						return el( TextareaControl, {
+							key: field[ 0 ],
+							label: field[ 1 ],
+							value: Array.isArray( value ) ? value.join( '\n' ) : value,
+							onChange: function ( next ) {
+								updateItem( index, field[ 0 ], next.split( /\r\n|\r|\n/ ).filter( Boolean ) );
+							}
+						} );
+					}
+					const Control = type === 'textarea' ? TextareaControl : TextControl;
+					return el( Control, {
+						key: field[ 0 ],
+						label: field[ 1 ],
+						value: value,
+						onChange: function ( next ) {
+							updateItem( index, field[ 0 ], next );
+						}
+					} );
+				} );
+
+				return el( 'div', { key: index, className: 'jd-editor-repeater-item' },
+					el( 'strong', {}, config.title + ' #' + ( index + 1 ) ),
+					itemFields,
+					el( 'div', { className: 'jd-editor-repeater-actions' },
+						el( Button, { variant: 'secondary', onClick: function () { moveItem( index, -1 ); }, disabled: index === 0 }, __( 'Up', 'jawad-dev' ) ),
+						el( Button, { variant: 'secondary', onClick: function () { moveItem( index, 1 ); }, disabled: index === items.length - 1 }, __( 'Down', 'jawad-dev' ) ),
+						el( Button, { variant: 'link', isDestructive: true, onClick: function () { removeItem( index ); } }, __( 'Remove', 'jawad-dev' ) )
+					)
+				);
+			} ),
+			el( Button, {
+				variant: 'primary',
+				onClick: function () {
+					setAttributes( { [ config.key ]: items.concat( [ Object.assign( {}, config.empty ) ] ) } );
+				}
+			}, config.addLabel )
+		);
+	}
 
 	Object.keys( sections ).forEach( function ( slug ) {
 		const name = 'jawad-dev/' + slug;
@@ -52,39 +291,25 @@
 					};
 				};
 
-				const controls = [
+				const sectionControls = [
 					el( ToggleControl, {
 						key: 'enabled',
 						label: __( 'Show this section', 'jawad-dev' ),
 						checked: attrs.enabled !== false,
 						onChange: set( 'enabled' )
 					} )
-				];
-
-				copyFields.forEach( function ( field ) {
-					if ( attrs[ field[ 0 ] ] === undefined && [ 'site-header', 'site-footer' ].indexOf( slug ) === -1 && field[ 0 ] === 'brand' ) {
-						return;
-					}
-					if ( attrs[ field[ 0 ] ] === undefined && slug !== 'site-header' && field[ 0 ] === 'ctaText' ) {
-						return;
-					}
-					const Control = field[ 2 ] === 'textarea' ? TextareaControl : TextControl;
-					controls.push( el( Control, {
-						key: field[ 0 ],
-						label: field[ 1 ],
-						value: attrs[ field[ 0 ] ] || '',
-						onChange: set( field[ 0 ] )
-					} ) );
-				} );
+				].concat( ( sectionFields[ slug ] || [] ).map( function ( field ) {
+					return fieldControl( attrs, set, field );
+				} ) );
 
 				if ( slug === 'hero' ) {
-					controls.push( el( ToggleControl, {
+					sectionControls.push( el( ToggleControl, {
 						key: 'showBadge',
-						label: __( 'Show availability badge', 'jawad-dev' ),
+						label: __( 'Show badge', 'jawad-dev' ),
 						checked: attrs.showBadge !== false,
 						onChange: set( 'showBadge' )
 					} ) );
-					controls.push( el( MediaUploadCheck, { key: 'media-check' },
+					sectionControls.push( el( MediaUploadCheck, { key: 'media-check' },
 						el( MediaUpload, {
 							onSelect: function ( media ) {
 								props.setAttributes( { imageId: media.id, imageUrl: media.url } );
@@ -99,7 +324,7 @@
 				}
 
 				if ( slug === 'projects' ) {
-					controls.push( el( RangeControl, {
+					sectionControls.push( el( RangeControl, {
 						key: 'postsToShow',
 						label: __( 'Projects to show', 'jawad-dev' ),
 						min: 1,
@@ -111,7 +336,8 @@
 
 				return el( 'div', { className: 'jawad-dev-editor-preview' },
 					el( InspectorControls, {},
-						el( PanelBody, { title: __( 'Section Settings', 'jawad-dev' ), initialOpen: true }, controls )
+						el( PanelBody, { title: __( 'Section Settings', 'jawad-dev' ), initialOpen: true }, sectionControls ),
+						repeaterConfigs[ slug ] ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ slug ] ) : null
 					),
 					el( ServerSideRender, { block: name, attributes: attrs } )
 				);

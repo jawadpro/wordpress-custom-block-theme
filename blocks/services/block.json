@@ -30,32 +30,70 @@
       "type": "string",
       "default": "From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites."
     },
-    "buttonText": {
-      "type": "string"
-    },
-    "buttonUrl": {
-      "type": "string"
-    },
-    "secondaryText": {
-      "type": "string"
-    },
-    "brand": {
-      "type": "string"
-    },
-    "ctaText": {
-      "type": "string"
-    },
-    "postsToShow": {
-      "type": "number"
-    },
-    "showBadge": {
-      "type": "boolean"
-    },
-    "imageId": {
-      "type": "number"
-    },
-    "imageUrl": {
-      "type": "string"
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Custom WordPress Website Design",
+          "text": "Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.",
+          "code": "wp_custom_build()",
+          "icon": "service-1"
+        },
+        {
+          "title": "Elementor & Elementor Pro Development",
+          "text": "Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.",
+          "code": "elementor.pro",
+          "icon": "service-2"
+        },
+        {
+          "title": "WooCommerce Store Development",
+          "text": "Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.",
+          "code": "woocommerce_store()",
+          "icon": "service-3"
+        },
+        {
+          "title": "WordPress Bug Fixing",
+          "text": "Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.",
+          "code": "debug_wp_issue()",
+          "icon": "service-4"
+        },
+        {
+          "title": "WordPress Speed Optimization",
+          "text": "Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.",
+          "code": "optimize_assets()",
+          "icon": "service-5"
+        },
+        {
+          "title": "Figma to WordPress",
+          "text": "Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.",
+          "code": "figma_to_wp()",
+          "icon": "service-6"
+        },
+        {
+          "title": "Landing Page Design",
+          "text": "Focused pages for services, products, ads, and lead generation with clear CTAs.",
+          "code": "landing_page()",
+          "icon": "service-7"
+        },
+        {
+          "title": "Maintenance & Security",
+          "text": "Updates, backups, malware cleanup, monitoring, and dependable ongoing care.",
+          "code": "site_care()",
+          "icon": "service-8"
+        },
+        {
+          "title": "ACF, CPT & Custom Theme Development",
+          "text": "Custom post types, flexible fields, and lightweight custom themes built with clean PHP.",
+          "code": "register_post_type()",
+          "icon": "service-9"
+        },
+        {
+          "title": "API Integration & Automation",
+          "text": "CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.",
+          "code": "POST /api/v1/connect",
+          "icon": "service-10"
+        }
+      ]
     }
   },
   "name": "jawad-dev/services",
