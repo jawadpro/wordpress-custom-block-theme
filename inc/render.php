@@ -339,6 +339,33 @@ function jawad_dev_gravity_dynamic_field_classes( array $form ): array {
 	return $form;
 }
 
+function jawad_dev_render_gravity_form( int $form_id, array $gravity_params ): string {
+	if ( ! function_exists( 'gravity_form' ) ) {
+		return '<div class="jd-form-alert">' . esc_html__( 'Gravity Forms is selected, but the Gravity Forms plugin is not active or is not loaded.', 'jawad-dev' ) . '</div>';
+	}
+
+	if ( class_exists( 'GFAPI' ) ) {
+		$form = GFAPI::get_form( $form_id );
+		if ( empty( $form ) ) {
+			return '<div class="jd-form-alert">' . sprintf( esc_html__( 'Gravity Form ID %d was not found. Check the form ID in the Contact Modal block settings.', 'jawad-dev' ), $form_id ) . '</div>';
+		}
+	}
+
+	$GLOBALS['jawad_dev_gravity_param_map'] = $gravity_params;
+	$markup = gravity_form( $form_id, false, false, true, null, true, 0, false );
+	unset( $GLOBALS['jawad_dev_gravity_param_map'] );
+
+	if ( '' === trim( (string) $markup ) && shortcode_exists( 'gravityform' ) ) {
+		$markup = do_shortcode( sprintf( '[gravityform id="%d" title="false" description="false" ajax="true"]', $form_id ) );
+	}
+
+	if ( '' === trim( (string) $markup ) ) {
+		return '<div class="jd-form-alert">' . sprintf( esc_html__( 'Gravity Form ID %d did not return any markup. Make sure the form exists and is not trashed.', 'jawad-dev' ), $form_id ) . '</div>';
+	}
+
+	return $markup;
+}
+
 function jawad_dev_render_services( array $a ): string {
 	return jawad_dev_render_card_grid( 'services', 'services-h', $a, jawad_dev_attr_items( $a, jawad_dev_cards_services() ), 'jd-card--service' );
 }
@@ -508,13 +535,13 @@ function jawad_dev_render_site_footer( array $a ): string {
 
 function jawad_dev_render_contact_modal( array $a ): string {
 	$form_id     = isset( $a['gravityFormId'] ) ? absint( $a['gravityFormId'] ) : 0;
-	$use_gravity = 'gravity' === ( $a['formProvider'] ?? 'builtin' ) && $form_id && function_exists( 'gravity_form' );
+	$use_gravity = 'gravity' === ( $a['formProvider'] ?? 'builtin' );
 	$gravity_params = array(
 		'service'  => sanitize_key( $a['gravityServiceParam'] ?? 'service' ) ?: 'service',
 		'budget'   => sanitize_key( $a['gravityBudgetParam'] ?? 'budget' ) ?: 'budget',
 		'timeline' => sanitize_key( $a['gravityTimelineParam'] ?? 'timeline' ) ?: 'timeline',
 	);
-	if ( $use_gravity && function_exists( 'gravity_form_enqueue_scripts' ) ) {
+	if ( $use_gravity && $form_id && function_exists( 'gravity_form_enqueue_scripts' ) ) {
 		gravity_form_enqueue_scripts( $form_id, true );
 	}
 	ob_start();
@@ -532,9 +559,11 @@ function jawad_dev_render_contact_modal( array $a ): string {
 							<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
 							<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
 							<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
-							<?php $GLOBALS['jawad_dev_gravity_param_map'] = $gravity_params; ?>
-							<?php echo gravity_form( $form_id, false, false, false, null, true, 0, false ); ?>
-							<?php unset( $GLOBALS['jawad_dev_gravity_param_map'] ); ?>
+							<?php if ( $form_id ) : ?>
+								<?php echo jawad_dev_render_gravity_form( $form_id, $gravity_params ); ?>
+							<?php else : ?>
+								<div class="jd-form-alert"><?php esc_html_e( 'Gravity Forms is selected, but no Gravity Form ID is set in the Contact Modal block.', 'jawad-dev' ); ?></div>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>

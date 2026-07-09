@@ -220,6 +220,7 @@ a:hover { color: #bae6fd; }
 .jd-gravity-form .gform_footer { margin: 22px 0 0 !important; padding: 22px 0 0 !important; border-top: 1px solid rgba(148,163,184,.1); }
 .jd-gravity-form .gform_button, .jd-gravity-form button[type="submit"] { font-family: "Space Grotesk" !important; font-weight: 600 !important; border: 0 !important; border-radius: 11px !important; cursor: pointer; padding: 13px 26px !important; color: #fff !important; background: linear-gradient(120deg, #2563eb, #06b6d4) !important; box-shadow: 0 8px 26px -10px rgba(37,99,235,.8) !important; }
 .jd-gravity-form .gform_confirmation_message { padding: 24px; border-radius: 16px; border: 1px solid rgba(52,211,153,.35); background: rgba(52,211,153,.08); color: #a7f3d0; line-height: 1.7; text-align: center; }
+.jd-form-alert { padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(251,191,36,.32); background: rgba(251,191,36,.08); color: #fde68a; line-height: 1.6; }
 .jd-orb { position: absolute; pointer-events: none; filter: blur(50px); border-radius: 50%; }
 .jd-orb--hero-a { top: -220px; left: 50%; transform: translateX(-50%); width: 900px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.28), transparent); }
 .jd-orb--hero-b { top: 10%; right: -180px; width: 560px; height: 560px; background: radial-gradient(closest-side, rgba(139,92,246,.16), transparent); }
