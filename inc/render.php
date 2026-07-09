@@ -69,8 +69,6 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'buttonUrl' => '#contact', 'secondaryText' => 'Discuss Your Project', 'secondaryUrl' => '#contact' ),
 		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
 		'contact-modal' => array(
-			'recipient'      => get_option( 'admin_email' ),
-			'formProvider'   => 'builtin',
 			'gravityFormId'  => 0,
 			'modalTitle'     => 'Start a project request',
 			'modalSubtitle'  => 'Tell me what you need and I’ll reply with next steps.',
@@ -535,49 +533,37 @@ function jawad_dev_render_site_footer( array $a ): string {
 
 function jawad_dev_render_contact_modal( array $a ): string {
 	$form_id     = isset( $a['gravityFormId'] ) ? absint( $a['gravityFormId'] ) : 0;
-	$use_gravity = 'gravity' === ( $a['formProvider'] ?? 'builtin' );
 	$gravity_params = array(
 		'service'  => sanitize_key( $a['gravityServiceParam'] ?? 'service' ) ?: 'service',
 		'budget'   => sanitize_key( $a['gravityBudgetParam'] ?? 'budget' ) ?: 'budget',
 		'timeline' => sanitize_key( $a['gravityTimelineParam'] ?? 'timeline' ) ?: 'timeline',
 	);
-	if ( $use_gravity && $form_id && function_exists( 'gravity_form_enqueue_scripts' ) ) {
+	if ( $form_id && function_exists( 'gravity_form_enqueue_scripts' ) ) {
 		gravity_form_enqueue_scripts( $form_id, true );
 	}
 	ob_start();
 	?>
-	<div class="jd-modal <?php echo $use_gravity ? 'jd-modal--gravity' : ''; ?>" data-gf-service-param="<?php echo esc_attr( $gravity_params['service'] ); ?>" data-gf-budget-param="<?php echo esc_attr( $gravity_params['budget'] ); ?>" data-gf-timeline-param="<?php echo esc_attr( $gravity_params['timeline'] ); ?>" hidden>
+	<div class="jd-modal jd-modal--gravity" data-gf-service-param="<?php echo esc_attr( $gravity_params['service'] ); ?>" data-gf-budget-param="<?php echo esc_attr( $gravity_params['budget'] ); ?>" data-gf-timeline-param="<?php echo esc_attr( $gravity_params['timeline'] ); ?>" hidden>
 		<div class="jd-modal__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Start a project request', 'jawad-dev' ); ?>">
 			<div class="jd-window-dots"><span></span><span></span><span></span><em>~/new-project-request</em><button type="button" class="jd-modal__close" aria-label="<?php esc_attr_e( 'Close form', 'jawad-dev' ); ?>">×</button></div>
 			<div class="jd-progress"><span></span></div>
-			<?php if ( $use_gravity ) : ?>
-				<div class="jd-form jd-form--gravity">
-					<div class="jd-form__step" data-step="1"><div class="jd-eyebrow">&gt; step_1: project_type</div><h3>What do you need built?</h3><p>Pick the closest match. Your answer will be attached to the final request.</p><div class="jd-choice-grid"><?php foreach ( array( 'site' => 'Full Website', 'landing' => 'Landing Page', 'store' => 'WooCommerce Store', 'automation' => 'AI Automation', 'fix' => 'Fix & Optimize', 'other' => 'Something Else' ) as $key => $label ) : ?><button type="button" data-name="service" data-value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?><span><?php echo esc_html( $key ); ?></span></button><?php endforeach; ?></div></div>
-					<div class="jd-form__step" data-step="2" hidden><div class="jd-eyebrow">&gt; step_2: scope</div><h3>Budget & timeline</h3><p>A rough range is fine. These values go into hidden Gravity Forms fields.</p><label>budget_range *</label><div class="jd-chip-row"><?php foreach ( array( '$500 – $1,500', '$1,500 – $3,500', '$3,500 – $6,000', '$6,000+' ) as $value ) : ?><button type="button" data-name="budget" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div><label>timeline *</label><div class="jd-chip-row"><?php foreach ( array( 'ASAP', '1–2 weeks', 'This month', 'Flexible' ) as $value ) : ?><button type="button" data-name="timeline" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div></div>
-					<div class="jd-form__step jd-form__step--gravity" data-step="3" hidden>
-						<div class="jd-gravity-form">
-							<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
-							<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
-							<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
-							<?php if ( $form_id ) : ?>
-								<?php echo jawad_dev_render_gravity_form( $form_id, $gravity_params ); ?>
-							<?php else : ?>
-								<div class="jd-form-alert"><?php esc_html_e( 'Gravity Forms is selected, but no Gravity Form ID is set in the Contact Modal block.', 'jawad-dev' ); ?></div>
-							<?php endif; ?>
-						</div>
+			<div class="jd-form jd-form--gravity">
+				<div class="jd-form__step" data-step="1"><div class="jd-eyebrow">&gt; step_1: project_type</div><h3>What do you need built?</h3><p>Pick the closest match. Your answer will be attached to the final request.</p><div class="jd-choice-grid"><?php foreach ( array( 'site' => 'Full Website', 'landing' => 'Landing Page', 'store' => 'WooCommerce Store', 'automation' => 'AI Automation', 'fix' => 'Fix & Optimize', 'other' => 'Something Else' ) as $key => $label ) : ?><button type="button" data-name="service" data-value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?><span><?php echo esc_html( $key ); ?></span></button><?php endforeach; ?></div></div>
+				<div class="jd-form__step" data-step="2" hidden><div class="jd-eyebrow">&gt; step_2: scope</div><h3>Budget & timeline</h3><p>A rough range is fine. These values go into hidden Gravity Forms fields.</p><label>budget_range *</label><div class="jd-chip-row"><?php foreach ( array( '$500 – $1,500', '$1,500 – $3,500', '$3,500 – $6,000', '$6,000+' ) as $value ) : ?><button type="button" data-name="budget" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div><label>timeline *</label><div class="jd-chip-row"><?php foreach ( array( 'ASAP', '1–2 weeks', 'This month', 'Flexible' ) as $value ) : ?><button type="button" data-name="timeline" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div></div>
+				<div class="jd-form__step jd-form__step--gravity" data-step="3" hidden>
+					<div class="jd-gravity-form">
+						<div class="jd-eyebrow"><?php echo esc_html( $a['gravityEyebrow'] ); ?></div>
+						<h3><?php echo esc_html( $a['modalTitle'] ); ?></h3>
+						<?php if ( ! empty( $a['modalSubtitle'] ) ) : ?><p><?php echo esc_html( $a['modalSubtitle'] ); ?></p><?php endif; ?>
+						<?php if ( $form_id ) : ?>
+							<?php echo jawad_dev_render_gravity_form( $form_id, $gravity_params ); ?>
+						<?php else : ?>
+							<div class="jd-form-alert"><?php esc_html_e( 'Add a Gravity Form ID in the Contact Modal block settings.', 'jawad-dev' ); ?></div>
+						<?php endif; ?>
 					</div>
-					<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>
 				</div>
-			<?php else : ?>
-			<form class="jd-form">
-				<input type="text" name="company_url" tabindex="-1" autocomplete="off" class="jd-hp" aria-hidden="true">
-				<div class="jd-form__step" data-step="1"><div class="jd-eyebrow">&gt; step_1: project_type</div><h3>What do you need built?</h3><p>Pick the closest match. You can explain the details later.</p><div class="jd-choice-grid"><?php foreach ( array( 'site' => 'Full Website', 'landing' => 'Landing Page', 'store' => 'WooCommerce Store', 'automation' => 'AI Automation', 'fix' => 'Fix & Optimize', 'other' => 'Something Else' ) as $key => $label ) : ?><button type="button" data-name="service" data-value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $label ); ?><span><?php echo esc_html( $key ); ?></span></button><?php endforeach; ?></div></div>
-				<div class="jd-form__step" data-step="2" hidden><div class="jd-eyebrow">&gt; step_2: scope</div><h3>Budget & timeline</h3><p>A rough range is fine.</p><label>budget_range *</label><div class="jd-chip-row"><?php foreach ( array( '$500 – $1,500', '$1,500 – $3,500', '$3,500 – $6,000', '$6,000+' ) as $value ) : ?><button type="button" data-name="budget" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div><label>timeline *</label><div class="jd-chip-row"><?php foreach ( array( 'ASAP', '1–2 weeks', 'This month', 'Flexible' ) as $value ) : ?><button type="button" data-name="timeline" data-value="<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $value ); ?></button><?php endforeach; ?></div></div>
-				<div class="jd-form__step" data-step="3" hidden><div class="jd-eyebrow">&gt; step_3: contact</div><h3>Where should I reply?</h3><p>I usually respond within 24 hours.</p><div class="jd-field-grid"><label>your_name *<input type="text" name="name" required placeholder="Jane Smith"></label><label>email *<input type="email" name="email" required placeholder="jane@company.com"></label></div><label>current_website <small>(optional)</small><input type="url" name="website" placeholder="https://"></label><label>project_details *<textarea name="message" rows="4" required placeholder="Tell me about your business and what the website needs to do..."></textarea></label></div>
-				<div class="jd-form__done" hidden><div class="jd-done-mark"><?php echo jawad_dev_svg( 'done' ); ?></div><h3>Request received!</h3><p>Thanks. I’ll review your project details and get back to you within 24 hours.</p></div>
 				<div class="jd-form__footer"><span class="jd-form__trace">&gt; awaiting_input...</span><button type="button" class="jd-form__back" hidden>← Back</button><button type="button" class="jd-form__next">Continue →</button></div>
-			</form>
-			<?php endif; ?>
+			</div>
 		</div>
 	</div>
 	<?php

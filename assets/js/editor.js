@@ -389,16 +389,6 @@
 				}
 
 				if ( slug === 'contact-modal' ) {
-					sectionControls.push( el( SelectControl, {
-						key: 'formProvider',
-						label: __( 'Form provider', 'jawad-dev' ),
-						value: attrs.formProvider || 'builtin',
-						options: [
-							{ label: __( 'Built-in AJAX form', 'jawad-dev' ), value: 'builtin' },
-							{ label: __( 'Gravity Forms', 'jawad-dev' ), value: 'gravity' }
-						],
-						onChange: set( 'formProvider' )
-					} ) );
 					sectionControls.push( el( TextControl, {
 						key: 'gravityFormId',
 						label: __( 'Gravity Form ID', 'jawad-dev' ),

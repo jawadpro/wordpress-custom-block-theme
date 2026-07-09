@@ -31,7 +31,6 @@
 		const next = qs( '.jd-form__next', modal );
 		const back = qs( '.jd-form__back', modal );
 		const trace = qs( '.jd-form__trace', modal );
-		const isGravity = modal.classList.contains( 'jd-modal--gravity' );
 
 		function open( trigger ) {
 			state.step = 1;
@@ -58,8 +57,8 @@
 			} );
 			const valid = isValid();
 			next.disabled = ! valid;
-			next.textContent = state.step === 3 ? 'Send Request ↵' : 'Continue →';
-			next.hidden = isGravity && state.step === 3;
+			next.textContent = 'Continue →';
+			next.hidden = state.step === 3;
 			back.hidden = state.step === 1;
 			progress.style.width = ( state.step === 1 ? 33 : state.step === 2 ? 66 : 92 ) + '%';
 			const parts = [];
@@ -67,7 +66,7 @@
 			if ( state.budget ) parts.push( 'budget: ' + state.budget.replace( /\s/g, '' ) );
 			if ( state.timeline ) parts.push( 'eta: ' + state.timeline.toLowerCase() );
 			trace.textContent = '> ' + ( parts.length ? parts.join( '  ·  ' ) : 'awaiting_input...' );
-			if ( isGravity && state.step === 3 ) {
+			if ( state.step === 3 ) {
 				syncGravityFields();
 				progress.style.width = '100%';
 				trace.textContent = '> selections_added_to_gravity_fields';
@@ -77,11 +76,7 @@
 		function isValid() {
 			if ( state.step === 1 ) return !! state.service;
 			if ( state.step === 2 ) return !! ( state.budget && state.timeline );
-			if ( isGravity ) return true;
-			const name = qs( '[name="name"]', form ).value.trim();
-			const email = qs( '[name="email"]', form ).value.trim();
-			const message = qs( '[name="message"]', form ).value.trim();
-			return !! ( name && email.indexOf( '@' ) > 0 && message );
+			return true;
 		}
 
 		function escapeSelectorValue( value ) {
@@ -124,39 +119,6 @@
 			setGravityValue( gravitySelectors( 'timeline' ), state.timeline );
 		}
 
-		function submit() {
-			if ( ! isValid() ) return;
-			next.disabled = true;
-			next.textContent = 'Sending...';
-			const data = new FormData( form );
-			data.append( 'action', 'jawad_dev_project_request' );
-			data.append( 'nonce', window.JawadDevForm ? window.JawadDevForm.nonce : '' );
-			data.append( 'service', state.service );
-			data.append( 'budget', state.budget );
-			data.append( 'timeline', state.timeline );
-
-			fetch( window.JawadDevForm.ajaxUrl, {
-				method: 'POST',
-				credentials: 'same-origin',
-				body: data
-			} )
-				.then( function ( res ) { return res.json(); } )
-				.then( function ( json ) {
-					if ( ! json || ! json.success ) {
-						throw new Error( json && json.data && json.data.message ? json.data.message : 'Unable to send request.' );
-					}
-					qsa( '.jd-form__step', form ).forEach( function ( step ) { step.hidden = true; } );
-					qs( '.jd-form__done', form ).hidden = false;
-					qs( '.jd-form__footer', form ).hidden = true;
-					progress.style.width = '100%';
-				} )
-				.catch( function ( err ) {
-					trace.textContent = '> error: ' + err.message;
-					next.disabled = false;
-					next.textContent = 'Send Request ↵';
-				} );
-		}
-
 		qsa( '.jd-open-form' ).forEach( function ( trigger ) {
 			trigger.addEventListener( 'click', function ( ev ) {
 				ev.preventDefault();
@@ -189,8 +151,6 @@
 					state.step += 1;
 					render();
 				}
-			} else if ( ! isGravity ) {
-				submit();
 			}
 		} );
 
