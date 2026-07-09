@@ -187,7 +187,7 @@ function jawad_dev_render_hero( array $a ): string {
 			</div>
 			<div class="jd-hero-visual">
 				<div class="jd-portrait"><?php if ( $image ) : ?><img src="<?php echo esc_url( $image ); ?>" alt="<?php esc_attr_e( 'Portrait of Jawad Ilyas', 'jawad-dev' ); ?>"><?php else : ?><div class="jd-portrait__placeholder">JI</div><?php endif; ?></div>
-				<div class="jd-float-card jd-code-card"><div class="jd-window-dots"><span></span><span></span><span></span><em>functions.php</em></div><code><b>add_action</b>('wp_head',<br><i>'optimize_site'</i>);<br><small>// speed + SEO ready</small></code></div>
+				<div class="jd-float-card jd-code-card"><div class="jd-window-dots"><span></span><span></span><span></span><em>functions.php</em></div><code><b>add_action</b>('need_website_help',<br><i>'hire_jawad'</i>);<br><small>// fast + SEO-ready</small></code></div>
 				<div class="jd-float-card jd-speed-card"><div class="jd-score"><span>98</span></div><div><strong>PageSpeed</strong><span>Core Web Vitals ✓</span></div></div>
 				<div class="jd-badge-stack"><span><?php echo jawad_dev_svg( 'wordpress' ); ?>WordPress</span><span><?php echo jawad_dev_svg( 'elementor' ); ?>Elementor</span><span><?php echo jawad_dev_svg( 'woo' ); ?>WooCommerce</span></div>
 			</div>
