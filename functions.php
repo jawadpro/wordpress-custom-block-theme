@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.1.2' );
+define( 'JAWAD_DEV_VERSION', '1.1.3' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -53,6 +53,26 @@ function jawad_dev_output_seo_fallbacks(): void {
 		),
 	);
 	echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $schema ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+
+add_action( 'wp_head', 'jawad_dev_output_site_icon_fallback', 98 );
+function jawad_dev_output_site_icon_fallback(): void {
+	if ( ! has_site_icon() ) {
+		return;
+	}
+
+	$icon_32  = get_site_icon_url( 32 );
+	$icon_180 = get_site_icon_url( 180 );
+	$icon_270 = get_site_icon_url( 270 );
+	if ( $icon_32 ) {
+		echo '<link rel="icon" href="' . esc_url( $icon_32 ) . '" sizes="32x32">' . "\n";
+	}
+	if ( $icon_180 ) {
+		echo '<link rel="apple-touch-icon" href="' . esc_url( $icon_180 ) . '">' . "\n";
+	}
+	if ( $icon_270 ) {
+		echo '<meta name="msapplication-TileImage" content="' . esc_url( $icon_270 ) . '">' . "\n";
+	}
 }
 
 function jawad_dev_has_seo_plugin(): bool {
