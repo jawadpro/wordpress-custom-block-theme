@@ -140,14 +140,30 @@
 			next.hidden = true;
 		}
 
-		qsa( '.jd-open-form' ).forEach( function ( trigger ) {
-			trigger.addEventListener( 'click', function ( ev ) {
+		function isContactTrigger( target ) {
+			const trigger = target.closest( '.jd-open-form, a[href="#contact"], a[href$="/#contact"]' );
+			if ( ! trigger ) {
+				return null;
+			}
+			const href = trigger.getAttribute( 'href' ) || '';
+			if ( trigger.classList.contains( 'jd-open-form' ) || href === '#contact' || href.endsWith( '/#contact' ) ) {
+				return trigger;
+			}
+			return null;
+		}
+
+		document.addEventListener( 'click', function ( ev ) {
+			const trigger = isContactTrigger( ev.target );
+			if ( trigger ) {
 				ev.preventDefault();
 				open( trigger );
-			} );
+			}
 		} );
 
-		qs( '.jd-modal__close', modal ).addEventListener( 'click', close );
+		const closeButton = qs( '.jd-modal__close', modal );
+		if ( closeButton ) {
+			closeButton.addEventListener( 'click', close );
+		}
 		modal.addEventListener( 'click', function ( ev ) {
 			if ( ev.target === modal ) close();
 		} );
