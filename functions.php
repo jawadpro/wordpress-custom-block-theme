@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.2.0' );
+define( 'JAWAD_DEV_VERSION', '1.2.1' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -100,6 +100,46 @@ function jawad_dev_enqueue_assets(): void {
 add_action( 'enqueue_block_editor_assets', 'jawad_dev_enqueue_editor_assets' );
 function jawad_dev_enqueue_editor_assets(): void {
 	wp_enqueue_style( 'jawad-dev-editor', JAWAD_DEV_URI . '/assets/css/editor.css', array( 'wp-components' ), JAWAD_DEV_VERSION );
+}
+
+add_action( 'init', 'jawad_dev_migrate_front_page_template_override', 20 );
+function jawad_dev_migrate_front_page_template_override(): void {
+	if ( 'jawad-ilyas-block-theme' !== get_stylesheet() ) {
+		return;
+	}
+
+	$version_key = 'jawad_dev_front_page_template_migration';
+	if ( get_option( $version_key ) === JAWAD_DEV_VERSION ) {
+		return;
+	}
+
+	$templates = get_posts(
+		array(
+			'post_type'      => 'wp_template',
+			'post_status'    => array( 'publish', 'draft' ),
+			'name'           => 'front-page',
+			'posts_per_page' => -1,
+			'no_found_rows'  => true,
+		)
+	);
+
+	foreach ( $templates as $template ) {
+		if (
+			str_contains( $template->post_content, 'wp:post-content' )
+			|| ! str_contains( $template->post_content, 'wp:jawad-dev/' )
+		) {
+			continue;
+		}
+
+		wp_update_post(
+			array(
+				'ID'           => $template->ID,
+				'post_content' => '<!-- wp:post-content {"align":"full","layout":{"type":"default"}} /-->',
+			)
+		);
+	}
+
+	update_option( $version_key, JAWAD_DEV_VERSION, false );
 }
 
 add_action( 'init', 'jawad_dev_register_project_content' );
