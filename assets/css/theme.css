@@ -286,7 +286,7 @@ a:hover { color: #bae6fd; }
 .jd-orb--left { top: 20%; left: -200px; width: 520px; height: 520px; background: radial-gradient(closest-side, rgba(37,99,235,.14), transparent); }
 @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes floatY2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-@keyframes logoMarquee { from { transform: translateX(0); } to { transform: translateX(calc(-50% - clamp(14px, 2vw, 27px))); } }
+@keyframes logoMarquee { from { transform: translateX(0); } to { transform: translateX(calc(-33.333% - clamp(9.333px, 1.333vw, 18px))); } }
 @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); } 50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }
 @media (prefers-reduced-motion: reduce) {
 	[data-reveal], [data-reveal-group] > * { opacity: 1; transform: none; transition: none; }

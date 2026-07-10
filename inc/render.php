@@ -234,7 +234,7 @@ function jawad_dev_render_platform_logos( array $a ): string {
 			<?php if ( ! empty( $a['label'] ) ) : ?><div class="jd-logo-strip__label"><?php echo esc_html( $a['label'] ); ?></div><?php endif; ?>
 			<div class="jd-logo-strip__items">
 				<div class="jd-logo-strip__track">
-					<?php for ( $set = 0; $set < 2; $set++ ) : ?>
+					<?php for ( $set = 0; $set < 3; $set++ ) : ?>
 						<?php foreach ( $logos as $logo ) : ?>
 							<?php
 							$name   = $logo['name'] ?? '';
