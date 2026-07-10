@@ -1,0 +1,70 @@
+{
+  "apiVersion": 3,
+  "category": "theme",
+  "icon": "slides",
+  "editorScript": "jawad-dev-blocks-editor",
+  "supports": {
+    "align": [
+      "full"
+    ],
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "label": {
+      "type": "string",
+      "default": "Trusted across modern web platforms"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "name": "Shopify Plus",
+          "icon": "shopify",
+          "accent": "#95bf47"
+        },
+        {
+          "name": "WordPress VIP",
+          "icon": "wordpress",
+          "accent": "#38bdf8"
+        },
+        {
+          "name": "Toptal",
+          "icon": "toptal",
+          "accent": "#2dd4bf"
+        },
+        {
+          "name": "Upwork",
+          "icon": "upwork",
+          "accent": "#6fda44"
+        },
+        {
+          "name": "Fiverr",
+          "icon": "fiverr",
+          "accent": "#1dbf73"
+        },
+        {
+          "name": "Vercel",
+          "icon": "vercel",
+          "accent": "#f8fafc"
+        },
+        {
+          "name": "AWS",
+          "icon": "aws",
+          "accent": "#ff9900"
+        }
+      ]
+    }
+  },
+  "name": "jawad-dev/platform-logos",
+  "title": "JD Platform Logos",
+  "description": "Editable platform logo carousel for the Jawad Dev theme.",
+  "textdomain": "jawad-dev"
+}

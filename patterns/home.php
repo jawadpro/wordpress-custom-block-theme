@@ -8,6 +8,7 @@
 ?>
 <!-- wp:jawad-dev/site-header {"align":"full"} /-->
 <!-- wp:jawad-dev/hero {"align":"full"} /-->
+<!-- wp:jawad-dev/platform-logos {"align":"full"} /-->
 <!-- wp:jawad-dev/services {"align":"full"} /-->
 <!-- wp:jawad-dev/why {"align":"full"} /-->
 <!-- wp:jawad-dev/solutions {"align":"full"} /-->

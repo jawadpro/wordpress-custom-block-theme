@@ -13,6 +13,7 @@ function jawad_dev_block_sections(): array {
 	return array(
 		'site-header'   => array( 'title' => 'JD Site Header' ),
 		'hero'          => array( 'title' => 'JD Hero' ),
+		'platform-logos' => array( 'title' => 'JD Platform Logos' ),
 		'services'      => array( 'title' => 'JD Services' ),
 		'why'           => array( 'title' => 'JD Why Hire Me' ),
 		'solutions'     => array( 'title' => 'JD Solutions' ),
@@ -56,6 +57,10 @@ function jawad_dev_default_attrs( string $slug ): array {
 				array( 'value' => '420+', 'label' => 'Happy Clients' ),
 				array( 'value' => '2K+', 'label' => 'Positive Reviews' ),
 			),
+		),
+		'platform-logos' => array(
+			'label' => 'Trusted across modern web platforms',
+			'items' => jawad_dev_platform_logo_items(),
 		),
 		'services'      => array( 'eyebrow' => '// SERVICES', 'title' => 'WordPress Services I Offer', 'description' => 'From full website builds to small fixes, I help businesses create fast, clean, professional, and easy-to-manage WordPress websites.', 'items' => jawad_dev_cards_services() ),
 		'why'           => array( 'eyebrow' => '// WHY HIRE ME', 'title' => 'Why Businesses Hire Me as Their WordPress Developer', 'items' => jawad_dev_why_items() ),
@@ -193,15 +198,6 @@ function jawad_dev_render_site_header( array $a ): string {
 function jawad_dev_render_hero( array $a ): string {
 	$stats = ! empty( $a['stats'] ) && is_array( $a['stats'] ) ? $a['stats'] : jawad_dev_default_attrs( 'hero' )['stats'];
 	$image = $a['imageUrl'] ? $a['imageUrl'] : '';
-	$logos = array(
-		array( 'name' => 'Shopify Plus', 'icon' => 'shopify', 'accent' => '#95bf47' ),
-		array( 'name' => 'WordPress VIP', 'icon' => 'wordpress', 'accent' => '#38bdf8' ),
-		array( 'name' => 'Toptal', 'icon' => 'toptal', 'accent' => '#2dd4bf' ),
-		array( 'name' => 'Upwork', 'icon' => 'upwork', 'accent' => '#6fda44' ),
-		array( 'name' => 'Fiverr', 'icon' => 'fiverr', 'accent' => '#1dbf73' ),
-		array( 'name' => 'Vercel', 'icon' => 'vercel', 'accent' => '#f8fafc' ),
-		array( 'name' => 'AWS', 'icon' => 'aws', 'accent' => '#ff9900' ),
-	);
 	if ( ! $image && ! empty( $a['imageId'] ) ) {
 		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
 	}
@@ -224,19 +220,37 @@ function jawad_dev_render_hero( array $a ): string {
 				<div class="jd-badge-stack"><span><?php echo jawad_dev_svg( 'wordpress' ); ?>WordPress</span><span><?php echo jawad_dev_svg( 'elementor' ); ?>Elementor</span><span><?php echo jawad_dev_svg( 'woo' ); ?>WooCommerce</span><span><?php echo jawad_dev_svg( 'ai' ); ?>AI Automation</span></div>
 			</div>
 		</div>
+	</header>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_platform_logos( array $a ): string {
+	$logos = jawad_dev_attr_items( $a, jawad_dev_platform_logo_items() );
+	ob_start();
+	?>
+	<section class="jd-section jd-platform-logos" aria-label="<?php esc_attr_e( 'Platforms and marketplaces', 'jawad-dev' ); ?>">
 		<div class="jd-container jd-logo-strip" data-reveal>
-			<div class="jd-logo-strip__label"><?php esc_html_e( 'Trusted across modern web platforms', 'jawad-dev' ); ?></div>
-			<div class="jd-logo-strip__items" aria-label="<?php esc_attr_e( 'Platforms and marketplaces', 'jawad-dev' ); ?>">
+			<?php if ( ! empty( $a['label'] ) ) : ?><div class="jd-logo-strip__label"><?php echo esc_html( $a['label'] ); ?></div><?php endif; ?>
+			<div class="jd-logo-strip__items">
 				<div class="jd-logo-strip__track">
 					<?php for ( $set = 0; $set < 2; $set++ ) : ?>
 						<?php foreach ( $logos as $logo ) : ?>
-							<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><span class="jd-logo-strip__icon"><?php echo jawad_dev_brand_svg( $logo['icon'] ); ?></span><?php echo esc_html( $logo['name'] ); ?></span>
+							<?php
+							$name   = $logo['name'] ?? '';
+							$icon   = $logo['icon'] ?? '';
+							$accent = sanitize_hex_color( $logo['accent'] ?? '' ) ?: '#22d3ee';
+							if ( ! $name ) {
+								continue;
+							}
+							?>
+							<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $accent ); ?>"><span class="jd-logo-strip__icon"><?php echo jawad_dev_brand_svg( $icon ); ?></span><?php echo esc_html( $name ); ?></span>
 						<?php endforeach; ?>
 					<?php endfor; ?>
 				</div>
 			</div>
 		</div>
-	</header>
+	</section>
 	<?php
 	return ob_get_clean();
 }
@@ -295,6 +309,18 @@ function jawad_dev_package_items(): array {
 		array( 'title' => 'Landing Page', 'price' => '$500 – $1,500', 'text' => 'One focused conversion page', 'features' => array( 'Custom layout', 'Responsive design', 'Contact form/CTA setup', 'Basic SEO setup' ), 'buttonText' => 'Build My Landing Page', 'service' => 'landing', 'featured' => false, 'badgeText' => '' ),
 		array( 'title' => 'Business Website', 'price' => '$1,500 – $3,500', 'text' => 'Complete website for service businesses', 'features' => array( 'Homepage + inner pages', 'Elementor or block editor setup', 'Contact forms', 'Speed and SEO basics', 'Launch support' ), 'buttonText' => 'Start My Website', 'service' => 'site', 'featured' => true, 'badgeText' => 'Most Popular' ),
 		array( 'title' => 'WooCommerce Store', 'price' => '$3,500 – $6,000', 'text' => 'Store setup and conversion cleanup', 'features' => array( 'Product and checkout setup', 'Payment/shipping configuration', 'Mobile store layout', 'Basic performance optimization' ), 'buttonText' => 'Build My Store', 'service' => 'store', 'featured' => false, 'badgeText' => '' ),
+	);
+}
+
+function jawad_dev_platform_logo_items(): array {
+	return array(
+		array( 'name' => 'Shopify Plus', 'icon' => 'shopify', 'accent' => '#95bf47' ),
+		array( 'name' => 'WordPress VIP', 'icon' => 'wordpress', 'accent' => '#38bdf8' ),
+		array( 'name' => 'Toptal', 'icon' => 'toptal', 'accent' => '#2dd4bf' ),
+		array( 'name' => 'Upwork', 'icon' => 'upwork', 'accent' => '#6fda44' ),
+		array( 'name' => 'Fiverr', 'icon' => 'fiverr', 'accent' => '#1dbf73' ),
+		array( 'name' => 'Vercel', 'icon' => 'vercel', 'accent' => '#f8fafc' ),
+		array( 'name' => 'AWS', 'icon' => 'aws', 'accent' => '#ff9900' ),
 	);
 }
 

@@ -17,6 +17,7 @@
 	const sections = {
 		'site-header': 'JD Site Header',
 		hero: 'JD Hero',
+		'platform-logos': 'JD Platform Logos',
 		services: 'JD Services',
 		why: 'JD Why Hire Me',
 		solutions: 'JD Solutions',
@@ -44,6 +45,9 @@
 			[ 'buttonUrl', __( 'Primary button URL', 'jawad-dev' ) ],
 			[ 'secondaryText', __( 'Secondary button text', 'jawad-dev' ) ],
 			[ 'secondaryUrl', __( 'Secondary button URL', 'jawad-dev' ) ]
+		],
+		'platform-logos': [
+			[ 'label', __( 'Carousel label', 'jawad-dev' ) ]
 		],
 		services: [
 			[ 'eyebrow', __( 'Eyebrow', 'jawad-dev' ) ],
@@ -115,6 +119,17 @@
 			fields: [
 				[ 'value', __( 'Value', 'jawad-dev' ) ],
 				[ 'label', __( 'Label', 'jawad-dev' ) ]
+			]
+		},
+		'platform-logos': {
+			key: 'items',
+			title: __( 'Platform Logos', 'jawad-dev' ),
+			addLabel: __( 'Add logo', 'jawad-dev' ),
+			empty: { name: 'New Platform', icon: 'wordpress', accent: '#22d3ee' },
+			fields: [
+				[ 'name', __( 'Logo name', 'jawad-dev' ) ],
+				[ 'icon', __( 'Icon key', 'jawad-dev' ) ],
+				[ 'accent', __( 'Accent color', 'jawad-dev' ) ]
 			]
 		},
 		services: {
@@ -222,7 +237,7 @@
 
 	function repeaterTitle( item, index, config ) {
 		const fallback = config.title + ' #' + ( index + 1 );
-		return ( item && ( item.title || item.question || item.author || item.text || item.label || item.value ) ) || fallback;
+		return ( item && ( item.title || item.name || item.question || item.author || item.text || item.label || item.value ) ) || fallback;
 	}
 
 	function repeaterMeta( item ) {
@@ -237,6 +252,9 @@
 		}
 		if ( item.code ) {
 			return item.code;
+		}
+		if ( item.icon ) {
+			return item.icon;
 		}
 		if ( item.service ) {
 			return item.service;

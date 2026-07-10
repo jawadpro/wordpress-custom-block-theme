@@ -4,7 +4,7 @@ Full-site-editing WordPress block theme converted from the supplied HTML export.
 
 ## What is included
 
-- Individual Gutenberg blocks for header, hero, services, why-hire, solutions, process, packages, projects, stack, testimonials, FAQ, CTA, footer, and contact modal.
+- Individual Gutenberg blocks for header, hero, platform logos, services, why-hire, solutions, process, packages, projects, stack, testimonials, FAQ, CTA, footer, and contact modal.
 - `project` custom post type for portfolio work.
 - Project fields: live link, client/industry, year, result/outcome, accent color, button text, featured image.
 - Project taxonomies: Project Types and Technologies.
