@@ -252,15 +252,16 @@
 
 		function open( trigger ) {
 			const projectId = trigger.dataset.projectId;
-			if ( ! projectId || ! window.JawadDev ) return;
+			if ( ! window.JawadDev ) return;
 			modal.hidden = false;
 			document.documentElement.style.overflow = 'hidden';
 			setLoading();
 
 			const data = new FormData();
 			data.append( 'action', 'jawad_dev_project_modal' );
-			data.append( 'nonce', window.JawadDev.projectNonce );
+			data.append( 'nonce', window.JawadDev.projectNonce || '' );
 			data.append( 'projectId', projectId );
+			data.append( 'projectUrl', trigger.href || '' );
 
 			fetch( window.JawadDev.ajaxUrl, {
 				method: 'POST',

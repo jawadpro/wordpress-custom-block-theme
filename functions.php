@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.2.7' );
+define( 'JAWAD_DEV_VERSION', '1.2.8' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -259,9 +259,11 @@ function jawad_dev_save_project_meta( int $post_id ): void {
 add_action( 'wp_ajax_jawad_dev_project_modal', 'jawad_dev_project_modal' );
 add_action( 'wp_ajax_nopriv_jawad_dev_project_modal', 'jawad_dev_project_modal' );
 function jawad_dev_project_modal(): void {
-	check_ajax_referer( 'jawad_dev_project_modal', 'nonce' );
-
 	$project_id = isset( $_POST['projectId'] ) ? absint( $_POST['projectId'] ) : 0;
+	if ( ! $project_id && ! empty( $_POST['projectUrl'] ) ) {
+		$project_id = url_to_postid( esc_url_raw( wp_unslash( $_POST['projectUrl'] ) ) );
+	}
+
 	$post       = $project_id ? get_post( $project_id ) : null;
 	if ( ! $post || 'project' !== $post->post_type || 'publish' !== $post->post_status ) {
 		wp_send_json_error( array( 'message' => __( 'Project not found.', 'jawad-dev' ) ), 404 );
