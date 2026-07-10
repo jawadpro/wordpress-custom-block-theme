@@ -98,7 +98,11 @@
 		],
 		'site-footer': [
 			[ 'brand', __( 'Brand', 'jawad-dev' ) ],
-			[ 'description', __( 'Description', 'jawad-dev' ), 'textarea' ]
+			[ 'description', __( 'Description', 'jawad-dev' ), 'textarea' ],
+			[ 'pagesTitle', __( 'Pages column title', 'jawad-dev' ) ],
+			[ 'socialTitle', __( 'Social column title', 'jawad-dev' ) ],
+			[ 'copyright', __( 'Copyright text', 'jawad-dev' ) ],
+			[ 'codeText', __( 'Footer code text', 'jawad-dev' ) ]
 		],
 		'contact-modal': [
 			[ 'modalTitle', __( 'Modal title', 'jawad-dev' ) ],
@@ -222,6 +226,26 @@
 			fields: [
 				[ 'question', __( 'Question', 'jawad-dev' ) ],
 				[ 'answer', __( 'Answer', 'jawad-dev' ), 'textarea' ]
+			]
+		},
+		'site-footer-pages': {
+			key: 'pagesLinks',
+			title: __( 'Footer Page Links', 'jawad-dev' ),
+			addLabel: __( 'Add page link', 'jawad-dev' ),
+			empty: { label: 'New Link', url: '#' },
+			fields: [
+				[ 'label', __( 'Link label', 'jawad-dev' ) ],
+				[ 'url', __( 'Link URL', 'jawad-dev' ) ]
+			]
+		},
+		'site-footer-social': {
+			key: 'socialLinks',
+			title: __( 'Footer Social Links', 'jawad-dev' ),
+			addLabel: __( 'Add social link', 'jawad-dev' ),
+			empty: { label: 'New Link', url: '#' },
+			fields: [
+				[ 'label', __( 'Link label', 'jawad-dev' ) ],
+				[ 'url', __( 'Link URL', 'jawad-dev' ) ]
 			]
 		}
 	};
@@ -411,7 +435,9 @@
 				return el( 'div', blockProps,
 					el( InspectorControls, {},
 						el( PanelBody, { title: __( 'Section Settings', 'jawad-dev' ), initialOpen: true }, sectionControls ),
-						repeaterConfigs[ slug ] ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ slug ] ) : null
+						repeaterConfigs[ slug ] ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ slug ] ) : null,
+						slug === 'site-footer' ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ 'site-footer-pages' ] ) : null,
+						slug === 'site-footer' ? repeaterControls( attrs, props.setAttributes, repeaterConfigs[ 'site-footer-social' ] ) : null
 					),
 					el( ServerSideRender, { block: name, attributes: attrs } )
 				);

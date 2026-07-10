@@ -25,6 +25,40 @@
     "description": {
       "type": "string",
       "default": "WordPress Developer & Full-Stack Web Designer"
+    },
+    "pagesTitle": {
+      "type": "string",
+      "default": "PAGES"
+    },
+    "pagesLinks": {
+      "type": "array",
+      "default": [
+        { "label": "Services", "url": "#services" },
+        { "label": "Work", "url": "#work" },
+        { "label": "Packages", "url": "#packages" },
+        { "label": "Process", "url": "#process" },
+        { "label": "FAQ", "url": "#faq" },
+        { "label": "Contact", "url": "#contact" }
+      ]
+    },
+    "socialTitle": {
+      "type": "string",
+      "default": "FIND ME ON"
+    },
+    "socialLinks": {
+      "type": "array",
+      "default": [
+        { "label": "LinkedIn", "url": "#contact" },
+        { "label": "GitHub", "url": "#contact" }
+      ]
+    },
+    "copyright": {
+      "type": "string",
+      "default": "Jawad Ilyas · jawadjd.dev — All rights reserved."
+    },
+    "codeText": {
+      "type": "string",
+      "default": "built_with: WordPress · care · clean_code"
     }
   },
   "name": "jawad-dev/site-footer",

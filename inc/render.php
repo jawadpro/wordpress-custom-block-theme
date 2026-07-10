@@ -72,7 +72,26 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'Trusted by Clients Worldwide', 'items' => jawad_dev_testimonial_items() ),
 		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions', 'items' => jawad_dev_faq_items() ),
 		'cta'           => array( 'title' => 'Have a WordPress project in mind?', 'description' => 'Tell me what you want to build, fix, or improve. I’ll help you choose the right approach and next steps.', 'buttonText' => 'Hire Me Now', 'buttonUrl' => '#contact', 'secondaryText' => 'Discuss Your Project', 'secondaryUrl' => '#contact' ),
-		'site-footer'   => array( 'brand' => 'Jawad Ilyas', 'description' => 'WordPress Developer & Full-Stack Web Designer' ),
+		'site-footer'   => array(
+			'brand'       => 'Jawad Ilyas',
+			'description' => 'WordPress Developer & Full-Stack Web Designer',
+			'pagesTitle'  => 'PAGES',
+			'pagesLinks'  => array(
+				array( 'label' => 'Services', 'url' => '#services' ),
+				array( 'label' => 'Work', 'url' => '#work' ),
+				array( 'label' => 'Packages', 'url' => '#packages' ),
+				array( 'label' => 'Process', 'url' => '#process' ),
+				array( 'label' => 'FAQ', 'url' => '#faq' ),
+				array( 'label' => 'Contact', 'url' => '#contact' ),
+			),
+			'socialTitle' => 'FIND ME ON',
+			'socialLinks' => array(
+				array( 'label' => 'LinkedIn', 'url' => '#contact' ),
+				array( 'label' => 'GitHub', 'url' => '#contact' ),
+			),
+			'copyright'   => 'Jawad Ilyas · jawadjd.dev — All rights reserved.',
+			'codeText'    => 'built_with: WordPress · care · clean_code',
+		),
 		'contact-modal' => array(
 			'gravityFormShortcode' => '[gravityform id="1" title="false"]',
 			'modalTitle'     => 'Start a project request',
@@ -623,8 +642,10 @@ function jawad_dev_render_cta( array $a ): string {
 }
 
 function jawad_dev_render_site_footer( array $a ): string {
+	$pages_links  = ! empty( $a['pagesLinks'] ) && is_array( $a['pagesLinks'] ) ? $a['pagesLinks'] : array();
+	$social_links = ! empty( $a['socialLinks'] ) && is_array( $a['socialLinks'] ) ? $a['socialLinks'] : array();
 	ob_start();
-	?><footer class="jd-footer"><div class="jd-container"><div class="jd-footer__top"><div><div class="jd-brand"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo esc_html( $a['brand'] ); ?></span></div><p><?php echo esc_html( $a['description'] ); ?></p></div><nav><strong>PAGES</strong><a href="#services">Services</a><a href="#work">Work</a><a href="#packages">Packages</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav><strong>FIND ME ON</strong><a href="#contact">LinkedIn</a><a href="#contact">GitHub</a></nav></div><div class="jd-footer__bottom"><span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> Jawad Ilyas · jawadjd.dev — All rights reserved.</span><code>built_with: WordPress · care · clean_code</code></div></div></footer><?php
+	?><footer class="jd-footer"><div class="jd-container"><div class="jd-footer__top"><div><div class="jd-brand"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo esc_html( $a['brand'] ); ?></span></div><p><?php echo esc_html( $a['description'] ); ?></p></div><nav><strong><?php echo esc_html( $a['pagesTitle'] ); ?></strong><?php foreach ( $pages_links as $link ) : ?><?php if ( ! empty( $link['label'] ) ) : ?><a href="<?php echo esc_url( $link['url'] ?? '#' ); ?>"><?php echo esc_html( $link['label'] ); ?></a><?php endif; ?><?php endforeach; ?></nav><nav><strong><?php echo esc_html( $a['socialTitle'] ); ?></strong><?php foreach ( $social_links as $link ) : ?><?php if ( ! empty( $link['label'] ) ) : ?><a href="<?php echo esc_url( $link['url'] ?? '#' ); ?>"><?php echo esc_html( $link['label'] ); ?></a><?php endif; ?><?php endforeach; ?></nav></div><div class="jd-footer__bottom"><span>© <?php echo esc_html( gmdate( 'Y' ) . ' ' . $a['copyright'] ); ?></span><code><?php echo esc_html( $a['codeText'] ); ?></code></div></div></footer><?php
 	return ob_get_clean();
 }
 
