@@ -188,13 +188,14 @@ function jawad_dev_brand_svg( string $name ): string {
 
 function jawad_dev_render_site_header( array $a ): string {
 	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Contact' => '#contact' );
+	$brand_url = is_front_page() ? '#top' : home_url( '/' );
 	ob_start();
 	echo jawad_dev_icon_defs();
 	?>
 	<div class="jd-grid-bg"></div><div class="jd-cursor-glow" aria-hidden="true"></div>
 	<nav class="jd-nav" aria-label="<?php esc_attr_e( 'Main navigation', 'jawad-dev' ); ?>">
 		<div class="jd-container jd-nav__inner">
-			<a class="jd-brand" href="#top"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo wp_kses_post( str_replace( '.dev', '<span>.dev</span>', esc_html( $a['brand'] ) ) ); ?></span></a>
+			<a class="jd-brand" href="<?php echo esc_url( $brand_url ); ?>"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo wp_kses_post( str_replace( '.dev', '<span>.dev</span>', esc_html( $a['brand'] ) ) ); ?></span></a>
 			<div class="jd-nav__links">
 				<?php foreach ( $links as $label => $url ) : ?>
 					<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
