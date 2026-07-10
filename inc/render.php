@@ -651,6 +651,7 @@ function jawad_dev_render_site_footer( array $a ): string {
 }
 
 function jawad_dev_render_contact_modal( array $a ): string {
+	$GLOBALS['jawad_dev_contact_modal_rendered'] = true;
 	$form_shortcode = isset( $a['gravityFormShortcode'] ) ? trim( (string) $a['gravityFormShortcode'] ) : '';
 	$form_id        = $form_shortcode ? jawad_dev_gravity_shortcode_id( $form_shortcode ) : 0;
 	$gravity_params = array(

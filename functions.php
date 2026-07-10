@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.2.5' );
+define( 'JAWAD_DEV_VERSION', '1.2.6' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -95,6 +95,15 @@ function jawad_dev_enqueue_assets(): void {
 			'projectNonce' => wp_create_nonce( 'jawad_dev_project_modal' ),
 		)
 	);
+}
+
+add_action( 'wp_footer', 'jawad_dev_render_contact_modal_fallback', 5 );
+function jawad_dev_render_contact_modal_fallback(): void {
+	if ( ! empty( $GLOBALS['jawad_dev_contact_modal_rendered'] ) ) {
+		return;
+	}
+
+	echo jawad_dev_render_contact_modal( jawad_dev_default_attrs( 'contact-modal' ) );
 }
 
 add_action( 'enqueue_block_editor_assets', 'jawad_dev_enqueue_editor_assets' );

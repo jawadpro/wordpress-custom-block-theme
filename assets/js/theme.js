@@ -141,6 +141,9 @@
 		}
 
 		function isContactTrigger( target ) {
+			if ( ! target || ! target.closest ) {
+				return null;
+			}
 			const trigger = target.closest( '.jd-open-form, a[href="#contact"], a[href$="/#contact"]' );
 			if ( ! trigger ) {
 				return null;
