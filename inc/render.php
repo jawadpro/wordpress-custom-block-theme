@@ -149,6 +149,19 @@ function jawad_dev_svg( string $name ): string {
 	return $icons[ $name ] ?? '';
 }
 
+function jawad_dev_brand_svg( string $name ): string {
+	$icons = array(
+		'shopify'   => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"></path></svg>',
+		'wordpress' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0"></path></svg>',
+		'toptal'    => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.227 10.038L10.188 0l-2.04 2.04 3.773 3.769-8.155 8.153L13.807 24l2.039-2.039-3.772-3.771 8.16-8.152h-.007zM8.301 14.269l6.066-6.063 1.223 1.223-6.064 6.113-1.223-1.26-.002-.013z"></path></svg>',
+		'upwork'    => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"></path></svg>',
+		'fiverr'    => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.004 15.588a.995.995 0 1 0 .002-1.99.995.995 0 0 0-.002 1.99zm-.996-3.705h-.85c-.546 0-.84.41-.84 1.092v2.466h-1.61v-3.558h-.684c-.547 0-.84.41-.84 1.092v2.466h-1.61v-4.874h1.61v.74c.264-.574.626-.74 1.163-.74h1.972v.74c.264-.574.625-.74 1.162-.74h.527v1.316zm-6.786 1.501h-3.359c.088.546.43.858 1.006.858.43 0 .732-.175.83-.487l1.425.4c-.351.848-1.22 1.364-2.255 1.364-1.748 0-2.549-1.355-2.549-2.515 0-1.14.703-2.505 2.45-2.505 1.856 0 2.471 1.384 2.471 2.408 0 .224-.01.37-.02.477zm-1.562-.945c-.04-.42-.342-.81-.889-.81-.508 0-.81.225-.908.81h1.797zM7.508 15.44h1.416l1.767-4.874h-1.62l-.86 2.837-.878-2.837H5.72l1.787 4.874zm-6.6 0H2.51v-3.558h1.524v3.558h1.591v-4.874H2.51v-.302c0-.332.235-.536.606-.536h.918V8.412H2.85c-1.162 0-1.943.712-1.943 1.755v.4H0v1.316h.908v3.558z"></path></svg>',
+		'vercel'    => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 1.608 12 20.784H0Z"></path></svg>',
+		'aws'       => '<svg viewBox="0 0 42 24" aria-hidden="true"><text x="2" y="15" font-family="Space Grotesk, Arial, sans-serif" font-size="13" font-weight="800" fill="currentColor">AWS</text><path d="M8 18.1c7.2 3.4 16.4 3.2 23.8-.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path><path d="M29.6 16.1l3.4.8-1.4 3.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+	);
+	return $icons[ $name ] ?? '';
+}
+
 function jawad_dev_render_site_header( array $a ): string {
 	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Contact' => '#contact' );
 	ob_start();
@@ -181,13 +194,13 @@ function jawad_dev_render_hero( array $a ): string {
 	$stats = ! empty( $a['stats'] ) && is_array( $a['stats'] ) ? $a['stats'] : jawad_dev_default_attrs( 'hero' )['stats'];
 	$image = $a['imageUrl'] ? $a['imageUrl'] : '';
 	$logos = array(
-		array( 'name' => 'Shopify Plus', 'accent' => '#95bf47' ),
-		array( 'name' => 'WordPress VIP', 'accent' => '#38bdf8' ),
-		array( 'name' => 'Toptal', 'accent' => '#2dd4bf' ),
-		array( 'name' => 'Upwork', 'accent' => '#6fda44' ),
-		array( 'name' => 'Fiverr', 'accent' => '#1dbf73' ),
-		array( 'name' => 'Vercel', 'accent' => '#f8fafc' ),
-		array( 'name' => 'AWS', 'accent' => '#ff9900' ),
+		array( 'name' => 'Shopify Plus', 'icon' => 'shopify', 'accent' => '#95bf47' ),
+		array( 'name' => 'WordPress VIP', 'icon' => 'wordpress', 'accent' => '#38bdf8' ),
+		array( 'name' => 'Toptal', 'icon' => 'toptal', 'accent' => '#2dd4bf' ),
+		array( 'name' => 'Upwork', 'icon' => 'upwork', 'accent' => '#6fda44' ),
+		array( 'name' => 'Fiverr', 'icon' => 'fiverr', 'accent' => '#1dbf73' ),
+		array( 'name' => 'Vercel', 'icon' => 'vercel', 'accent' => '#f8fafc' ),
+		array( 'name' => 'AWS', 'icon' => 'aws', 'accent' => '#ff9900' ),
 	);
 	if ( ! $image && ! empty( $a['imageId'] ) ) {
 		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
@@ -215,7 +228,7 @@ function jawad_dev_render_hero( array $a ): string {
 			<div class="jd-logo-strip__label"><?php esc_html_e( 'Trusted across modern web platforms', 'jawad-dev' ); ?></div>
 			<div class="jd-logo-strip__items" aria-label="<?php esc_attr_e( 'Platforms and marketplaces', 'jawad-dev' ); ?>">
 				<?php foreach ( $logos as $logo ) : ?>
-					<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><i></i><?php echo esc_html( $logo['name'] ); ?></span>
+					<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><span class="jd-logo-strip__icon"><?php echo jawad_dev_brand_svg( $logo['icon'] ); ?></span><?php echo esc_html( $logo['name'] ); ?></span>
 				<?php endforeach; ?>
 			</div>
 		</div>
