@@ -13,6 +13,7 @@
 	const SelectControl = components.SelectControl;
 	const Button = components.Button;
 	const ServerSideRender = serverSideRender;
+	const blockMeta = window.JawadDevBlockMeta || {};
 
 	const sections = {
 		'site-header': 'JD Site Header',
@@ -352,7 +353,7 @@
 
 	Object.keys( sections ).forEach( function ( slug ) {
 		const name = 'jawad-dev/' + slug;
-		blocks.registerBlockType( name, {
+		blocks.registerBlockType( name, Object.assign( {}, blockMeta[ slug ] || {}, {
 			edit: function ( props ) {
 				const attrs = props.attributes;
 				const blockProps = useBlockProps( { className: 'jawad-dev-editor-preview' } );
@@ -418,6 +419,6 @@
 			save: function () {
 				return null;
 			}
-		} );
+		} ) );
 	} );
 } )( window.wp.blocks, window.wp.element, window.wp.components, window.wp.blockEditor, window.wp.serverSideRender, window.wp.i18n );

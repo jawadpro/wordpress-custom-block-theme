@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.1.8' );
+define( 'JAWAD_DEV_VERSION', '1.1.9' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -253,7 +253,19 @@ function jawad_dev_register_blocks(): void {
 		true
 	);
 
+	$block_meta = array();
 	foreach ( jawad_dev_block_sections() as $slug => $section ) {
+		$block_json = JAWAD_DEV_DIR . '/blocks/' . $slug . '/block.json';
+		if ( file_exists( $block_json ) ) {
+			$metadata = json_decode( (string) file_get_contents( $block_json ), true );
+			if ( is_array( $metadata ) ) {
+				$block_meta[ $slug ] = array_intersect_key(
+					$metadata,
+					array_flip( array( 'title', 'description', 'category', 'icon', 'supports', 'attributes' ) )
+				);
+			}
+		}
+
 		register_block_type(
 			JAWAD_DEV_DIR . '/blocks/' . $slug,
 			array(
@@ -263,4 +275,10 @@ function jawad_dev_register_blocks(): void {
 			)
 		);
 	}
+
+	wp_add_inline_script(
+		'jawad-dev-blocks-editor',
+		'window.JawadDevBlockMeta = ' . wp_json_encode( $block_meta, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . ';',
+		'before'
+	);
 }

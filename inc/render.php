@@ -92,7 +92,7 @@ function jawad_dev_attrs( string $slug, array $attrs ): array {
 }
 
 function jawad_dev_attr_items( array $a, array $fallback ): array {
-	return ! empty( $a['items'] ) && is_array( $a['items'] ) ? $a['items'] : $fallback;
+	return array_key_exists( 'items', $a ) && is_array( $a['items'] ) ? $a['items'] : $fallback;
 }
 
 function jawad_dev_lines( $value ): array {
