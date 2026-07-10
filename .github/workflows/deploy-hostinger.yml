@@ -1,0 +1,40 @@
+name: Deploy theme to Hostinger
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: hostinger-theme-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy WordPress theme
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          HOSTINGER_SSH_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$HOSTINGER_SSH_KEY" > ~/.ssh/hostinger_deploy_key
+          chmod 600 ~/.ssh/hostinger_deploy_key
+          ssh-keyscan -p 65002 -H 145.223.89.2 >> ~/.ssh/known_hosts
+
+      - name: Deploy theme files
+        run: |
+          rsync -az --delete \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.DS_Store' \
+            --exclude='node_modules/' \
+            --exclude='wordpress-custom-block-theme.zip' \
+            -e "ssh -i ~/.ssh/hostinger_deploy_key -p 65002 -o IdentitiesOnly=yes" \
+            ./ u323192521@145.223.89.2:/home/u323192521/domains/jawadjd.dev/public_html/wp-content/themes/jawad-ilyas-block-theme/
