@@ -247,13 +247,26 @@ a:hover { color: #bae6fd; }
 @media (max-width: 760px) {
 	.jd-container { width: min(100% - 32px, 1200px); }
 	.jd-nav__links { order: 3; width: 100%; margin-left: 0; }
-	.jd-hero-visual { transform: scale(.86); transform-origin: top center; margin-bottom: -70px; }
-	.jd-code-card { left: 10px; }
-	.jd-badge-stack { right: 10px; }
+	.jd-hero-visual { height: 500px; min-width: 300px; transform: scale(.92); transform-origin: top center; margin: 8px auto -42px; }
+	.jd-portrait { top: 46px; width: 286px; height: 382px; }
+	.jd-code-card { top: 0; left: -8px; width: 190px; }
+	.jd-code-card code { padding: 11px 13px; font-size: 10px; line-height: 1.65; }
+	.jd-speed-card { bottom: 20px; left: -6px; width: 178px; gap: 9px; padding: 11px 13px; }
+	.jd-speed-card strong { font-size: 15px; }
+	.jd-badge-stack { top: 68px; right: -6px; gap: 8px; align-items: flex-end; }
+	.jd-badge-stack span { padding: 8px 11px; font-size: 10.5px; }
 	.jd-timeline::before { left: 22px; }
 	.jd-timeline article { gap: 16px; }
 	.jd-timeline article > span { width: 46px; height: 46px; }
 	.jd-form__footer { flex-wrap: wrap; }
+}
+@media (max-width: 420px) {
+	.jd-hero-visual { transform: none; height: 470px; }
+	.jd-portrait { width: 258px; height: 350px; }
+	.jd-code-card { left: -2px; width: 168px; }
+	.jd-speed-card { bottom: 24px; left: 0; width: 158px; }
+	.jd-badge-stack { right: 0; top: 76px; }
+	.jd-badge-stack span { padding: 7px 9px; font-size: 9.5px; }
 }
 @media (max-width: 860px) {
 	.jd-nav__links, .jd-nav__inner > .jd-open-form { display: none; }
