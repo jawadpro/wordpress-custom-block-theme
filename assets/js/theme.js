@@ -9,6 +9,12 @@
 		return Array.prototype.slice.call( ( root || document ).querySelectorAll( selector ) );
 	}
 
+	function escapeHtml( value ) {
+		const div = document.createElement( 'div' );
+		div.textContent = value || '';
+		return div.innerHTML;
+	}
+
 	function setupGlow() {
 		const glow = qs( '.jd-cursor-glow' );
 		if ( ! glow ) return;
@@ -23,7 +29,7 @@
 	}
 
 	function setupModal() {
-		const modal = qs( '.jd-modal' );
+		const modal = qs( '.jd-modal--gravity' );
 		if ( ! modal ) return;
 
 		const form = qs( '.jd-form', modal );
@@ -193,6 +199,83 @@
 		}
 	}
 
+	function setupProjectModal() {
+		const modal = qs( '.jd-project-modal' );
+		if ( ! modal ) return;
+
+		const content = qs( '.jd-project-modal__content', modal );
+		const loading = qs( '.jd-project-modal__loading', modal );
+		const closeButton = qs( '.jd-project-modal__close', modal );
+
+		function close() {
+			modal.hidden = true;
+			document.documentElement.style.overflow = '';
+		}
+
+		function setLoading() {
+			loading.hidden = false;
+			content.hidden = true;
+			content.innerHTML = '';
+		}
+
+		function renderProject( project ) {
+			const tags = Array.isArray( project.tags ) && project.tags.length
+				? '<div class="jd-tags">' + project.tags.map( function ( tag ) { return '<span>' + escapeHtml( tag ) + '</span>'; } ).join( '' ) + '</div>'
+				: '';
+			const meta = [ project.client, project.year, project.result ].filter( Boolean ).map( escapeHtml );
+			const image = project.image ? '<img class="jd-project-modal__image" src="' + encodeURI( project.image ) + '" alt="">' : '';
+			const link = project.link ? '<a class="jd-btn jd-btn--small" target="_blank" rel="noopener" href="' + encodeURI( project.link ) + '">' + escapeHtml( project.buttonText ) + '</a>' : '';
+
+			content.innerHTML = image + '<div class="jd-project-modal__inner"><div class="jd-eyebrow">// PROJECT</div><h2>' + escapeHtml( project.title ) + '</h2>' + ( meta.length ? '<p class="jd-project-modal__meta">' + meta.join( ' · ' ) + '</p>' : '' ) + tags + '<div class="jd-project-modal__post">' + project.content + '</div>' + link + '</div>';
+			loading.hidden = true;
+			content.hidden = false;
+		}
+
+		function open( trigger ) {
+			const projectId = trigger.dataset.projectId;
+			if ( ! projectId || ! window.JawadDev ) return;
+			modal.hidden = false;
+			document.documentElement.style.overflow = 'hidden';
+			setLoading();
+
+			const data = new FormData();
+			data.append( 'action', 'jawad_dev_project_modal' );
+			data.append( 'nonce', window.JawadDev.projectNonce );
+			data.append( 'projectId', projectId );
+
+			fetch( window.JawadDev.ajaxUrl, {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: data
+			} )
+				.then( function ( response ) { return response.json(); } )
+				.then( function ( json ) {
+					if ( ! json || ! json.success ) {
+						throw new Error( json && json.data && json.data.message ? json.data.message : 'Unable to load project.' );
+					}
+					renderProject( json.data );
+				} )
+				.catch( function ( error ) {
+					loading.textContent = error.message;
+				} );
+		}
+
+		qsa( '.jd-open-project' ).forEach( function ( trigger ) {
+			trigger.addEventListener( 'click', function ( ev ) {
+				ev.preventDefault();
+				open( trigger );
+			} );
+		} );
+
+		closeButton.addEventListener( 'click', close );
+		modal.addEventListener( 'click', function ( ev ) {
+			if ( ev.target === modal ) close();
+		} );
+		document.addEventListener( 'keydown', function ( ev ) {
+			if ( ev.key === 'Escape' && ! modal.hidden ) close();
+		} );
+	}
+
 	function setupMobileMenu() {
 		const toggle = qs( '.jd-menu-toggle' );
 		const menu = qs( '.jd-mobile-menu' );
@@ -251,5 +334,6 @@
 		setupMobileMenu();
 		setupReveal();
 		setupModal();
+		setupProjectModal();
 	} );
 } )();

@@ -62,7 +62,7 @@ function jawad_dev_default_attrs( string $slug ): array {
 		'solutions'     => array( 'eyebrow' => '// SOLUTIONS', 'title' => 'Built for Real Business Needs', 'items' => jawad_dev_solution_items() ),
 		'process'       => array( 'eyebrow' => '// PROCESS', 'title' => 'My Website Development Process', 'items' => jawad_dev_process_items() ),
 		'packages'      => array( 'eyebrow' => '// PACKAGES', 'title' => 'Website Development Packages', 'items' => jawad_dev_package_items() ),
-		'projects'      => array( 'enabled' => false, 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
+		'projects'      => array( 'enabled' => true, 'eyebrow' => '// PORTFOLIO', 'title' => 'Recent Website Work', 'description' => 'A few representative WordPress builds, optimization projects, and WooCommerce improvements.', 'postsToShow' => 4 ),
 		'stack'         => array( 'eyebrow' => '// STACK', 'title' => 'Tools & Technologies I Work With', 'items' => jawad_dev_stack_items() ),
 		'testimonials'  => array( 'eyebrow' => '// TESTIMONIALS', 'title' => 'Trusted by Clients Worldwide', 'items' => jawad_dev_testimonial_items() ),
 		'faq'           => array( 'eyebrow' => '// FAQ', 'title' => 'Frequently Asked Questions', 'items' => jawad_dev_faq_items() ),
@@ -453,10 +453,6 @@ function jawad_dev_render_packages( array $a ): string {
 }
 
 function jawad_dev_render_projects( array $a ): string {
-	if ( empty( $a['enabled'] ) ) {
-		return '';
-	}
-
 	$q = new WP_Query( array( 'post_type' => 'project', 'posts_per_page' => max( 1, (int) $a['postsToShow'] ), 'post_status' => 'publish', 'no_found_rows' => true ) );
 	ob_start();
 	?>
@@ -469,10 +465,11 @@ function jawad_dev_render_projects( array $a ): string {
 			$result = get_post_meta( get_the_ID(), 'project_result', true );
 			$accent = get_post_meta( get_the_ID(), 'project_accent', true ) ?: '#22d3ee';
 			$tags   = get_the_terms( get_the_ID(), 'project_technology' );
+			$button = get_post_meta( get_the_ID(), 'project_button_text', true ) ?: __( 'View Project', 'jawad-dev' );
 			?>
 			<article class="jd-project" style="--jd-accent:<?php echo esc_attr( $accent ); ?>">
-				<a class="jd-project__media" href="<?php echo esc_url( $link ); ?>"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } else { echo '<span>Project Screenshot</span>'; } ?></a>
-				<div><h3><?php the_title(); ?></h3><p><?php echo esc_html( get_the_excerpt() ); ?></p><?php if ( $result ) : ?><strong><?php echo esc_html( $result ); ?></strong><?php endif; ?><div class="jd-tags"><?php if ( $tags && ! is_wp_error( $tags ) ) { foreach ( array_slice( $tags, 0, 3 ) as $tag ) { echo '<span>' . esc_html( $tag->name ) . '</span>'; } } ?></div><a href="<?php echo esc_url( $link ); ?>"><?php echo esc_html( get_post_meta( get_the_ID(), 'project_button_text', true ) ?: 'View Project' ); ?> <?php echo jawad_dev_svg( 'arrow-sm' ); ?></a></div>
+				<a class="jd-project__media jd-open-project" data-project-id="<?php echo esc_attr( get_the_ID() ); ?>" href="<?php the_permalink(); ?>"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large' ); } else { echo '<span>Project Screenshot</span>'; } ?></a>
+				<div><h3><?php the_title(); ?></h3><p><?php echo esc_html( get_the_excerpt() ); ?></p><?php if ( $result ) : ?><strong><?php echo esc_html( $result ); ?></strong><?php endif; ?><div class="jd-tags"><?php if ( $tags && ! is_wp_error( $tags ) ) { foreach ( array_slice( $tags, 0, 3 ) as $tag ) { echo '<span>' . esc_html( $tag->name ) . '</span>'; } } ?></div><a class="jd-open-project" data-project-id="<?php echo esc_attr( get_the_ID() ); ?>" href="<?php the_permalink(); ?>"><?php echo esc_html( $button ); ?> <?php echo jawad_dev_svg( 'arrow-sm' ); ?></a></div>
 			</article>
 			<?php
 		endwhile;
@@ -486,6 +483,23 @@ function jawad_dev_render_projects( array $a ): string {
 	endif;
 	?>
 	</div></div></section>
+	<?php echo jawad_dev_render_project_modal(); ?>
+	<?php
+	return ob_get_clean();
+}
+
+function jawad_dev_render_project_modal(): string {
+	ob_start();
+	?>
+	<div class="jd-modal jd-project-modal" hidden>
+		<div class="jd-modal__dialog jd-project-modal__dialog" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Project details', 'jawad-dev' ); ?>">
+			<div class="jd-window-dots"><span></span><span></span><span></span><em>~/project-details</em><button type="button" class="jd-modal__close jd-project-modal__close" aria-label="<?php esc_attr_e( 'Close project details', 'jawad-dev' ); ?>">×</button></div>
+			<div class="jd-project-modal__body">
+				<div class="jd-project-modal__loading"><?php esc_html_e( 'Loading project…', 'jawad-dev' ); ?></div>
+				<div class="jd-project-modal__content" hidden></div>
+			</div>
+		</div>
+	</div>
 	<?php
 	return ob_get_clean();
 }

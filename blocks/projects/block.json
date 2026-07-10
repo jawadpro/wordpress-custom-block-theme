@@ -16,7 +16,7 @@
   "attributes": {
     "enabled": {
       "type": "boolean",
-      "default": false
+      "default": true
     },
     "eyebrow": {
       "type": "string",

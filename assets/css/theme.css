@@ -121,12 +121,13 @@ a:hover { color: #bae6fd; }
 .jd-package li > span { color: #22d3ee; width: 16px; height: 16px; flex-shrink: 0; display: inline-grid; place-items: center; margin-top: 2px; }
 .jd-package li > span svg { width: 13px; height: 13px; }
 .jd-package .jd-btn { margin-top: auto; }
-.jd-project { border-radius: 20px; border: 1px solid rgba(148,163,184,.12); background: rgba(15,23,42,.5); backdrop-filter: blur(12px); overflow: hidden; transition: transform .25s, border-color .25s, box-shadow .25s; }
-.jd-project__media { display: grid; place-items: center; aspect-ratio: 16 / 10; background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--jd-accent, #22d3ee) 24%, transparent), rgba(15,23,42,.8)); color: #64748b; font-family: "JetBrains Mono"; }
-.jd-project__media img { width: 100%; height: 100%; object-fit: cover; }
+.jd-project { display: flex; flex-direction: column; border-radius: 20px; border: 1px solid rgba(148,163,184,.12); background: rgba(15,23,42,.5); backdrop-filter: blur(12px); overflow: hidden; transition: transform .25s, border-color .25s, box-shadow .25s; }
+.jd-project__media { display: block; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--jd-accent, #22d3ee) 24%, transparent), rgba(15,23,42,.8)); color: #64748b; font-family: "JetBrains Mono"; }
+.jd-project__media img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.jd-project__media span { display: grid; place-items: center; width: 100%; height: 100%; }
 .jd-project > div:last-child { padding: 24px; }
 .jd-project strong { display: block; color: #34d399; font-family: "JetBrains Mono"; font-size: 12px; margin-bottom: 12px; }
-.jd-project a { display: inline-flex; align-items: center; gap: 8px; font-family: "Space Grotesk"; font-weight: 600; font-size: 14px; color: #67e8f9; }
+.jd-project > div:last-child a { display: inline-flex; align-items: center; gap: 8px; font-family: "Space Grotesk"; font-weight: 600; font-size: 14px; color: #67e8f9; }
 .jd-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
 .jd-tags span { font-family: "JetBrains Mono"; font-size: 11px; color: #bfdbfe; border: 1px solid rgba(96,165,250,.3); padding: 4px 11px; border-radius: 999px; }
 .jd-stack { padding: clamp(70px, 7vw, 100px) 24px; }
@@ -179,6 +180,19 @@ a:hover { color: #bae6fd; }
 .jd-modal__dialog > * { background: rgba(7,11,20,.98); }
 .jd-modal .jd-window-dots { border-radius: 21px 21px 0 0; padding: 14px 20px; }
 .jd-modal__close { margin-left: 8px; width: 28px; height: 28px; border-radius: 8px; background: transparent; border: 1px solid rgba(148,163,184,.2); color: #94a3b8; cursor: pointer; }
+.jd-project-modal__dialog { width: min(860px, 100%); }
+.jd-project-modal__body { border-radius: 0 0 21px 21px; background: rgba(7,11,20,.98); }
+.jd-project-modal__loading { padding: 34px; color: #94a3b8; font-family: "JetBrains Mono"; }
+.jd-project-modal__image { display: block; width: 100%; aspect-ratio: 16 / 8; object-fit: cover; object-position: center; background: rgba(15,23,42,.8); }
+.jd-project-modal__inner { padding: clamp(24px, 4vw, 42px); }
+.jd-project-modal__inner h2 { margin: 0 0 12px; color: #f8fafc; font-family: "Space Grotesk"; font-size: clamp(28px, 4vw, 42px); line-height: 1.12; }
+.jd-project-modal__meta { margin: 0 0 18px; color: #34d399; font-family: "JetBrains Mono"; font-size: 12px; line-height: 1.7; }
+.jd-project-modal__post { color: #cbd5e1; line-height: 1.8; margin: 24px 0; }
+.jd-project-modal__post > *:first-child { margin-top: 0; }
+.jd-project-modal__post h1, .jd-project-modal__post h2, .jd-project-modal__post h3, .jd-project-modal__post h4 { color: #f8fafc; font-family: "Space Grotesk"; line-height: 1.2; margin: 1.3em 0 .55em; }
+.jd-project-modal__post p, .jd-project-modal__post ul, .jd-project-modal__post ol { margin: 0 0 1em; }
+.jd-project-modal__post img { max-width: 100%; height: auto; border-radius: 14px; border: 1px solid rgba(148,163,184,.12); }
+.jd-project-modal__post a { color: #67e8f9; text-decoration: underline; text-underline-offset: 3px; }
 .jd-progress { height: 2px; background: rgba(148,163,184,.1); }
 .jd-progress span { display: block; height: 2px; width: 33%; background: linear-gradient(90deg, #2563eb, #22d3ee); transition: width .35s ease; }
 .jd-form { padding: 28px; border-radius: 0 0 21px 21px; }

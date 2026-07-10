@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.1.1' );
+define( 'JAWAD_DEV_VERSION', '1.1.2' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -67,6 +67,14 @@ function jawad_dev_enqueue_assets(): void {
 	wp_enqueue_style( 'jawad-dev-fonts', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap', array(), null );
 	wp_enqueue_style( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/css/theme.css', array( 'jawad-dev-fonts' ), JAWAD_DEV_VERSION );
 	wp_enqueue_script( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/js/theme.js', array(), JAWAD_DEV_VERSION, true );
+	wp_localize_script(
+		'jawad-dev-theme',
+		'JawadDev',
+		array(
+			'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+			'projectNonce' => wp_create_nonce( 'jawad_dev_project_modal' ),
+		)
+	);
 }
 
 add_action( 'enqueue_block_editor_assets', 'jawad_dev_enqueue_editor_assets' );
@@ -177,6 +185,42 @@ function jawad_dev_save_project_meta( int $post_id ): void {
 		$value = isset( $_POST[ $key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) : '';
 		update_post_meta( $post_id, $key, 'project_link' === $key ? esc_url_raw( $value ) : $value );
 	}
+}
+
+add_action( 'wp_ajax_jawad_dev_project_modal', 'jawad_dev_project_modal' );
+add_action( 'wp_ajax_nopriv_jawad_dev_project_modal', 'jawad_dev_project_modal' );
+function jawad_dev_project_modal(): void {
+	check_ajax_referer( 'jawad_dev_project_modal', 'nonce' );
+
+	$project_id = isset( $_POST['projectId'] ) ? absint( $_POST['projectId'] ) : 0;
+	$post       = $project_id ? get_post( $project_id ) : null;
+	if ( ! $post || 'project' !== $post->post_type || 'publish' !== $post->post_status ) {
+		wp_send_json_error( array( 'message' => __( 'Project not found.', 'jawad-dev' ) ), 404 );
+	}
+
+	$image = get_the_post_thumbnail_url( $project_id, 'large' );
+	$link  = get_post_meta( $project_id, 'project_link', true );
+	$terms = get_the_terms( $project_id, 'project_technology' );
+	$tags  = array();
+	if ( $terms && ! is_wp_error( $terms ) ) {
+		foreach ( $terms as $term ) {
+			$tags[] = $term->name;
+		}
+	}
+
+	wp_send_json_success(
+		array(
+			'title'      => get_the_title( $project_id ),
+			'image'      => $image ?: '',
+			'content'    => apply_filters( 'the_content', $post->post_content ),
+			'link'       => $link ? esc_url_raw( $link ) : '',
+			'client'     => get_post_meta( $project_id, 'project_client', true ),
+			'year'       => get_post_meta( $project_id, 'project_year', true ),
+			'result'     => get_post_meta( $project_id, 'project_result', true ),
+			'tags'       => $tags,
+			'buttonText' => get_post_meta( $project_id, 'project_button_text', true ) ?: __( 'Visit Project', 'jawad-dev' ),
+		)
+	);
 }
 
 add_action( 'init', 'jawad_dev_register_blocks' );
