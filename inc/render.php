@@ -180,6 +180,15 @@ function jawad_dev_render_site_header( array $a ): string {
 function jawad_dev_render_hero( array $a ): string {
 	$stats = ! empty( $a['stats'] ) && is_array( $a['stats'] ) ? $a['stats'] : jawad_dev_default_attrs( 'hero' )['stats'];
 	$image = $a['imageUrl'] ? $a['imageUrl'] : '';
+	$logos = array(
+		array( 'name' => 'Shopify Plus', 'accent' => '#95bf47' ),
+		array( 'name' => 'WordPress VIP', 'accent' => '#38bdf8' ),
+		array( 'name' => 'Toptal', 'accent' => '#2dd4bf' ),
+		array( 'name' => 'Upwork', 'accent' => '#6fda44' ),
+		array( 'name' => 'Fiverr', 'accent' => '#1dbf73' ),
+		array( 'name' => 'Vercel', 'accent' => '#f8fafc' ),
+		array( 'name' => 'AWS', 'accent' => '#ff9900' ),
+	);
 	if ( ! $image && ! empty( $a['imageId'] ) ) {
 		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
 	}
@@ -200,6 +209,14 @@ function jawad_dev_render_hero( array $a ): string {
 				<div class="jd-float-card jd-code-card"><div class="jd-window-dots"><span></span><span></span><span></span><em>functions.php</em></div><code><b>add_action</b>('need_website_help',<br><i>'hire_jawad'</i>);<br><small>// your business solution</small></code></div>
 				<div class="jd-float-card jd-speed-card"><div class="jd-score"><span>98</span></div><div><strong>PageSpeed</strong><span>Core Web Vitals ✓</span></div></div>
 				<div class="jd-badge-stack"><span><?php echo jawad_dev_svg( 'wordpress' ); ?>WordPress</span><span><?php echo jawad_dev_svg( 'elementor' ); ?>Elementor</span><span><?php echo jawad_dev_svg( 'woo' ); ?>WooCommerce</span><span><?php echo jawad_dev_svg( 'ai' ); ?>AI Automation</span></div>
+			</div>
+		</div>
+		<div class="jd-container jd-logo-strip" data-reveal>
+			<div class="jd-logo-strip__label"><?php esc_html_e( 'Trusted across modern web platforms', 'jawad-dev' ); ?></div>
+			<div class="jd-logo-strip__items" aria-label="<?php esc_attr_e( 'Platforms and marketplaces', 'jawad-dev' ); ?>">
+				<?php foreach ( $logos as $logo ) : ?>
+					<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><i></i><?php echo esc_html( $logo['name'] ); ?></span>
+				<?php endforeach; ?>
 			</div>
 		</div>
 	</header>
