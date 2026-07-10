@@ -227,9 +227,13 @@ function jawad_dev_render_hero( array $a ): string {
 		<div class="jd-container jd-logo-strip" data-reveal>
 			<div class="jd-logo-strip__label"><?php esc_html_e( 'Trusted across modern web platforms', 'jawad-dev' ); ?></div>
 			<div class="jd-logo-strip__items" aria-label="<?php esc_attr_e( 'Platforms and marketplaces', 'jawad-dev' ); ?>">
-				<?php foreach ( $logos as $logo ) : ?>
-					<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><span class="jd-logo-strip__icon"><?php echo jawad_dev_brand_svg( $logo['icon'] ); ?></span><?php echo esc_html( $logo['name'] ); ?></span>
-				<?php endforeach; ?>
+				<div class="jd-logo-strip__track">
+					<?php for ( $set = 0; $set < 2; $set++ ) : ?>
+						<?php foreach ( $logos as $logo ) : ?>
+							<span class="jd-logo-strip__logo" style="--jd-logo-accent: <?php echo esc_attr( $logo['accent'] ); ?>"><span class="jd-logo-strip__icon"><?php echo jawad_dev_brand_svg( $logo['icon'] ); ?></span><?php echo esc_html( $logo['name'] ); ?></span>
+						<?php endforeach; ?>
+					<?php endfor; ?>
+				</div>
 			</div>
 		</div>
 	</header>
