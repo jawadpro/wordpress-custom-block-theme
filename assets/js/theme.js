@@ -148,6 +148,9 @@
 			if ( ! trigger ) {
 				return null;
 			}
+			if ( trigger.classList.contains( 'jd-no-modal' ) ) {
+				return null;
+			}
 			if ( trigger.closest( '.jd-footer' ) && ! trigger.classList.contains( 'jd-open-form' ) ) {
 				return null;
 			}

@@ -638,7 +638,7 @@ function jawad_dev_render_faq( array $a ): string {
 
 function jawad_dev_render_cta( array $a ): string {
 	ob_start();
-	?><section id="contact" class="jd-section jd-cta"><div class="jd-container"><div class="jd-cta__box" data-reveal><h2><?php echo esc_html( $a['title'] ); ?></h2><p><?php echo esc_html( $a['description'] ); ?></p><div class="jd-actions"><a class="jd-btn jd-open-form jd-hire-anim-lg" href="<?php echo esc_url( $a['buttonUrl'] ); ?>"><?php echo esc_html( $a['buttonText'] ); ?></a><a class="jd-btn jd-btn--ghost jd-open-form" href="<?php echo esc_url( $a['secondaryUrl'] ); ?>"><?php echo esc_html( $a['secondaryText'] ); ?></a></div></div></div></section><?php
+	?><section id="contact" class="jd-section jd-cta"><div class="jd-container"><div class="jd-cta__box" data-reveal><h2><?php echo esc_html( $a['title'] ); ?></h2><p><?php echo esc_html( $a['description'] ); ?></p><div class="jd-actions"><a class="jd-btn jd-open-form jd-hire-anim-lg" href="<?php echo esc_url( $a['buttonUrl'] ); ?>"><?php echo esc_html( $a['buttonText'] ); ?></a><a class="jd-btn jd-btn--ghost jd-no-modal" href="<?php echo esc_url( $a['secondaryUrl'] ); ?>"><?php echo esc_html( $a['secondaryText'] ); ?></a></div></div></div></section><?php
 	return ob_get_clean();
 }
 
