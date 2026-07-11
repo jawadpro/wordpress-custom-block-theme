@@ -148,6 +148,9 @@
 			if ( ! trigger ) {
 				return null;
 			}
+			if ( trigger.closest( '.jd-footer' ) && ! trigger.classList.contains( 'jd-open-form' ) ) {
+				return null;
+			}
 			const href = trigger.getAttribute( 'href' ) || '';
 			if ( trigger.classList.contains( 'jd-open-form' ) || href === '#contact' || href.endsWith( '/#contact' ) ) {
 				return trigger;

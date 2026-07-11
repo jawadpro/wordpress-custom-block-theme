@@ -86,8 +86,8 @@ function jawad_dev_default_attrs( string $slug ): array {
 			),
 			'socialTitle' => 'FIND ME ON',
 			'socialLinks' => array(
-				array( 'label' => 'LinkedIn', 'url' => '#contact' ),
-				array( 'label' => 'GitHub', 'url' => '#contact' ),
+				array( 'label' => 'LinkedIn', 'url' => '#' ),
+				array( 'label' => 'GitHub', 'url' => 'https://github.com/jawadpro' ),
 			),
 			'copyright'   => 'Jawad Ilyas · jawadjd.dev — All rights reserved.',
 			'codeText'    => 'built_with: WordPress · care · clean_code',

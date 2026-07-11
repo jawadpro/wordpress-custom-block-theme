@@ -48,8 +48,8 @@
     "socialLinks": {
       "type": "array",
       "default": [
-        { "label": "LinkedIn", "url": "#contact" },
-        { "label": "GitHub", "url": "#contact" }
+        { "label": "LinkedIn", "url": "#" },
+        { "label": "GitHub", "url": "https://github.com/jawadpro" }
       ]
     },
     "copyright": {
