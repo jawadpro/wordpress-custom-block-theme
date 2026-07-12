@@ -187,7 +187,7 @@ function jawad_dev_brand_svg( string $name ): string {
 }
 
 function jawad_dev_render_site_header( array $a ): string {
-	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Contact' => '#contact' );
+	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Blog' => home_url( '/blog/' ), 'Contact' => '#contact' );
 	$brand_url = is_front_page() ? '#top' : home_url( '/' );
 	ob_start();
 	echo jawad_dev_icon_defs();
