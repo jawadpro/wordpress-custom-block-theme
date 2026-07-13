@@ -26,7 +26,6 @@
     "typography": {
       "fontFamilies": [
         { "fontFamily": "'Manrope', sans-serif", "slug": "manrope", "name": "Manrope" },
-        { "fontFamily": "'Space Grotesk', sans-serif", "slug": "space-grotesk", "name": "Space Grotesk" },
         { "fontFamily": "'JetBrains Mono', monospace", "slug": "jetbrains-mono", "name": "JetBrains Mono" }
       ]
     }
