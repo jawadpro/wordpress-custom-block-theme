@@ -22,6 +22,10 @@ a:hover { color: #bae6fd; }
 .jd-nav__links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
 .jd-nav__links a { color: #94a3b8; font-size: 14.5px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: color .2s; }
 .jd-nav__links a:hover { color: #e2e8f0; }
+.jd-nav__links .jd-nav__tool { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; margin-left: 4px; padding: 8px 13px; border: 1px solid rgba(34,211,238,.28); background: rgba(34,211,238,.07); color: #dffbff; box-shadow: 0 0 28px -18px rgba(34,211,238,.9); }
+.jd-nav__links .jd-nav__tool::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 14px rgba(34,211,238,.8); }
+.jd-nav__links .jd-nav__tool::after { content: ""; position: absolute; inset: -1px; transform: translateX(-120%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent); animation: navToolScan 3.8s ease-in-out infinite; }
+.jd-nav__links .jd-nav__tool:hover { border-color: rgba(34,211,238,.5); color: #fff; background: rgba(34,211,238,.12); }
 .jd-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 16px; color: #fff; background: linear-gradient(120deg, #2563eb, #06b6d4); padding: 15px 30px; border-radius: 12px; border: 0; box-shadow: 0 10px 34px -10px rgba(37,99,235,.8); transition: transform .2s, box-shadow .2s, border-color .2s, background .2s; cursor: pointer; }
 .jd-btn:hover { color: #fff; transform: translateY(-2px); box-shadow: 0 16px 42px -10px rgba(34,211,238,.7); }
 .jd-btn--small { font-size: 14.5px; padding: 10px 22px; border-radius: 10px; }
@@ -30,6 +34,7 @@ a:hover { color: #bae6fd; }
 .jd-menu-toggle { margin-left: auto; width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(148,163,184,.22); background: rgba(148,163,184,.07); display: none; place-items: center; cursor: pointer; flex-shrink: 0; }
 .jd-mobile-menu { display: none; border-top: 1px solid rgba(148,163,184,.1); background: rgba(5,7,13,.94); backdrop-filter: blur(18px); padding: 12px 24px 20px; flex-direction: column; gap: 4px; }
 .jd-mobile-menu a { color: #cbd5e1; font-size: 15.5px; font-weight: 600; padding: 12px 6px; border-radius: 8px; border-bottom: 1px solid rgba(148,163,184,.08); }
+.jd-mobile-menu .jd-nav__tool { margin: 8px 0 4px; padding: 13px 14px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.08); color: #e0fbff; text-align: center; }
 .jd-mobile-menu a:last-child { margin-top: 10px; text-align: center; color: #fff; background: linear-gradient(120deg, #2563eb, #06b6d4); padding: 13px 22px; border-bottom: 0; }
 .jd-mobile-menu.is-open { display: flex; }
 .jd-hire-anim, .jd-hire-anim-lg { position: relative; }
@@ -344,10 +349,12 @@ a:hover { color: #bae6fd; }
 @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes floatY2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 @keyframes logoMarquee { from { transform: translateX(0); } to { transform: translateX(calc(-33.333% - clamp(9.333px, 1.333vw, 18px))); } }
+@keyframes navToolScan { 0%, 48% { transform: translateX(-120%); } 72%, 100% { transform: translateX(120%); } }
 @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); } 50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }
 @media (prefers-reduced-motion: reduce) {
 	[data-reveal], [data-reveal-group] > * { opacity: 1; transform: none; transition: none; }
 	.jd-logo-strip__track { animation: none; }
+	.jd-nav__links .jd-nav__tool::after { animation: none; }
 }
 @media (max-width: 760px) {
 	.jd-container { width: min(100% - 32px, 1200px); }

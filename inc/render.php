@@ -187,7 +187,16 @@ function jawad_dev_brand_svg( string $name ): string {
 }
 
 function jawad_dev_render_site_header( array $a ): string {
-	$links = array( 'Services' => '#services', 'Work' => '#work', 'Packages' => '#packages', 'Process' => '#process', 'FAQ' => '#faq', 'Blog' => home_url( '/blog/' ), 'Contact' => '#contact' );
+	$links = array(
+		'Services'           => '#services',
+		'Work'               => '#work',
+		'Packages'           => '#packages',
+		'Process'            => '#process',
+		'FAQ'                => '#faq',
+		'Blog'               => home_url( '/blog/' ),
+		'Check Your Website' => home_url( '/wordpress-website-health-check/' ),
+		'Contact'            => '#contact',
+	);
 	$brand_url = is_front_page() ? '#top' : home_url( '/' );
 	ob_start();
 	echo jawad_dev_icon_defs();
@@ -198,7 +207,7 @@ function jawad_dev_render_site_header( array $a ): string {
 			<a class="jd-brand" href="<?php echo esc_url( $brand_url ); ?>"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo wp_kses_post( str_replace( '.dev', '<span>.dev</span>', esc_html( $a['brand'] ) ) ); ?></span></a>
 			<div class="jd-nav__links">
 				<?php foreach ( $links as $label => $url ) : ?>
-					<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+					<a class="<?php echo 'Check Your Website' === $label ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
 				<?php endforeach; ?>
 			</div>
 			<a class="jd-btn jd-btn--small jd-open-form jd-hire-anim" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
@@ -206,7 +215,7 @@ function jawad_dev_render_site_header( array $a ): string {
 		</div>
 		<div class="jd-mobile-menu">
 			<?php foreach ( $links as $label => $url ) : ?>
-				<a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+				<a class="<?php echo 'Check Your Website' === $label ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
 			<?php endforeach; ?>
 			<a class="jd-hire-anim jd-open-form" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
 		</div>
