@@ -222,13 +222,16 @@ function jawad_dev_render_hero( array $a ): string {
 		$image = wp_get_attachment_image_url( (int) $a['imageId'], 'large' );
 	}
 	ob_start();
+	$title_html = esc_html( $a['title'] );
+	$title_html = str_replace( 'WordPress Developer', '<span class="jd-hero__role">WordPress Developer</span>', $title_html );
+	$title_html = preg_replace( '/(Fast, Modern &amp; SEO-Friendly|Fast, Modern & SEO-Friendly)/', '<span class="jd-hero__accent">$1</span>', $title_html );
 	?>
 	<header id="top" class="jd-hero jd-section">
 		<div class="jd-orb jd-orb--hero-a"></div><div class="jd-orb jd-orb--hero-b"></div>
 		<div class="jd-container jd-hero__grid">
 			<div class="jd-hero__copy">
 				<?php if ( ! empty( $a['showBadge'] ) ) : ?><div class="jd-pill"><span></span><?php echo esc_html( $a['eyebrow'] ); ?></div><?php endif; ?>
-				<h1><?php echo wp_kses_post( preg_replace( '/(Fast, Modern &amp; SEO-Friendly|Fast, Modern & SEO-Friendly)/', '<span>$1</span>', esc_html( $a['title'] ) ) ); ?></h1>
+				<h1><?php echo wp_kses_post( $title_html ); ?></h1>
 				<p><?php echo esc_html( $a['description'] ); ?></p>
 				<div class="jd-actions"><a class="jd-btn jd-open-form" href="<?php echo esc_url( $a['buttonUrl'] ); ?>"><?php echo esc_html( $a['buttonText'] ); ?> <?php echo jawad_dev_svg( 'arrow' ); ?></a><a class="jd-btn jd-btn--ghost" href="<?php echo esc_url( $a['secondaryUrl'] ); ?>"><?php echo esc_html( $a['secondaryText'] ); ?></a></div>
 				<div class="jd-stats"><?php foreach ( $stats as $stat ) : ?><div><strong><?php echo esc_html( $stat['value'] ?? ( $stat[0] ?? '' ) ); ?></strong><span><?php echo esc_html( $stat['label'] ?? ( $stat[1] ?? '' ) ); ?></span></div><?php endforeach; ?></div>
