@@ -223,7 +223,6 @@ function jawad_dev_render_hero( array $a ): string {
 	}
 	ob_start();
 	$title_html = esc_html( $a['title'] );
-	$title_html = str_replace( 'WordPress Developer', '<span class="jd-hero__role">WordPress Developer</span>', $title_html );
 	$title_html = preg_replace( '/(Fast, Modern &amp; SEO-Friendly|Fast, Modern & SEO-Friendly)/', '<span class="jd-hero__accent">$1</span>', $title_html );
 	?>
 	<header id="top" class="jd-hero jd-section">
