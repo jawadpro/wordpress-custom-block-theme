@@ -195,7 +195,6 @@ function jawad_dev_render_site_header( array $a ): string {
 		'FAQ'                => '#faq',
 		'Blog'               => home_url( '/blog/' ),
 		'Check Your Website' => home_url( '/wordpress-website-health-check/' ),
-		'Contact'            => '#contact',
 	);
 	$brand_url = is_front_page() ? '#top' : home_url( '/' );
 	ob_start();
