@@ -20,9 +20,9 @@ a:hover { color: #bae6fd; }
 .jd-brand--wordmark { position: relative; gap: 0; color: #f8fafc; line-height: 1; transform: translateY(1px); }
 .jd-wordmark { position: relative; display: inline-flex; align-items: baseline; padding: 9px 0 4px; white-space: nowrap; filter: drop-shadow(0 10px 22px rgba(15,23,42,.34)); }
 .jd-wordmark::before { content: ""; position: absolute; top: 0; left: .24em; width: .14em; height: .14em; min-width: 5px; min-height: 5px; border-radius: 1px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); box-shadow: 0 0 16px rgba(14,165,233,.7); }
-.jd-wordmark__name { font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px, 3vw, 45px); font-weight: 400; letter-spacing: -.075em; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.12); }
-.jd-wordmark__domain { margin-left: .08em; font-family: Manrope, sans-serif; font-size: clamp(24px, 2vw, 34px); font-weight: 800; letter-spacing: -.035em; background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 58%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 22px rgba(14,165,233,.28); }
-.jd-wordmark__cursor { margin-left: .12em; font-family: Manrope, sans-serif; font-size: clamp(24px, 2vw, 34px); font-weight: 800; line-height: .7; color: #0ea5e9; text-shadow: 0 0 18px rgba(14,165,233,.55); animation: logoCursorBlink 1.05s steps(2, start) infinite; }
+.jd-wordmark__name { font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 2.4vw, 36px); font-weight: 400; letter-spacing: -.075em; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.12); }
+.jd-wordmark__domain { margin-left: .08em; font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 2.4vw, 36px); font-weight: 400; letter-spacing: -.075em; background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 58%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 22px rgba(14,165,233,.28); }
+.jd-wordmark__cursor { margin-left: .12em; font-family: Georgia, "Times New Roman", serif; font-size: clamp(28px, 2.4vw, 36px); font-weight: 400; line-height: .7; color: #0ea5e9; text-shadow: 0 0 18px rgba(14,165,233,.55); animation: logoCursorBlink 1.05s steps(2, start) infinite; }
 .jd-brand:not(.jd-brand--wordmark) span span { color: #22d3ee; }
 .jd-brand__mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, #2563eb, #06b6d4); box-shadow: 0 4px 18px -4px rgba(34,211,238,.55); font-family: "JetBrains Mono", monospace; font-size: 14px; color: #fff; }
 .jd-nav__links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
@@ -408,6 +408,5 @@ a:hover { color: #bae6fd; }
 	.jd-nav__links, .jd-nav__inner > .jd-open-form { display: none; }
 	.jd-menu-toggle { display: grid; }
 	.jd-nav__inner { gap: 16px; }
-	.jd-wordmark__name { font-size: 33px; }
-	.jd-wordmark__domain, .jd-wordmark__cursor { font-size: 24px; }
+	.jd-wordmark__name, .jd-wordmark__domain, .jd-wordmark__cursor { font-size: 28px; }
 }
