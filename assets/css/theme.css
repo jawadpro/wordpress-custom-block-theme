@@ -17,7 +17,13 @@ a:hover { color: #bae6fd; }
 .jd-nav { position: sticky; top: 0; z-index: 60; backdrop-filter: blur(18px); background: rgba(5,7,13,.72); border-bottom: 1px solid rgba(148,163,184,.1); }
 .jd-nav__inner { padding: 16px 0; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
 .jd-brand { display: inline-flex; align-items: center; gap: 10px; color: #f1f5f9; font-family: Manrope, sans-serif; font-weight: 700; font-size: 18px; }
-.jd-brand span span { color: #22d3ee; }
+.jd-brand--wordmark { position: relative; gap: 0; color: #f8fafc; line-height: 1; transform: translateY(1px); }
+.jd-wordmark { position: relative; display: inline-flex; align-items: baseline; padding: 9px 0 4px; white-space: nowrap; filter: drop-shadow(0 10px 22px rgba(15,23,42,.34)); }
+.jd-wordmark::before { content: ""; position: absolute; top: 0; left: .24em; width: .14em; height: .14em; min-width: 5px; min-height: 5px; border-radius: 1px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); box-shadow: 0 0 16px rgba(14,165,233,.7); }
+.jd-wordmark__name { font-family: Georgia, "Times New Roman", serif; font-size: clamp(34px, 3vw, 45px); font-weight: 400; letter-spacing: -.075em; color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.12); }
+.jd-wordmark__domain { margin-left: .08em; font-family: Manrope, sans-serif; font-size: clamp(24px, 2vw, 34px); font-weight: 800; letter-spacing: -.035em; background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 58%, #0284c7 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 22px rgba(14,165,233,.28); }
+.jd-wordmark__cursor { margin-left: .12em; font-family: Manrope, sans-serif; font-size: clamp(24px, 2vw, 34px); font-weight: 800; line-height: .7; color: #0ea5e9; text-shadow: 0 0 18px rgba(14,165,233,.55); animation: logoCursorBlink 1.05s steps(2, start) infinite; }
+.jd-brand:not(.jd-brand--wordmark) span span { color: #22d3ee; }
 .jd-brand__mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, #2563eb, #06b6d4); box-shadow: 0 4px 18px -4px rgba(34,211,238,.55); font-family: "JetBrains Mono", monospace; font-size: 14px; color: #fff; }
 .jd-nav__links { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-left: auto; }
 .jd-nav__links a { color: #94a3b8; font-size: 14.5px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: color .2s; }
@@ -351,10 +357,12 @@ a:hover { color: #bae6fd; }
 @keyframes logoMarquee { from { transform: translateX(0); } to { transform: translateX(calc(-33.333% - clamp(9.333px, 1.333vw, 18px))); } }
 @keyframes navToolScan { 0%, 48% { transform: translateX(-120%); } 72%, 100% { transform: translateX(120%); } }
 @keyframes pulseDot { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); } 50% { box-shadow: 0 0 0 6px rgba(52,211,153,0); } }
+@keyframes logoCursorBlink { 0%, 45% { opacity: 1; } 46%, 100% { opacity: .16; } }
 @media (prefers-reduced-motion: reduce) {
 	[data-reveal], [data-reveal-group] > * { opacity: 1; transform: none; transition: none; }
 	.jd-logo-strip__track { animation: none; }
 	.jd-nav__links .jd-nav__tool::after { animation: none; }
+	.jd-wordmark__cursor { animation: none; }
 }
 @media (max-width: 760px) {
 	.jd-container { width: min(100% - 32px, 1200px); }
@@ -400,4 +408,6 @@ a:hover { color: #bae6fd; }
 	.jd-nav__links, .jd-nav__inner > .jd-open-form { display: none; }
 	.jd-menu-toggle { display: grid; }
 	.jd-nav__inner { gap: 16px; }
+	.jd-wordmark__name { font-size: 33px; }
+	.jd-wordmark__domain, .jd-wordmark__cursor { font-size: 24px; }
 }

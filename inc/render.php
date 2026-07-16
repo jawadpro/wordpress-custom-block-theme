@@ -203,7 +203,7 @@ function jawad_dev_render_site_header( array $a ): string {
 	<div class="jd-grid-bg"></div><div class="jd-cursor-glow" aria-hidden="true"></div>
 	<nav class="jd-nav" aria-label="<?php esc_attr_e( 'Main navigation', 'jawad-dev' ); ?>">
 		<div class="jd-container jd-nav__inner">
-			<a class="jd-brand" href="<?php echo esc_url( $brand_url ); ?>"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo wp_kses_post( str_replace( '.dev', '<span>.dev</span>', esc_html( $a['brand'] ) ) ); ?></span></a>
+			<a class="jd-brand jd-brand--wordmark" href="<?php echo esc_url( $brand_url ); ?>" aria-label="<?php esc_attr_e( 'jawadjd.dev home', 'jawad-dev' ); ?>"><span class="jd-wordmark" aria-hidden="true"><span class="jd-wordmark__name">jawadjd</span><span class="jd-wordmark__domain">.dev</span><span class="jd-wordmark__cursor">_</span></span></a>
 			<div class="jd-nav__links">
 				<?php foreach ( $links as $label => $url ) : ?>
 					<a class="<?php echo 'Check Your Website' === $label ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
