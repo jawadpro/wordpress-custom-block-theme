@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.4.4' );
+define( 'JAWAD_DEV_VERSION', '1.4.5' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
@@ -86,8 +86,7 @@ add_action( 'wp_enqueue_scripts', 'jawad_dev_enqueue_assets' );
 function jawad_dev_enqueue_assets(): void {
 	wp_enqueue_style( 'jawad-dev-fonts', 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap', array(), null );
 	wp_enqueue_style( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/css/theme.css', array( 'jawad-dev-fonts' ), JAWAD_DEV_VERSION );
-	wp_enqueue_script( 'gsap', 'https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js', array(), '3.15.0', true );
-	wp_enqueue_script( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/js/theme.js', array( 'gsap' ), JAWAD_DEV_VERSION, true );
+	wp_enqueue_script( 'jawad-dev-theme', JAWAD_DEV_URI . '/assets/js/theme.js', array(), JAWAD_DEV_VERSION, true );
 	wp_localize_script(
 		'jawad-dev-theme',
 		'JawadDev',
