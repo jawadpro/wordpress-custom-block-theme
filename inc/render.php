@@ -79,7 +79,6 @@ function jawad_dev_default_attrs( string $slug ): array {
 			'pagesLinks'  => array(
 				array( 'label' => 'Services', 'url' => '#services' ),
 				array( 'label' => 'Work', 'url' => '#work' ),
-				array( 'label' => 'Packages', 'url' => '#packages' ),
 				array( 'label' => 'Process', 'url' => '#process' ),
 				array( 'label' => 'FAQ', 'url' => '#faq' ),
 				array( 'label' => 'Contact', 'url' => '#contact' ),
@@ -190,7 +189,6 @@ function jawad_dev_render_site_header( array $a ): string {
 	$links = array(
 		'Services'           => '#services',
 		'Work'               => '#work',
-		'Packages'           => '#packages',
 		'Process'            => '#process',
 		'FAQ'                => '#faq',
 		'Blog'               => home_url( '/blog/' ),
@@ -534,6 +532,8 @@ function jawad_dev_render_process( array $a ): string {
 }
 
 function jawad_dev_render_packages( array $a ): string {
+	return '';
+
 	$packages = jawad_dev_attr_items( $a, jawad_dev_package_items() );
 	ob_start();
 	?>
@@ -654,6 +654,14 @@ function jawad_dev_render_cta( array $a ): string {
 
 function jawad_dev_render_site_footer( array $a ): string {
 	$pages_links  = ! empty( $a['pagesLinks'] ) && is_array( $a['pagesLinks'] ) ? $a['pagesLinks'] : array();
+	$pages_links  = array_values(
+		array_filter(
+			$pages_links,
+			static function ( $link ): bool {
+				return ! ( is_array( $link ) && isset( $link['label'] ) && 'Packages' === $link['label'] );
+			}
+		)
+	);
 	$social_links = ! empty( $a['socialLinks'] ) && is_array( $a['socialLinks'] ) ? $a['socialLinks'] : array();
 	ob_start();
 	?><footer class="jd-footer"><div class="jd-container"><div class="jd-footer__top"><div><div class="jd-brand"><span class="jd-brand__mark">&lt;/&gt;</span><span><?php echo esc_html( $a['brand'] ); ?></span></div><p><?php echo esc_html( $a['description'] ); ?></p></div><nav><strong><?php echo esc_html( $a['pagesTitle'] ); ?></strong><?php foreach ( $pages_links as $link ) : ?><?php if ( ! empty( $link['label'] ) ) : ?><a href="<?php echo esc_url( $link['url'] ?? '#' ); ?>"><?php echo esc_html( $link['label'] ); ?></a><?php endif; ?><?php endforeach; ?></nav><nav><strong><?php echo esc_html( $a['socialTitle'] ); ?></strong><?php foreach ( $social_links as $link ) : ?><?php if ( ! empty( $link['label'] ) ) : ?><a href="<?php echo esc_url( $link['url'] ?? '#' ); ?>"><?php echo esc_html( $link['label'] ); ?></a><?php endif; ?><?php endforeach; ?></nav></div><div class="jd-footer__bottom"><span>© <?php echo esc_html( gmdate( 'Y' ) . ' ' . $a['copyright'] ); ?></span><code><?php echo esc_html( $a['codeText'] ); ?></code></div></div></footer><?php

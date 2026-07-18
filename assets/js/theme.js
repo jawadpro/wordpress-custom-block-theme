@@ -336,16 +336,42 @@
 	function setupReveal() {
 		const items = qsa( '[data-reveal], [data-reveal-group]' );
 		if ( ! items.length ) return;
-		if ( ! ( 'IntersectionObserver' in window ) ) {
+		const reducedMotion = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		const gsap = window.gsap;
+
+		if ( reducedMotion || ! gsap || ! ( 'IntersectionObserver' in window ) ) {
 			items.forEach( function ( item ) {
 				item.classList.add( 'is-revealed' );
 			} );
 			return;
 		}
+
+		function reveal( item ) {
+			const targets = item.hasAttribute( 'data-reveal-group' ) ? qsa( ':scope > *', item ) : [ item ];
+			if ( ! targets.length ) return;
+			gsap.killTweensOf( targets );
+			gsap.fromTo(
+				targets,
+				{ autoAlpha: 0, y: 34, filter: 'blur(10px)' },
+				{
+					autoAlpha: 1,
+					y: 0,
+					filter: 'blur(0px)',
+					duration: 0.9,
+					ease: 'power3.out',
+					stagger: item.hasAttribute( 'data-reveal-group' ) ? 0.075 : 0,
+					clearProps: 'transform,filter,opacity,visibility',
+					onComplete: function () {
+						item.classList.add( 'is-revealed' );
+					}
+				}
+			);
+		}
+
 		const observer = new IntersectionObserver( function ( entries ) {
 			entries.forEach( function ( entry ) {
 				if ( entry.isIntersecting ) {
-					entry.target.classList.add( 'is-revealed' );
+					reveal( entry.target );
 					observer.unobserve( entry.target );
 				}
 			} );
