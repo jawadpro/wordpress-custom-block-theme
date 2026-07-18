@@ -345,6 +345,7 @@
 			} );
 			return;
 		}
+		document.documentElement.classList.add( 'jd-gsap-reveal' );
 
 		function reveal( item ) {
 			const targets = item.hasAttribute( 'data-reveal-group' ) ? qsa( ':scope > *', item ) : [ item ];
