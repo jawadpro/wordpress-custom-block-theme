@@ -77,8 +77,13 @@ function jawad_dev_default_attrs( string $slug ): array {
 			'description' => 'WordPress Developer & Full-Stack Web Designer',
 			'pagesTitle'  => 'PAGES',
 			'pagesLinks'  => array(
-				array( 'label' => 'Services', 'url' => '#services' ),
-				array( 'label' => 'Work', 'url' => '#work' ),
+				array( 'label' => 'Elementor Developer', 'url' => '/elementor-developer/' ),
+				array( 'label' => 'Speed Optimization', 'url' => '/wordpress-speed-optimization/' ),
+				array( 'label' => 'WooCommerce Developer', 'url' => '/woocommerce-developer/' ),
+				array( 'label' => 'Fix WordPress Website', 'url' => '/fix-wordpress-website/' ),
+				array( 'label' => 'Figma to WordPress', 'url' => '/figma-to-wordpress/' ),
+				array( 'label' => 'Landing Page Design', 'url' => '/landing-page-design/' ),
+				array( 'label' => 'Maintenance', 'url' => '/wordpress-maintenance/' ),
 				array( 'label' => 'Process', 'url' => '#process' ),
 				array( 'label' => 'FAQ', 'url' => '#faq' ),
 				array( 'label' => 'Contact', 'url' => '#contact' ),
@@ -187,7 +192,10 @@ function jawad_dev_brand_svg( string $name ): string {
 
 function jawad_dev_render_site_header( array $a ): string {
 	$links = array(
-		'Services'           => '#services',
+		'Elementor'          => home_url( '/elementor-developer/' ),
+		'Speed'              => home_url( '/wordpress-speed-optimization/' ),
+		'WooCommerce'        => home_url( '/woocommerce-developer/' ),
+		'Fix Site'           => home_url( '/fix-wordpress-website/' ),
 		'Work'               => '#work',
 		'Process'            => '#process',
 		'FAQ'                => '#faq',
@@ -289,14 +297,14 @@ function jawad_dev_section_heading( array $a, string $id ): string {
 
 function jawad_dev_cards_services(): array {
 	return array(
-		array( 'title' => 'Custom WordPress Website Design', 'text' => 'Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.', 'code' => 'wp_custom_build()', 'icon' => 'service-1' ),
-		array( 'title' => 'Elementor & Elementor Pro Development', 'text' => 'Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.', 'code' => 'elementor.pro', 'icon' => 'service-2' ),
-		array( 'title' => 'WooCommerce Store Development', 'text' => 'Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.', 'code' => 'woocommerce_store()', 'icon' => 'service-3' ),
-		array( 'title' => 'WordPress Bug Fixing', 'text' => 'Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.', 'code' => 'debug_wp_issue()', 'icon' => 'service-4' ),
-		array( 'title' => 'WordPress Speed Optimization', 'text' => 'Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.', 'code' => 'optimize_assets()', 'icon' => 'service-5' ),
-		array( 'title' => 'Figma to WordPress', 'text' => 'Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.', 'code' => 'figma_to_wp()', 'icon' => 'service-6' ),
-		array( 'title' => 'Landing Page Design', 'text' => 'Focused pages for services, products, ads, and lead generation with clear CTAs.', 'code' => 'landing_page()', 'icon' => 'service-7' ),
-		array( 'title' => 'Maintenance & Security', 'text' => 'Updates, backups, malware cleanup, monitoring, and dependable ongoing care.', 'code' => 'site_care()', 'icon' => 'service-8' ),
+		array( 'title' => 'Custom WordPress Website Design', 'text' => 'Complete business websites designed and built from scratch, clean, modern, and easy for you to manage.', 'code' => 'wp_custom_build()', 'icon' => 'service-1', 'serviceUrl' => home_url( '/fix-wordpress-website/' ) ),
+		array( 'title' => 'Elementor & Elementor Pro Development', 'text' => 'Pixel-perfect, responsive Elementor builds with clean structure, global styles, and reusable templates.', 'code' => 'elementor.pro', 'icon' => 'service-2', 'serviceUrl' => home_url( '/elementor-developer/' ) ),
+		array( 'title' => 'WooCommerce Store Development', 'text' => 'Product pages, cart, checkout, payment gateways, and store layouts that feel smooth and trustworthy.', 'code' => 'woocommerce_store()', 'icon' => 'service-3', 'serviceUrl' => home_url( '/woocommerce-developer/' ) ),
+		array( 'title' => 'WordPress Bug Fixing', 'text' => 'Theme, plugin, Elementor, WooCommerce, responsive, and layout issues debugged carefully.', 'code' => 'debug_wp_issue()', 'icon' => 'service-4', 'serviceUrl' => home_url( '/fix-wordpress-website/' ) ),
+		array( 'title' => 'WordPress Speed Optimization', 'text' => 'Core Web Vitals improvements, image optimization, cache setup, script cleanup, and performance fixes.', 'code' => 'optimize_assets()', 'icon' => 'service-5', 'serviceUrl' => home_url( '/wordpress-speed-optimization/' ) ),
+		array( 'title' => 'Figma to WordPress', 'text' => 'Responsive builds from Figma designs using Elementor, custom themes, or clean frontend development.', 'code' => 'figma_to_wp()', 'icon' => 'service-6', 'serviceUrl' => home_url( '/figma-to-wordpress/' ) ),
+		array( 'title' => 'Landing Page Design', 'text' => 'Focused pages for services, products, ads, and lead generation with clear CTAs.', 'code' => 'landing_page()', 'icon' => 'service-7', 'serviceUrl' => home_url( '/landing-page-design/' ) ),
+		array( 'title' => 'Maintenance & Security', 'text' => 'Updates, backups, malware cleanup, monitoring, and dependable ongoing care.', 'code' => 'site_care()', 'icon' => 'service-8', 'serviceUrl' => home_url( '/wordpress-maintenance/' ) ),
 		array( 'title' => 'ACF, CPT & Custom Theme Development', 'text' => 'Custom post types, flexible fields, and lightweight custom themes built with clean PHP.', 'code' => 'register_post_type()', 'icon' => 'service-9' ),
 		array( 'title' => 'API Integration & Automation', 'text' => 'CRMs, payment gateways, webhooks, and workflow automation connected to your WordPress site.', 'code' => 'POST /api/v1/connect', 'icon' => 'service-10' ),
 		array( 'title' => 'AI Workflow Automation', 'text' => 'AI chatbots, lead qualification, content workflows, CRM handoffs, and smart automations connected to your WordPress website.', 'code' => 'ai_automation()', 'icon' => 'service-11' ),
@@ -492,12 +500,14 @@ function jawad_dev_render_card_grid( string $section, string $heading_id, array 
 					$text  = $card['text'] ?? ( $card[1] ?? '' );
 					$code  = $card['code'] ?? ( $card[2] ?? '' );
 					$icon  = $card['icon'] ?? ( $card[3] ?? '' );
+					$url   = ! empty( $card['serviceUrl'] ) ? $card['serviceUrl'] : jawad_dev_service_url_for_title( (string) $title );
 					?>
 					<article class="jd-card <?php echo esc_attr( $class ); ?>">
 						<div class="jd-card__icon"><?php echo jawad_dev_svg( $icon ); ?></div>
 						<h3><?php echo esc_html( $title ); ?></h3>
 						<p><?php echo esc_html( $text ); ?></p>
 						<?php if ( ! empty( $code ) ) : ?><code><?php echo esc_html( $code ); ?></code><?php endif; ?>
+						<?php if ( $url ) : ?><a class="jd-card__link" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'View service', 'jawad-dev' ); ?> <?php echo jawad_dev_svg( 'arrow-sm' ); ?></a><?php endif; ?>
 					</article>
 				<?php endforeach; ?>
 			</div>

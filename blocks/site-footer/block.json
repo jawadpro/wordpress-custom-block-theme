@@ -33,9 +33,13 @@
     "pagesLinks": {
       "type": "array",
       "default": [
-        { "label": "Services", "url": "#services" },
-        { "label": "Work", "url": "#work" },
-        { "label": "Packages", "url": "#packages" },
+        { "label": "Elementor Developer", "url": "/elementor-developer/" },
+        { "label": "Speed Optimization", "url": "/wordpress-speed-optimization/" },
+        { "label": "WooCommerce Developer", "url": "/woocommerce-developer/" },
+        { "label": "Fix WordPress Website", "url": "/fix-wordpress-website/" },
+        { "label": "Figma to WordPress", "url": "/figma-to-wordpress/" },
+        { "label": "Landing Page Design", "url": "/landing-page-design/" },
+        { "label": "Maintenance", "url": "/wordpress-maintenance/" },
         { "label": "Process", "url": "#process" },
         { "label": "FAQ", "url": "#faq" },
         { "label": "Contact", "url": "#contact" }

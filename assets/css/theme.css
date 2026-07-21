@@ -122,6 +122,8 @@ a:hover { color: #bae6fd; }
 .jd-card h3, .jd-project h3, .jd-package h3, .jd-testimonial p { font-family: Manrope, sans-serif; font-size: 19px; font-weight: 600; color: #f1f5f9; margin: 0 0 10px; }
 .jd-card p, .jd-project p, .jd-package p { font-size: 14.5px; margin: 0 0 16px; }
 .jd-card code { font-family: "JetBrains Mono"; font-size: 11px; color: #5b7a9d; }
+.jd-card__link { margin-top: 16px; display: inline-flex; align-items: center; gap: 8px; color: #67e8f9; font-size: 13px; font-weight: 700; }
+.jd-card__link svg { width: 14px; height: 14px; }
 .jd-split { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(40px, 5vw, 80px); }
 .jd-split > * { flex: 1 1 420px; min-width: 0; }
 .jd-check-list { list-style: none; display: grid; gap: 18px; margin: 0; padding: 0; }
@@ -233,6 +235,11 @@ a:hover { color: #bae6fd; }
 .jd-singular__nav { width: min(900px, calc(100% - 48px)); margin: 26px auto 0; gap: 14px; }
 .jd-singular__nav a { display: inline-flex; align-items: center; min-height: 46px; padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(148,163,184,.14); background: rgba(15,23,42,.48); color: #dbe4ef; font-family: Manrope, sans-serif; font-weight: 600; }
 .jd-singular__nav a:hover { border-color: rgba(34,211,238,.4); color: #f8fafc; }
+.jd-service-page { padding: clamp(72px, 7vw, 110px) 0; }
+.jd-service-page > p:first-of-type { max-width: 780px; color: #94a3b8; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.75; }
+.jd-service-page h2 { margin-top: 48px; color: #f8fafc; font-family: Manrope, sans-serif; }
+.jd-service-page h3 { color: #e2e8f0; font-family: Manrope, sans-serif; }
+.jd-service-page li { margin-bottom: 8px; color: #aebccd; line-height: 1.7; }
 .jd-blog { position: relative; overflow: hidden; padding: clamp(76px, 8vw, 118px) 0 clamp(78px, 8vw, 120px); }
 .jd-blog::before { content: ""; position: absolute; top: -260px; left: 50%; width: 980px; height: 620px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(37,99,235,.18), rgba(34,211,238,.07) 48%, transparent 72%); filter: blur(46px); pointer-events: none; }
 .jd-blog::after { content: ""; position: absolute; right: -260px; bottom: 12%; width: 620px; height: 460px; border-radius: 50%; background: radial-gradient(closest-side, rgba(139,92,246,.11), transparent 72%); filter: blur(52px); pointer-events: none; }

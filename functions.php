@@ -9,10 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'JAWAD_DEV_VERSION', '1.4.5' );
+define( 'JAWAD_DEV_VERSION', '1.4.6' );
 define( 'JAWAD_DEV_DIR', get_template_directory() );
 define( 'JAWAD_DEV_URI', get_template_directory_uri() );
 
+require_once JAWAD_DEV_DIR . '/inc/seo.php';
 require_once JAWAD_DEV_DIR . '/inc/render.php';
 
 add_action( 'after_setup_theme', 'jawad_dev_setup' );

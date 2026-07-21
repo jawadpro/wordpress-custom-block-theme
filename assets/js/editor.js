@@ -146,6 +146,7 @@
 				[ 'title', __( 'Service title', 'jawad-dev' ) ],
 				[ 'text', __( 'Description', 'jawad-dev' ), 'textarea' ],
 				[ 'code', __( 'Code label', 'jawad-dev' ) ],
+				[ 'serviceUrl', __( 'Service page URL', 'jawad-dev' ) ],
 				[ 'icon', __( 'Icon key', 'jawad-dev' ) ]
 			]
 		},
