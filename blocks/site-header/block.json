@@ -25,10 +25,24 @@
     "ctaText": {
       "type": "string",
       "default": "Hire Me"
+    },
+    "navLinks": {
+      "type": "array",
+      "default": [
+        { "label": "Elementor", "url": "/elementor-developer/" },
+        { "label": "Speed", "url": "/wordpress-speed-optimization/" },
+        { "label": "WooCommerce", "url": "/woocommerce-developer/" },
+        { "label": "Fix Site", "url": "/fix-wordpress-website/" },
+        { "label": "Work", "url": "#work" },
+        { "label": "Process", "url": "#process" },
+        { "label": "FAQ", "url": "#faq" },
+        { "label": "Blog", "url": "/blog/" },
+        { "label": "Check Your Website", "url": "/wordpress-website-health-check/" }
+      ]
     }
   },
   "name": "jawad-dev/site-header",
-  "title": "JD Site Header",
-  "description": "Editable Site Header section for the Jawad Dev theme.",
+  "title": "JD Primary Header",
+  "description": "Editable primary header and navigation for the Jawad Dev theme.",
   "textdomain": "jawad-dev"
 }

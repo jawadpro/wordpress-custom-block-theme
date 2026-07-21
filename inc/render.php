@@ -40,7 +40,11 @@ function jawad_dev_default_attrs( string $slug ): array {
 	);
 
 	$by_slug = array(
-		'site-header'   => array( 'brand' => 'jawad.dev', 'ctaText' => 'Hire Me' ),
+		'site-header'   => array(
+			'brand'    => 'jawad.dev',
+			'ctaText'  => 'Hire Me',
+			'navLinks' => jawad_dev_default_nav_links(),
+		),
 		'hero'          => array(
 			'eyebrow'      => 'TOP RATED WORDPRESS DEVELOPER',
 			'title'        => 'WordPress Developer for Fast, Modern & SEO-Friendly Websites',
@@ -190,18 +194,34 @@ function jawad_dev_brand_svg( string $name ): string {
 	return $icons[ $name ] ?? '';
 }
 
-function jawad_dev_render_site_header( array $a ): string {
-	$links = array(
-		'Elementor'          => home_url( '/elementor-developer/' ),
-		'Speed'              => home_url( '/wordpress-speed-optimization/' ),
-		'WooCommerce'        => home_url( '/woocommerce-developer/' ),
-		'Fix Site'           => home_url( '/fix-wordpress-website/' ),
-		'Work'               => '#work',
-		'Process'            => '#process',
-		'FAQ'                => '#faq',
-		'Blog'               => home_url( '/blog/' ),
-		'Check Your Website' => home_url( '/wordpress-website-health-check/' ),
+function jawad_dev_default_nav_links(): array {
+	return array(
+		array( 'label' => 'Elementor', 'url' => '/elementor-developer/' ),
+		array( 'label' => 'Speed', 'url' => '/wordpress-speed-optimization/' ),
+		array( 'label' => 'WooCommerce', 'url' => '/woocommerce-developer/' ),
+		array( 'label' => 'Fix Site', 'url' => '/fix-wordpress-website/' ),
+		array( 'label' => 'Work', 'url' => '#work' ),
+		array( 'label' => 'Process', 'url' => '#process' ),
+		array( 'label' => 'FAQ', 'url' => '#faq' ),
+		array( 'label' => 'Blog', 'url' => '/blog/' ),
+		array( 'label' => 'Check Your Website', 'url' => '/wordpress-website-health-check/' ),
 	);
+}
+
+function jawad_dev_normalize_nav_url( string $url ): string {
+	if ( '' === $url ) {
+		return '#';
+	}
+
+	if ( str_starts_with( $url, '#' ) || preg_match( '#^[a-z][a-z0-9+.-]*:#i', $url ) ) {
+		return $url;
+	}
+
+	return home_url( '/' . ltrim( $url, '/' ) );
+}
+
+function jawad_dev_render_site_header( array $a ): string {
+	$links = ! empty( $a['navLinks'] ) && is_array( $a['navLinks'] ) ? $a['navLinks'] : jawad_dev_default_nav_links();
 	$brand_url = is_front_page() ? '#top' : home_url( '/' );
 	ob_start();
 	echo jawad_dev_icon_defs();
@@ -211,16 +231,20 @@ function jawad_dev_render_site_header( array $a ): string {
 		<div class="jd-container jd-nav__inner">
 			<a class="jd-brand jd-brand--wordmark" href="<?php echo esc_url( $brand_url ); ?>" aria-label="<?php esc_attr_e( 'Jawadjd.dev home', 'jawad-dev' ); ?>"><span class="jd-wordmark" aria-hidden="true"><span class="jd-wordmark__name">Jawadjd</span><span class="jd-wordmark__domain">.dev</span><span class="jd-wordmark__cursor">_</span></span></a>
 			<div class="jd-nav__links">
-				<?php foreach ( $links as $label => $url ) : ?>
-					<a class="<?php echo 'Check Your Website' === $label ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+				<?php foreach ( $links as $link ) : ?>
+					<?php if ( empty( $link['label'] ) ) : continue; endif; ?>
+					<?php $url = jawad_dev_normalize_nav_url( (string) ( $link['url'] ?? '#' ) ); ?>
+					<a class="<?php echo 'Check Your Website' === $link['label'] ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $link['label'] ); ?></a>
 				<?php endforeach; ?>
 			</div>
 			<a class="jd-btn jd-btn--small jd-open-form jd-hire-anim" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
 			<button type="button" class="jd-menu-toggle" aria-label="<?php esc_attr_e( 'Toggle menu', 'jawad-dev' ); ?>" aria-expanded="false"><?php echo jawad_dev_svg( 'menu' ); ?></button>
 		</div>
 		<div class="jd-mobile-menu">
-			<?php foreach ( $links as $label => $url ) : ?>
-				<a class="<?php echo 'Check Your Website' === $label ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a>
+			<?php foreach ( $links as $link ) : ?>
+				<?php if ( empty( $link['label'] ) ) : continue; endif; ?>
+				<?php $url = jawad_dev_normalize_nav_url( (string) ( $link['url'] ?? '#' ) ); ?>
+				<a class="<?php echo 'Check Your Website' === $link['label'] ? 'jd-nav__tool' : ''; ?>" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $link['label'] ); ?></a>
 			<?php endforeach; ?>
 			<a class="jd-hire-anim jd-open-form" href="#contact"><?php echo esc_html( $a['ctaText'] ); ?></a>
 		</div>

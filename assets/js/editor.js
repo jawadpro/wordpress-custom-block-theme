@@ -16,7 +16,7 @@
 	const blockMeta = window.JawadDevBlockMeta || {};
 
 	const sections = {
-		'site-header': 'JD Site Header',
+		'site-header': 'JD Primary Header',
 		hero: 'JD Hero',
 		'platform-logos': 'JD Platform Logos',
 		services: 'JD Services',
@@ -116,6 +116,16 @@
 	};
 
 	const repeaterConfigs = {
+		'site-header': {
+			key: 'navLinks',
+			title: __( 'Primary Navigation', 'jawad-dev' ),
+			addLabel: __( 'Add nav item', 'jawad-dev' ),
+			empty: { label: 'New Link', url: '#' },
+			fields: [
+				[ 'label', __( 'Link label', 'jawad-dev' ) ],
+				[ 'url', __( 'Link URL', 'jawad-dev' ) ]
+			]
+		},
 		hero: {
 			key: 'stats',
 			title: __( 'Hero Stats', 'jawad-dev' ),
