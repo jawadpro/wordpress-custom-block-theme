@@ -26,13 +26,13 @@
       "type": "string",
       "default": "Hire Me"
     },
+    "showServicesMega": {
+      "type": "boolean",
+      "default": true
+    },
     "navLinks": {
       "type": "array",
       "default": [
-        { "label": "Elementor", "url": "/elementor-developer/" },
-        { "label": "Speed", "url": "/wordpress-speed-optimization/" },
-        { "label": "WooCommerce", "url": "/woocommerce-developer/" },
-        { "label": "Fix Site", "url": "/fix-wordpress-website/" },
         { "label": "Work", "url": "#work" },
         { "label": "Process", "url": "#process" },
         { "label": "FAQ", "url": "#faq" },

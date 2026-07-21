@@ -36,7 +36,8 @@
 	const sectionFields = {
 		'site-header': [
 			[ 'brand', __( 'Brand', 'jawad-dev' ) ],
-			[ 'ctaText', __( 'CTA text', 'jawad-dev' ) ]
+			[ 'ctaText', __( 'CTA text', 'jawad-dev' ) ],
+			[ 'showServicesMega', __( 'Show services mega menu', 'jawad-dev' ), 'toggle' ]
 		],
 		hero: [
 			[ 'eyebrow', __( 'Badge text', 'jawad-dev' ) ],
@@ -262,6 +263,15 @@
 	};
 
 	function fieldControl( attrs, set, field ) {
+		if ( field[ 2 ] === 'toggle' ) {
+			return el( ToggleControl, {
+				key: field[ 0 ],
+				label: field[ 1 ],
+				checked: !! attrs[ field[ 0 ] ],
+				onChange: set( field[ 0 ] )
+			} );
+		}
+
 		const Control = field[ 2 ] === 'textarea' ? TextareaControl : TextControl;
 		return el( Control, {
 			key: field[ 0 ],

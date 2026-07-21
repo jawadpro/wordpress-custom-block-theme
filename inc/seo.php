@@ -176,30 +176,31 @@ function jawad_dev_service_url_for_title( string $title ): string {
 function jawad_dev_service_pattern_content( string $slug, array $page ): string {
 	$related = array();
 	foreach ( $page['related'] as $related_slug ) {
-		$related[] = '<li><a href="' . esc_url( home_url( '/' . $related_slug . '/' ) ) . '">' . esc_html( jawad_dev_seo_service_pages()[ $related_slug ]['title'] ?? $related_slug ) . '</a></li>';
+		$related[] = '<a href="' . esc_url( home_url( '/' . $related_slug . '/' ) ) . '">' . esc_html( jawad_dev_seo_service_pages()[ $related_slug ]['title'] ?? $related_slug ) . '</a>';
 	}
 
 	$process = array_map(
-		static fn( $item ) => '<li>' . esc_html( $item ) . '</li>',
+		static fn( $item ) => '<li><span></span>' . esc_html( $item ) . '</li>',
 		$page['process']
 	);
 	$faq = '';
 	foreach ( $page['faq'] as $item ) {
-		$faq .= '<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . esc_html( $item['q'] ) . '</h3><!-- /wp:heading -->';
-		$faq .= '<!-- wp:paragraph --><p>' . esc_html( $item['a'] ) . '</p><!-- /wp:paragraph -->';
+		$faq .= '<details><summary><h3>' . esc_html( $item['q'] ) . '</h3><span>+</span></summary><p>' . esc_html( $item['a'] ) . '</p></details>';
 	}
 
-	return '<!-- wp:group {"align":"full","className":"jd-service-page","layout":{"type":"constrained"}} --><div class="wp-block-group alignfull jd-service-page">'
-		. '<!-- wp:heading {"level":1,"className":"jd-singular__title"} --><h1 class="wp-block-heading jd-singular__title">' . esc_html( $page['h1'] ) . '</h1><!-- /wp:heading -->'
-		. '<!-- wp:paragraph --><p>' . esc_html( $page['summary'] ) . '</p><!-- /wp:paragraph -->'
-		. '<!-- wp:heading --><h2 class="wp-block-heading">What this service solves</h2><!-- /wp:heading -->'
-		. '<!-- wp:paragraph --><p>This page targets <strong>' . esc_html( $page['keyword'] ) . '</strong> and should be expanded with one relevant project, screenshots, and proof from your real client work before publishing.</p><!-- /wp:paragraph -->'
-		. '<!-- wp:heading --><h2 class="wp-block-heading">My process</h2><!-- /wp:heading -->'
-		. '<!-- wp:list --><ul>' . implode( '', $process ) . '</ul><!-- /wp:list -->'
-		. '<!-- wp:heading --><h2 class="wp-block-heading">Related services</h2><!-- /wp:heading -->'
-		. '<!-- wp:list --><ul>' . implode( '', $related ) . '</ul><!-- /wp:list -->'
-		. '<!-- wp:heading --><h2 class="wp-block-heading">FAQ</h2><!-- /wp:heading -->' . $faq
-		. '<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button {"className":"jd-open-form"} --><div class="wp-block-button jd-open-form"><a class="wp-block-button__link wp-element-button" href="#contact">Start a project request</a></div><!-- /wp:button --></div><!-- /wp:buttons -->'
+	$secondary = array_map(
+		static fn( $item ) => '<span>' . esc_html( $item ) . '</span>',
+		$page['secondary']
+	);
+
+	return '<!-- wp:group {"align":"full","className":"jd-service-page","layout":{"type":"default"}} --><div class="wp-block-group alignfull jd-service-page">'
+		. '<section class="jd-service-hero"><div class="jd-container jd-service-hero__grid">'
+		. '<div class="jd-service-hero__copy"><div class="jd-eyebrow">// ' . esc_html( strtoupper( str_replace( '-', ' ', $slug ) ) ) . '</div><h1>' . esc_html( $page['h1'] ) . '</h1><p>' . esc_html( $page['summary'] ) . '</p><div class="jd-service-keywords">' . implode( '', $secondary ) . '</div><a class="jd-btn jd-open-form jd-hire-anim-lg" href="#contact">Start a project request</a></div>'
+		. '<div class="jd-service-visual" aria-hidden="true"><div class="jd-service-window"><div class="jd-window-dots"><span></span><span></span><span></span><em>' . esc_html( $slug ) . '.php</em></div><div class="jd-service-orbit"><i></i><i></i><i></i></div><code><b>add_action</b>(<i>\'need_website_help\'</i>,<br><i>\'hire_jawad\'</i>);<br><small>// fast, editable, conversion-ready</small></code><div class="jd-service-bars"><span></span><span></span><span></span></div></div></div>'
+		. '</div></section>'
+		. '<section class="jd-service-band"><div class="jd-container jd-service-layout"><article><h2>What this service solves</h2><p>This page targets <strong>' . esc_html( $page['keyword'] ) . '</strong>. Add one real project, screenshots, before/after notes, and client proof before publishing so the page feels useful, specific, and trustworthy.</p></article><article><h2>My process</h2><ul class="jd-service-process">' . implode( '', $process ) . '</ul></article></div></section>'
+		. '<section class="jd-service-band jd-service-band--soft"><div class="jd-container"><div class="jd-service-section-head"><span>// RELATED</span><h2>Related WordPress services</h2></div><div class="jd-service-related">' . implode( '', $related ) . '</div></div></section>'
+		. '<section class="jd-service-band"><div class="jd-container jd-service-faq-wrap"><div class="jd-service-section-head"><span>// FAQ</span><h2>Questions before you start</h2></div><div class="jd-faq jd-service-faq">' . $faq . '</div></div></section>'
 		. '</div><!-- /wp:group -->';
 }
 
